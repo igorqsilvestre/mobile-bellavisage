@@ -1,0 +1,7 @@
+{
+  "name": "mobile-bellavisage",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
