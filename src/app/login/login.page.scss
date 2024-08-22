@@ -1,0 +1,19 @@
+.principal{
+  display: flex;
+  text-align: center;
+}
+
+
+ion-title {
+  --font-family: 'Public Sans';
+  --color: #6B6E71;
+}
+
+ion-button {
+  --background: #950341;
+  --color: #FFFFFF;
+  --border-radius: 4px;
+  --font-family: 'Public Sans';
+  --font-weight: bold;
+  --border: none;
+}
