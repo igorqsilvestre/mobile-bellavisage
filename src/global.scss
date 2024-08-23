@@ -35,3 +35,42 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+
+*{
+  font-size: 16px;
+}
+
+ion-title {
+  color:  #6B6E71;
+  font-weight: bold;
+  font-family: 'Public Sans';
+  font-size: 22px;
+}
+
+ion-button {
+  --background: #950341;
+  --color: #FFFFFF;
+  font-family: 'Public Sans';
+  font-weight: bold;
+  text-transform: none;
+}
+
+
+ion-button::part(native){
+  padding: 0 2em;
+}
+
+.label-text{
+  color: #950341;
+  font-family: 'Public Sans';
+  font-weight: bold;
+}
+
+
+a{
+  font-family: 'Public Sans';
+  text-decoration: none;
+  color: #950341;
+  font-weight: bold;
+}

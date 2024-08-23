@@ -1,19 +1,35 @@
-.principal{
-  display: flex;
+
+
+.card{
+  padding-top: 30%;
+  margin: 0;
+  box-shadow: none;
+}
+
+.titulo{
+  margin-top: 1.5em;
   text-align: center;
 }
 
-
-ion-title {
-  --font-family: 'Public Sans';
-  --color: #6B6E71;
+form{
+  margin: 1em 0;
 }
 
-ion-button {
-  --background: #950341;
-  --color: #FFFFFF;
-  --border-radius: 4px;
-  --font-family: 'Public Sans';
-  --font-weight: bold;
-  --border: none;
+.redirecionamentos{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.botao_entrar{
+  margin-top: 2em;
+}
+
+
+.texto-criarConta{
+  margin-top: 2em;
+}
+
+.texto-criarConta a{
+  color:#F5066C;
 }
