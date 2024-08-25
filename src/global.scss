@@ -56,7 +56,6 @@ ion-button {
   text-transform: none;
 }
 
-
 ion-button::part(native){
   padding: 0 2em;
 }
@@ -66,6 +65,7 @@ ion-button::part(native){
   font-family: 'Public Sans';
   font-weight: bold;
 }
+
 
 
 a{
