@@ -15,10 +15,12 @@ form{
   margin: 1em 0;
 }
 
+
 .redirecionamentos{
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-around;
 }
 
 .botao{
