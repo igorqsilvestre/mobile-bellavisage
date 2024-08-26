@@ -11,13 +11,18 @@ const routes: Routes = [
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'login-novo-usuario-parte1',
+    path: 'login/novo-usuario-parte1',
     loadChildren: () => import('./login-usuario-form1/login-usuario-form1.module').then( m => m.LoginUsuarioForm1PageModule)
   },
   {
-    path: 'login-novo-usuario-parte2',
+    path: 'login/novo-usuario-parte2',
     loadChildren: () => import('./login-usuario-form2/login-usuario-form2.module').then( m => m.LoginUsuarioForm2PageModule)
+  },
+  {
+    path: 'login/alterar-senha',
+    loadChildren: () => import('./login-alterar-senha/login-alterar-senha.module').then( m => m.LoginAlterarSenhaPageModule)
   }
+
 
 
 

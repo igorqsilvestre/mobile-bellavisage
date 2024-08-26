@@ -54,10 +54,12 @@ ion-button {
   font-family: 'Public Sans';
   font-weight: bold;
   text-transform: none;
+  width: 50%;
 }
 
 ion-button::part(native){
   padding: 0 2em;
+
 }
 
 .label-text{

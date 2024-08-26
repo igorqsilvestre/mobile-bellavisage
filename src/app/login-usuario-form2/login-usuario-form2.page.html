@@ -2,31 +2,32 @@
   <ion-card class="card">
     <ion-card-header>
       <ion-img src="assets/logo-bellavisage.png" alt="logo-bellavisage"></ion-img>
-      <ion-title class="titulo">Mais alguns dados sobre você:</ion-title>
+      <ion-title class="titulo">Insira mais alguns dados</ion-title>
     </ion-card-header>
     <ion-card-content>
       <form>
         <ion-list>
           <ion-item>
-            <ion-label position="floating">CEP</ion-label>
-            <ion-input  type="text" maxlength="8"></ion-input>
+            <ion-input label="Cep : "></ion-input>
           </ion-item>
-          <ion-button expand="full" >Buscar</ion-button>
+          <ion-row class="ion-justify-content-center">
+            <ion-button class="botao" >Buscar</ion-button>
+          </ion-row>
 
           <ion-item>
-            <ion-input label="Logradouro :"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-input label="Bairro :"></ion-input>
+            <ion-input label="Logradouro : " [disabled]="true"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input label="Cidade :"></ion-input>
+            <ion-input label="Bairro :" [disabled]="true"></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input label="Estado :"></ion-input>
+            <ion-input label="Cidade :" [disabled]="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input label="Estado :" [disabled]="true"></ion-input>
           </ion-item>
 
           <ion-item>
@@ -36,12 +37,16 @@
           <ion-item>
             <ion-input label="Complemento :"></ion-input>
           </ion-item>
+
+          <ion-item>
+            <ion-input label="Telefone :"></ion-input>
+          </ion-item>
         </ion-list>
       </form>
 
       <div class="redirecionamentos">
-        <ion-button class="botao_entrar" href="#">Voltar</ion-button>
-        <ion-button class="botao_entrar" href="#">Cadastrar</ion-button>
+        <ion-button  class="botao" href="#">Cadastrar</ion-button>
+        <ion-button  color="medium" href="#">Voltar</ion-button>
       </div>
     </ion-card-content>
   </ion-card>
