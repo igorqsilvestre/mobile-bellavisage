@@ -4,23 +4,23 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'login/novo-usuario-parte1',
-    loadChildren: () => import('./login-usuario-form1/login-usuario-form1.module').then( m => m.LoginUsuarioForm1PageModule)
+    loadChildren: () => import('./pages/login-usuario-form1/login-usuario-form1.module').then( m => m.LoginUsuarioForm1PageModule)
   },
   {
     path: 'login/novo-usuario-parte2',
-    loadChildren: () => import('./login-usuario-form2/login-usuario-form2.module').then( m => m.LoginUsuarioForm2PageModule)
+    loadChildren: () => import('./pages/login-usuario-form2/login-usuario-form2.module').then( m => m.LoginUsuarioForm2PageModule)
   },
   {
     path: 'login/alterar-senha',
-    loadChildren: () => import('./login-alterar-senha/login-alterar-senha.module').then( m => m.LoginAlterarSenhaPageModule)
+    loadChildren: () => import('./pages/login-alterar-senha/login-alterar-senha.module').then( m => m.LoginAlterarSenhaPageModule)
   }
 
 

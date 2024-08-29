@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login-usuario-form2',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginUsuarioForm2Page implements OnInit {
 
-  constructor() { }
+  constructor( 
+    private navCtrl: NavController
+  ) { }
 
   ngOnInit() {
   }
 
+  voltarPaginaAnterior(){
+    this.navCtrl.back();
+  }
 }
