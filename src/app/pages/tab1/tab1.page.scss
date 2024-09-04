@@ -1,0 +1,67 @@
+.principal{
+  padding: 0 1em;
+}
+
+.container-logo{
+  width: 40%;
+  margin: 1em 0;
+}
+
+h1{
+  text-align: center;
+}
+
+h1 .titulo{
+  color:  #810339;
+  font-weight: bold;
+  font-family: 'Public Sans';
+  font-size: 22px;
+}
+
+section{
+  margin: 3em 0;
+}
+
+.container-servicos{
+  display: flex;
+  justify-content: space-around;
+}
+
+h2{
+ margin-bottom: 1em;
+}
+
+p{
+  font-size: 12px;
+}
+
+ion-icon{
+  font-size: 22px;
+  margin-top: 0.2em;
+}
+
+.botao-servico{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-button {
+  overflow: visible;
+  font-weight: 300;
+  --border-radius: 8px;
+  width: 30%;
+}
+
+ion-card.card-agendamentos{
+  background-color: #f3f1f1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  margin:1em 0 0 0;
+}
+
+.card-agendamentos img {
+  border-radius: 8px;
+}

@@ -48,6 +48,13 @@ ion-title {
   font-size: 22px;
 }
 
+h1,h2,h3 {
+  color:  #1E1F2E;
+  font-weight: bold;
+  font-family: 'Public Sans';
+  font-size: 22px;
+}
+
 ion-button {
   --background: #950341;
   --color: #FFFFFF;
@@ -57,9 +64,27 @@ ion-button {
   width: 50%;
 }
 
+ion-card-subtitle{
+  font-weight: bold;
+  color:  #1E1F2E;
+  font-family: 'Public Sans';
+}
+
+p{
+  font-family: 'Public Sans';
+}
+
 ion-button::part(native){
   padding: 0 2em;
 
+}
+
+ion-searchbar.custom {
+  --background: #FAFAFA;
+  --color: #fff;
+  --placeholder-color: #000;
+  --icon-color: #000;
+  --border-radius: 8px;
 }
 
 .label-text{
@@ -68,11 +93,19 @@ ion-button::part(native){
   font-weight: bold;
 }
 
-
-
 a{
   font-family: 'Public Sans';
   text-decoration: none;
   color: #950341;
-  font-weight: bold;
+
 }
+
+ion-label,ion-icon{
+  color: #fff;
+  font-family: 'Public Sans';
+}
+
+ion-tab-bar{
+  --background: #810339;
+}
+
