@@ -1,0 +1,61 @@
+<ion-content>
+  <main class="principal">
+    <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
+    <h1>Selecione um tratamento</h1>
+    <div class="container-pesquisar">
+      <button (click)="voltarPaginaAnterior()">
+        <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
+      </button>
+      <ion-searchbar placeholder="Pesquisar" class="custom"></ion-searchbar>
+    </div>
+
+    <section>
+      <ion-card class="card-agendamentos">
+        <img src="assets/Peeling-Quimico.jpg" alt="Pilling de Diamante"/>
+        <ion-card-content>
+          <ion-card-subtitle >Pilling de Diamante</ion-card-subtitle>
+          <p>Senior Surgeon</p>
+          <p>Preço: R$ 200,00</p>
+          <div class="container-icones">
+            <span><ion-icon name="star" color="warning"></ion-icon> 4.9</span>
+            <button>
+              <ion-icon slot="icon-only" name="arrow-forward-outline" color="dark"></ion-icon>
+            </button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="card-agendamentos">
+        <img src="assets/Laser-Venus.jpg" alt="Laser de Vênus"/>
+        <ion-card-content>
+          <ion-card-subtitle>Laser de Vênus</ion-card-subtitle>
+          <p>Senior Surgeon</p>
+          <p>Preço: R$ 1000,00</p>
+          <div class="container-icones">
+            <span><ion-icon name="star" color="warning"></ion-icon> 5.0</span>
+            <button>
+              <ion-icon slot="icon-only" name="arrow-forward-outline" color="dark"></ion-icon>
+            </button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="card-agendamentos">
+        <img src="assets/Preenchimento-labial.jpeg" alt="Preenchimento labial"/>
+        <ion-card-content>
+          <ion-card-subtitle>Preenchimento labial</ion-card-subtitle>
+          <p>Senior Surgeon</p>
+          <p>Preço: R$ 340,00</p>
+          <div class="container-icones">
+            <span><ion-icon name="star" color="warning"></ion-icon> 3.1</span>
+            <button>
+              <ion-icon slot="icon-only" name="arrow-forward-outline" color="dark"></ion-icon>
+            </button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </section>
+  </main>
+  <app-tabs></app-tabs>
+</ion-content>
+

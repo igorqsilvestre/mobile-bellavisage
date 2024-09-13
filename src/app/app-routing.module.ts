@@ -4,7 +4,12 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadChildren:() => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'login',
@@ -21,8 +26,11 @@ const routes: Routes = [
   {
     path: 'login/alterar-senha',
     loadChildren: () => import('./pages/login-alterar-senha/login-alterar-senha.module').then( m => m.LoginAlterarSenhaPageModule)
+  },
+  {
+    path: 'novo-agendamento-parte1',
+    loadChildren: () => import('./pages/agendamento-form1/agendamento-form1.module').then( m => m.AgendamentoForm1PageModule)
   }
-
 
 
 
