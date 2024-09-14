@@ -19,7 +19,7 @@ export class LoginPage implements OnInit{
 
     //Vai para a página home
     console.log('estou aqui');
-    this.route.navigate(['/home']);
+    this.route.navigate(['/tabs']);
 
   }
 

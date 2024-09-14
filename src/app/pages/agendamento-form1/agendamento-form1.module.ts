@@ -15,7 +15,6 @@ import { TabsPageModule } from '../tabs/tabs.module';
     FormsModule,
     IonicModule,
     AgendamentoForm1PageRoutingModule,
-    TabsPageModule
   ],
   declarations: [AgendamentoForm1Page]
 })

@@ -8,7 +8,7 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
+    path: 'tabs',
     loadChildren:() => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
@@ -27,11 +27,6 @@ const routes: Routes = [
     path: 'login/alterar-senha',
     loadChildren: () => import('./pages/login-alterar-senha/login-alterar-senha.module').then( m => m.LoginAlterarSenhaPageModule)
   },
-  {
-    path: 'novo-agendamento-parte1',
-    loadChildren: () => import('./pages/agendamento-form1/agendamento-form1.module').then( m => m.AgendamentoForm1PageModule)
-  }
-
 
 
 ];
