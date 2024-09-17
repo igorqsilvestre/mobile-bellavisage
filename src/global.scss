@@ -64,7 +64,7 @@ ion-button {
   width: 50%;
 }
 
-ion-card-subtitle{
+ion-card-title, ion-card-subtitle{
   font-weight: bold;
   color:  #1E1F2E;
   font-family: 'Public Sans';
@@ -108,4 +108,23 @@ ion-label,ion-icon{
 ion-tab-bar{
   --background: #810339;
 }
+
+ion-alert h2{
+  text-align: center;
+}
+
+ion-alert.custom-alert {
+  --backdrop-opacity: 0.7;
+}
+
+.custom-alert .alert-button-group {
+  justify-content: center;
+}
+
+button.alert-button.alert-button-confirm {
+  background-color:  #810339;
+  color:#FFF;
+  border-radius: 4px;
+}
+
 

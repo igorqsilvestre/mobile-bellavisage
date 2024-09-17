@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -9,7 +10,8 @@ import { NavController } from '@ionic/angular';
 export class AgendamentoForm1Page implements OnInit {
 
   constructor(
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -17,5 +19,9 @@ export class AgendamentoForm1Page implements OnInit {
 
   voltarPaginaAnterior(){
     this.navCtrl.back();
+  }
+
+  irParaProximaPaginaCadastro(){
+    this.router.navigate(['/tabs/novo-agendamento-parte2']);
   }
 }

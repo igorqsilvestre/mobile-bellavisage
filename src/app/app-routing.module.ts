@@ -28,7 +28,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login-alterar-senha/login-alterar-senha.module').then( m => m.LoginAlterarSenhaPageModule)
   },
 
-
 ];
 @NgModule({
   imports: [

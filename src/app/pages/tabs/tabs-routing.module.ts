@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('../agendamento-form1/agendamento-form1.module').then(m => m.AgendamentoForm1PageModule)
       },
       {
+        path: 'novo-agendamento-parte2',
+        loadChildren: () => import('../agendamento-form2/agendamento-form2.module').then(m => m.AgendamentoForm2PageModule)
+      },
+      {
         path: '',
         redirectTo: 'tab1',
         pathMatch: 'full'
