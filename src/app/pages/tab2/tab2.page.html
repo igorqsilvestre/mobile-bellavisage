@@ -1,17 +1,80 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <main class="principal">
+    <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
+    <div class="container-pesquisar">
+      <button (click)="voltarPaginaAnterior()">
+        <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
+      </button>
+      <ion-searchbar placeholder="Pesquisar" class="custom"></ion-searchbar>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <section>
+      <h1>Meus agendamentos</h1>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+        <ion-card class="card-agendamentos">
+          <img src="assets/Peeling-Quimico.jpg" alt="Pilling de Diamante"/>
+          <ion-card-content>
+            <ion-card-subtitle >Pilling de Diamante</ion-card-subtitle>
+            <p>Senior Surgeon</p>
+            <p>📅 19/01/2024</p>
+            <p>⏰ 10:30</p>
+            <p>Preço: R$ 200,00</p>
+            <ion-icon name="star" color="warning"></ion-icon> 4.9
+          </ion-card-content>
+        </ion-card>
+
+        <div class="container-botoes">
+          <ion-button size="small">
+            <ion-icon class="container-icone" slot="icon-only" name="pencil"></ion-icon>
+          </ion-button>
+          <ion-button size="small">
+            <ion-icon class="container-icone" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </div>
+
+        <ion-card class="card-agendamentos">
+          <img src="assets/Laser-Venus.jpg" alt="Laser de Vênus"/>
+          <ion-card-content>
+            <ion-card-subtitle>Laser de Vênus</ion-card-subtitle>
+            <p>Senior Surgeon</p>
+            <p>📅 19/01/2024</p>
+            <p>⏰ 15:00</p>
+            <p>Preço: R$ 1000,00</p>
+            <ion-icon name="star" color="warning"></ion-icon> 5.0
+          </ion-card-content>
+        </ion-card>
+
+        <div class="container-botoes">
+          <ion-button size="small">
+            <ion-icon class="container-icone" slot="icon-only" name="pencil"></ion-icon>
+          </ion-button>
+          <ion-button size="small">
+            <ion-icon class="container-icone" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </div>
+
+        <ion-card class="card-agendamentos">
+          <img src="assets/Preenchimento-labial.jpeg" alt="Preenchimento labial"/>
+          <ion-card-content>
+            <ion-card-subtitle>Preenchimento labial</ion-card-subtitle>
+            <p>Senior Surgeon</p>
+            <p>📅 19/01/2024</p>
+            <p>⏰ 17:05</p>
+            <p>Preço: R$ 340,00</p>
+            <ion-icon name="star" color="warning"></ion-icon> 3.1
+          </ion-card-content>
+        </ion-card>
+
+        <div class="container-botoes">
+          <ion-button size="small">
+            <ion-icon class="container-icone" slot="icon-only" name="pencil"></ion-icon>
+          </ion-button>
+          <ion-button size="small">
+            <ion-icon class="container-icone" slot="icon-only" name="trash"></ion-icon>
+          </ion-button>
+        </div>
+
+
+    </section>
+  </main>
 </ion-content>
