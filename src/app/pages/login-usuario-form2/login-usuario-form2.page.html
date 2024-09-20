@@ -2,40 +2,25 @@
   <ion-card class="card">
     <ion-card-header>
       <ion-img src="assets/logo-bellavisage.png" alt="logo-bellavisage"></ion-img>
-      <ion-title class="titulo">Insira mais alguns dados</ion-title>
+      <ion-title class="titulo">Insira dados pessoais</ion-title>
     </ion-card-header>
     <ion-card-content>
       <form>
         <ion-list>
           <ion-item>
-            <ion-input label="Cep : "></ion-input>
-          </ion-item>
-          <ion-row class="ion-justify-content-center">
-            <ion-button class="botao" >Buscar</ion-button>
-          </ion-row>
-
-          <ion-item>
-            <ion-input label="Logradouro : " [disabled]="true"></ion-input>
+            <ion-input label="Nome :" type="text" ></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input label="Bairro :" [disabled]="true"></ion-input>
+            <ion-input label="Cpf :" type="text" appCpfMask></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input label="Cidade :" [disabled]="true"></ion-input>
+            <ion-input label="Telefone :" appTelefoneMask></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-input label="Estado :" [disabled]="true"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-input label="Número :"></ion-input>
-          </ion-item>
-
-          <ion-item>
-            <ion-input label="Complemento :"></ion-input>
+            <ion-input label="Data de nascimento :" appDataNascimentoMask></ion-input>
           </ion-item>
 
         </ion-list>
