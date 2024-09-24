@@ -25,24 +25,31 @@ export class PacienteService {
   }
 
   public async addPaciente(paciente: Paciente): Promise<void> {
-    const query = `INSERT INTO paciente (id, email, senha, nome, cpf, telefone, dataNascimento) VALUES (?, ?, ?, ?, ?)`;
-    const formattedDate = paciente.dataNascimento instanceof Date ? paciente.dataNascimento.toISOString().split('T')[0] : paciente.dataNascimento;
-    await this.databaseService.executeSql(query, [paciente.id, paciente.email, paciente.senha, paciente.nome, paciente.cpf, paciente.telefone, formattedDate]);
+    const query = `INSERT INTO paciente (id, email, senha, nome, cpf, telefone, dataNascimento) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    //const formattedDate = paciente.dataNascimento instanceof Date ? paciente.dataNascimento.toISOString().split('T')[0] : paciente.dataNascimento;
+    await this.databaseService.executeSql(query, [paciente.id, paciente.email, paciente.senha, paciente.nome, paciente.cpf, paciente.telefone, paciente.dataNascimento]);
     console.log('Paciente adicionado');
   }
 
-  public async getPacientes(): Promise<Paciente[]> {
-    const query = 'SELECT * FROM paciente';
-    const result = await this.databaseService.executeSql(query);
-    const pacientes: Paciente[] = [];
+  public async getPacienteByEmailAndSenha(email: string, senha: string): Promise<Paciente | null> {
+    const query = 'SELECT * FROM paciente WHERE email = ? AND senha = ?';
+    const result = await this.databaseService.executeSql(query, [email, senha]);
 
-    for (let i = 0; i < result.rows.length; i++) {
-      const row = result.rows.item(i);
-      const paciente = new Paciente(row.id, row.email, row.senha, row.nome, row.cpf, row.telefone, row.dataNascimento);
-      pacientes.push(paciente);
+    if (result.rows.length > 0) {
+      const row = result.rows.item(0);
+      const paciente = new Paciente(
+        row.id,
+        row.email,
+        row.senha,
+        row.nome,
+        row.cpf,
+        row.telefone,
+        row.dataNascimento
+      );
+      return paciente;
+    } else {
+      return null;
     }
-
-    return pacientes;
   }
 
 }

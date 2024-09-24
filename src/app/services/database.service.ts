@@ -27,8 +27,13 @@ export class DatabaseService {
   }
 
   public async executeSql(query: string, params: any[] = []): Promise<any> {
+    if (!this.dbInstance) {
+      console.error('Banco de dados não inicializado');
+      throw new Error('Banco de dados não inicializado');
+    }
+
     try {
-      return await this.dbInstance?.executeSql(query, params);
+      return await this.dbInstance.executeSql(query, params);
     } catch (error) {
       console.error('Erro ao executar SQL', error);
       throw error;

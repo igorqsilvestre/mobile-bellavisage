@@ -10,11 +10,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoginUsuarioForm1Page implements OnInit {
 
   pacienteForm: FormGroup = this.fb.group({});;
-  pacienteId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router
   ) { }
 
@@ -28,7 +26,13 @@ export class LoginUsuarioForm1Page implements OnInit {
   }
 
   onSubmit(){
-    console.log('olá');
+    if(this.pacienteForm.valid){
+      const paciente = this.pacienteForm.value;
+      this.router.navigate(['/login/novo-usuario-parte2'], { state:{ paciente } })
+
+    }else{
+      this.marcarCamposInvalidosComoTocado(this.pacienteForm);
+    }
   }
 
   campoEstaInvalido(campo: string): boolean{
