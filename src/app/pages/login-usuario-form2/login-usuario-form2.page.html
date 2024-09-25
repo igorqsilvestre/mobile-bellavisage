@@ -30,7 +30,9 @@
           </ion-item>
 
           <ion-text color="danger" *ngIf="campoEstaInvalido('telefone')">
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('telefone')?.errors">Telefone é obrigatório.</p>
+            <p class="mensagem-erro" *ngIf="pacienteForm.get('telefone')?.errors?.['required']">Telefone é obrigatório.</p>
+            <p class="mensagem-erro" *ngIf="pacienteForm.get('telefone')?.errors?.['minlength'] ||
+              pacienteForm.get('telefone')?.errors?.['maxlength'] ">Telefone tem que ter 15 caracteres.</p>
           </ion-text>
 
           <ion-item>
@@ -38,9 +40,10 @@
           </ion-item>
 
           <ion-text color="danger" *ngIf="campoEstaInvalido('dataNascimento')">
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors">Data de nascimento é obrigatória.</p>
+            <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['required']">Data de nascimento é obrigatória.</p>
+            <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['minlength'] ||
+              pacienteForm.get('dataNascimento')?.errors?.['maxlength'] ">Data tem que ter 10 caracteres</p>
           </ion-text>
-
         </ion-list>
 
         <div class="redirecionamentos">

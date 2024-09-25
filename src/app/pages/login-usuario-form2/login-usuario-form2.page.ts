@@ -33,10 +33,10 @@ export class LoginUsuarioForm2Page implements OnInit {
 
     this.pacienteForm = this.fb.group(
       {
-      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)] ],
       cpf: ['', [Validators.required, CpfUtilValidator.validate()]],
-      telefone: ['', [Validators.required]],
-      dataNascimento: ['', Validators.required],
+      telefone: ['', [Validators.required, Validators.minLength(15), Validators.maxLength(15)] ],
+      dataNascimento: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(10)] ],
       email: [this.pacienteDaDo.email],
       senha: [this.pacienteDaDo.senha]
       });
@@ -103,7 +103,7 @@ export class LoginUsuarioForm2Page implements OnInit {
       header: tipo === 'sucesso' ? 'Sucesso' : 'Erro',
       message: mensagem,
       buttons: ['OK'],
-      cssClass: tipo === 'sucesso' ? 'alert-success' : 'alert-error'
+      cssClass: 'custom-alert '
     });
 
     await alert.present();

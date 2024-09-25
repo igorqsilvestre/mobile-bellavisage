@@ -31,9 +31,36 @@ export class PacienteService {
     console.log('Paciente adicionado');
   }
 
+  public async updatePacienteSenha(id: string, novaSenha: string): Promise<void> {
+    const query = `UPDATE paciente SET senha = ? WHERE id = ?`;
+    await this.databaseService.executeSql(query, [novaSenha, id]);
+    console.log('Senha atualizada com sucesso');
+  }
+
   public async getPacienteByEmailAndSenha(email: string, senha: string): Promise<Paciente | null> {
     const query = 'SELECT * FROM paciente WHERE email = ? AND senha = ?';
     const result = await this.databaseService.executeSql(query, [email, senha]);
+
+    if (result.rows.length > 0) {
+      const row = result.rows.item(0);
+      const paciente = new Paciente(
+        row.id,
+        row.email,
+        row.senha,
+        row.nome,
+        row.cpf,
+        row.telefone,
+        row.dataNascimento
+      );
+      return paciente;
+    } else {
+      return null;
+    }
+  }
+
+  public async getPacienteByEmail(email: string): Promise<Paciente | null> {
+    const query = 'SELECT * FROM paciente WHERE email = ?';
+    const result = await this.databaseService.executeSql(query, [email]);
 
     if (result.rows.length > 0) {
       const row = result.rows.item(0);

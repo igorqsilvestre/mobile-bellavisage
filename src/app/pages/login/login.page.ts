@@ -39,7 +39,7 @@ export class LoginPage implements OnInit{
                 await this.presentAlert('sucesso', 'Login realizado com sucesso!');
                 this.route.navigate(['/tabs']);
             } else {
-                await this.presentAlert('erro', 'Dados do usuário não encontrados.');
+                await this.presentAlert('erro', 'Usuário não encontrado.');
             }
         } catch (error) {
             await this.presentAlert('erro', 'Ocorreu um erro ao tentar fazer o login.');
@@ -72,7 +72,7 @@ export class LoginPage implements OnInit{
       header: tipo === 'sucesso' ? 'Sucesso' : 'Erro',
       message: mensagem,
       buttons: ['OK'],
-      cssClass: tipo === 'sucesso' ? 'alert-success' : 'alert-error'
+      cssClass: 'custom-alert '
     });
 
     await alert.present();
