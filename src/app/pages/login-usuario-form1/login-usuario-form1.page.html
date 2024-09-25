@@ -2,40 +2,45 @@
   <ion-card class="card">
     <ion-card-header>
       <ion-img src="assets/logo-bellavisage.png" alt="logo-bellavisage"></ion-img>
-      <ion-title class="titulo">Insira dados básicos</ion-title>
+      <ion-title class="titulo">Insira dados de login</ion-title>
     </ion-card-header>
     <ion-card-content>
-      <form>
+      <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
         <ion-list>
-          <ion-item>
-            <ion-input label="Nome :"></ion-input>
-          </ion-item>
 
           <ion-item>
-            <ion-input label="Cpf :" type="text" appCpfMask></ion-input>
+            <ion-input formControlName="email" label="Email :" type="email" placeholder="email@domain.com"></ion-input>
           </ion-item>
 
-          <ion-item>
-            <ion-input label="Email :" type="email" placeholder="email@domain.com"></ion-input>
-          </ion-item>
+          <ion-text color="danger" *ngIf="campoEstaInvalido('email')">
+            <p class="mensagem-erro" *ngIf="pacienteForm.get('email')?.errors">Email é inválido.</p>
+          </ion-text>
 
           <ion-item>
-            <ion-input label="Telefone :" appTelefoneMask></ion-input>
+            <ion-input formControlName="senha" label="Criar senha :" type="password" ></ion-input>
           </ion-item>
 
-          <ion-item>
-            <ion-input label="Criar senha :" type="password" ></ion-input>
-          </ion-item>
+          <ion-text color="danger" *ngIf="campoEstaInvalido('senha')">
+            <p class="mensagem-erro" *ngIf="pacienteForm.get('senha')?.errors?.['minlength'] ||
+              pacienteForm.get('senha')?.errors?.['required']">Senha tem que ter no minimo 3 caracteres.</p>
+            <p class="mensagem-erro" *ngIf="pacienteForm.get('senha')?.errors?.['maxlength']">Senha tem que ter no máximo 16 caracteres.</p>
+          </ion-text>
 
           <ion-item>
-            <ion-input label="Repitir senha :" type="password"></ion-input>
+            <ion-input formControlName="confirmarSenha" label="Repitir senha :" type="password"></ion-input>
           </ion-item>
+
+          <ion-text color="danger" *ngIf="verificaSenhasIguais(pacienteForm)">
+            <p class="mensagem-erro">Senha tem que ser igual a anterior.</p>
+          </ion-text>
+
         </ion-list>
+
+        <div class="redirecionamentos">
+          <ion-button type="submit" class="botao">Avançar</ion-button>
+        </div>
       </form>
 
-      <div class="redirecionamentos">
-        <ion-button class="botao" [routerLink]="'/login/novo-usuario-parte2'">Avançar</ion-button>
-      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>
