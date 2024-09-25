@@ -46,8 +46,15 @@ export class LoginUsuarioForm2Page implements OnInit {
   async onSubmit(){
     if(this.pacienteForm.valid){
       const pacienteDado = this.pacienteForm?.value as Paciente;
-      const pacienteId = uuidv4();
 
+      const data = await this.pacienteService.getPacienteByCPF(pacienteDado.cpf);
+
+      if(data !== null){
+        await this.presentAlert('erro', ' CPF já cadastrado.');
+        throw new Error('CPF já cadastrado.');
+      }
+
+      const pacienteId = uuidv4();
       const paciente = new Paciente(
         pacienteId,
         pacienteDado.email,

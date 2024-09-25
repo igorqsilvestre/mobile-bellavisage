@@ -79,4 +79,25 @@ export class PacienteService {
     }
   }
 
+  public async getPacienteByCPF(cpf: string): Promise<Paciente | null> {
+    const query = 'SELECT * FROM paciente WHERE cpf = ?';
+    const result = await this.databaseService.executeSql(query, [cpf]);
+
+    if (result.rows.length > 0) {
+      const row = result.rows.item(0);
+      const paciente = new Paciente(
+        row.id,
+        row.email,
+        row.senha,
+        row.nome,
+        row.cpf,
+        row.telefone,
+        row.dataNascimento
+      );
+      return paciente;
+    } else {
+      return null;
+    }
+  }
+
 }
