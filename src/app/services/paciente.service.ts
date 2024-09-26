@@ -9,6 +9,7 @@ export class PacienteService {
 
   constructor(private databaseService: DatabaseService) {}
 
+  // Criação de tabela no SQLite ou IndexedDB
   public async createTable(): Promise<void> {
     const query = `
       CREATE TABLE IF NOT EXISTS paciente (
@@ -20,84 +21,145 @@ export class PacienteService {
         telefone TEXT,
         dataNascimento TEXT
       )`;
-    await this.databaseService.executeSql(query);
-    console.log('Tabela paciente criada');
+
+    if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
+      await this.databaseService.executeSql(query);
+      console.log('Tabela paciente criada no SQLite');
+    } else {
+      await this.createIndexedDBStore();
+      console.log('Store paciente criada no IndexedDB');
+    }
   }
 
+  // Criação de store no IndexedDB
+  private async createIndexedDBStore(): Promise<void> {
+    // IndexedDB já cria a store na inicialização, então este método pode não ser necessário,
+    // mas pode ser usado para verificações adicionais, se necessário
+    console.log('IndexedDB store já criada');
+  }
+
+  // Adicionar paciente no SQLite ou IndexedDB
   public async addPaciente(paciente: Paciente): Promise<void> {
-    const query = `INSERT INTO paciente (id, email, senha, nome, cpf, telefone, dataNascimento) VALUES (?, ?, ?, ?, ?, ?, ?)`;
-    //const formattedDate = paciente.dataNascimento instanceof Date ? paciente.dataNascimento.toISOString().split('T')[0] : paciente.dataNascimento;
-    await this.databaseService.executeSql(query, [paciente.id, paciente.email, paciente.senha, paciente.nome, paciente.cpf, paciente.telefone, paciente.dataNascimento]);
-    console.log('Paciente adicionado');
+    if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
+      const query = `INSERT INTO paciente (id, email, senha, nome, cpf, telefone, dataNascimento) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      await this.databaseService.executeSql(query, [
+        paciente.id,
+        paciente.email,
+        paciente.senha,
+        paciente.nome,
+        paciente.cpf,
+        paciente.telefone,
+        paciente.dataNascimento
+      ]);
+      console.log('Paciente adicionado no SQLite');
+    } else {
+      const pacienteData = {
+        id: paciente.id,
+        email: paciente.email,
+        senha: paciente.senha,
+        nome: paciente.nome,
+        cpf: paciente.cpf,
+        telefone: paciente.telefone,
+        dataNascimento: paciente.dataNascimento
+      };
+      await this.databaseService.executeSql('INSERT', [pacienteData]);
+      console.log('Paciente adicionado no IndexedDB');
+    }
   }
 
+  // Atualizar senha do paciente no SQLite ou IndexedDB
   public async updatePacienteSenha(id: string, novaSenha: string): Promise<void> {
-    const query = `UPDATE paciente SET senha = ? WHERE id = ?`;
-    await this.databaseService.executeSql(query, [novaSenha, id]);
-    console.log('Senha atualizada com sucesso');
+    if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
+      const query = `UPDATE paciente SET senha = ? WHERE id = ?`;
+      await this.databaseService.executeSql(query, [novaSenha, id]);
+      console.log('Senha atualizada no SQLite');
+    } else {
+      const pacientes = await this.getAllPacientes();
+      const paciente = pacientes.find(p => p.id === id);
+      if (paciente) {
+        paciente.senha = novaSenha;
+        await this.databaseService.executeSql('INSERT', [paciente]);
+        console.log('Senha atualizada no IndexedDB');
+      }
+    }
   }
 
+  // Buscar paciente por email e senha no SQLite ou IndexedDB
   public async getPacienteByEmailAndSenha(email: string, senha: string): Promise<Paciente | null> {
-    const query = 'SELECT * FROM paciente WHERE email = ? AND senha = ?';
-    const result = await this.databaseService.executeSql(query, [email, senha]);
-
-    if (result.rows.length > 0) {
-      const row = result.rows.item(0);
-      const paciente = new Paciente(
-        row.id,
-        row.email,
-        row.senha,
-        row.nome,
-        row.cpf,
-        row.telefone,
-        row.dataNascimento
-      );
-      return paciente;
+    if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
+      const query = 'SELECT * FROM paciente WHERE email = ? AND senha = ?';
+      const result = await this.databaseService.executeSql(query, [email, senha]);
+      if (result.rows.length > 0) {
+        const row = result.rows.item(0);
+        return this.mapRowToPaciente(row);
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      const pacientes = await this.getAllPacientes();
+      return pacientes.find(p => p.email === email && p.senha === senha) || null;
     }
   }
 
+  // Buscar paciente por email no SQLite ou IndexedDB
   public async getPacienteByEmail(email: string): Promise<Paciente | null> {
-    const query = 'SELECT * FROM paciente WHERE email = ?';
-    const result = await this.databaseService.executeSql(query, [email]);
-
-    if (result.rows.length > 0) {
-      const row = result.rows.item(0);
-      const paciente = new Paciente(
-        row.id,
-        row.email,
-        row.senha,
-        row.nome,
-        row.cpf,
-        row.telefone,
-        row.dataNascimento
-      );
-      return paciente;
+    if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
+      const query = 'SELECT * FROM paciente WHERE email = ?';
+      const result = await this.databaseService.executeSql(query, [email]);
+      if (result.rows.length > 0) {
+        const row = result.rows.item(0);
+        return this.mapRowToPaciente(row);
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      const pacientes = await this.getAllPacientes();
+      return pacientes.find(p => p.email === email) || null;
     }
   }
 
+  // Buscar paciente por CPF no SQLite ou IndexedDB
   public async getPacienteByCPF(cpf: string): Promise<Paciente | null> {
-    const query = 'SELECT * FROM paciente WHERE cpf = ?';
-    const result = await this.databaseService.executeSql(query, [cpf]);
-
-    if (result.rows.length > 0) {
-      const row = result.rows.item(0);
-      const paciente = new Paciente(
-        row.id,
-        row.email,
-        row.senha,
-        row.nome,
-        row.cpf,
-        row.telefone,
-        row.dataNascimento
-      );
-      return paciente;
+    if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
+      const query = 'SELECT * FROM paciente WHERE cpf = ?';
+      const result = await this.databaseService.executeSql(query, [cpf]);
+      if (result.rows.length > 0) {
+        const row = result.rows.item(0);
+        return this.mapRowToPaciente(row);
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      const pacientes = await this.getAllPacientes();
+      return pacientes.find(p => p.cpf === cpf) || null;
     }
+  }
+
+  // Método auxiliar para mapear resultados de SQL para um objeto Paciente
+  private mapRowToPaciente(row: any): Paciente {
+    return new Paciente(
+      row.id,
+      row.email,
+      row.senha,
+      row.nome,
+      row.cpf,
+      row.telefone,
+      row.dataNascimento
+    );
+  }
+
+  // Buscar todos os pacientes no IndexedDB
+  private async getAllPacientes(): Promise<Paciente[]> {
+    const pacientes = await this.databaseService.executeSql('SELECT');
+    return pacientes.map((pacienteData: any) => new Paciente(
+      pacienteData.id,
+      pacienteData.email,
+      pacienteData.senha,
+      pacienteData.nome,
+      pacienteData.cpf,
+      pacienteData.telefone,
+      pacienteData.dataNascimento
+    ));
   }
 
 }

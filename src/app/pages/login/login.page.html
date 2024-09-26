@@ -2,7 +2,7 @@
 <ion-content>
     <ion-card class="card">
       <ion-card-header>
-        <ion-img src="assets/logo-bellavisage.png" alt="logo-bellavisage"></ion-img>
+        <img src="assets/logo-bellavisage.png" srcset="assets/logo-grande-bellavisage2.png 1200w" alt="logo-bellavisage">
         <ion-title class="titulo">Bem vindo!</ion-title>
         <ion-title class="titulo">Faça o login em sua conta</ion-title>
       </ion-card-header>
@@ -20,11 +20,11 @@
             <ion-item>
               <ion-input formControlName="senha" label="Senha :" type="password"></ion-input>
             </ion-item>
-          </ion-list>
 
-          <ion-text color="danger" *ngIf="campoEstaInvalido('senha')">
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('senha')?.errors">Senha é obrigatória.</p>
-          </ion-text>
+            <ion-text color="danger" *ngIf="campoEstaInvalido('senha')">
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('senha')?.errors">Senha é obrigatória.</p>
+            </ion-text>
+          </ion-list>
 
           <div class="redirecionamentos">
             <ion-button type="submit" class="botao">Entrar</ion-button>

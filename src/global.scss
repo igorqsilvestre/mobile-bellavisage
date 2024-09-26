@@ -37,10 +37,6 @@
 @import "@ionic/angular/css/palettes/dark.system.css";
 
 
-*{
-  font-size: 16px;
-}
-
 ion-title {
   color:  #6B6E71;
   font-weight: bold;
@@ -61,7 +57,10 @@ ion-button {
   font-family: 'Public Sans';
   font-weight: bold;
   text-transform: none;
-  width: 50%;
+  --padding-start: 1em;
+  --padding-end: 1em;
+  --padding-top: 0.4em;
+  --padding-bottom: 0.4em;
 }
 
 ion-card-title, ion-card-subtitle{
@@ -72,11 +71,6 @@ ion-card-title, ion-card-subtitle{
 
 p{
   font-family: 'Public Sans';
-}
-
-ion-button::part(native){
-  padding: 0 2em;
-
 }
 
 ion-searchbar.custom {
@@ -109,16 +103,34 @@ ion-tab-bar{
   --background: #810339;
 }
 
-ion-alert h2{
-  text-align: center;
-}
-
-ion-alert.custom-alert {
+.custom-alert {
+  --border-radius: 10px; /* Aumentar a borda, se desejado */
   --backdrop-opacity: 0.7;
-}
 
-.custom-alert .alert-button-group {
-  justify-content: center;
+  /* Aumentando o tamanho do texto */
+  .alert-message {
+    font-size: 16px; /* Tamanho da fonte */
+    line-height: 1; /* Espaçamento entre linhas */
+    font-family: 'Public Sans';
+    text-align: center;
+  }
+
+  .alert-title {
+    font-size: 22px; /* Tamanho da fonte do cabeçalho */
+    font-weight: bold; /* Negrito no cabeçalho */
+    font-family: 'Public Sans';
+    text-align: center;
+  }
+
+  .alert-button{
+    font-size: 20px;
+  }
+
+  .alert-button-group{
+    justify-content: center;
+
+  }
+
 }
 
 button.alert-button.alert-button-confirm {
@@ -127,4 +139,47 @@ button.alert-button.alert-button-confirm {
   border-radius: 4px;
 }
 
+@media(min-width:1200px) {
 
+  .custom-alert {
+    --min-width: 300px; /* Largura mínima do alerta */
+    --max-width: 600px; /* Largura máxima do alerta */
+    --border-radius: 10px; /* Aumentar a borda, se desejado */
+    padding: 20px; /* Aumentar o espaçamento interno */
+    --backdrop-opacity: 0.7;
+
+    /* Para aumentar a altura do alerta, se necessário */
+    .alert-wrapper {
+      min-height: 200px; /* Altura mínima */
+    }
+
+    /* Aumentando o tamanho do texto */
+    .alert-message {
+      font-size: 28px; /* Tamanho da fonte */
+      line-height: 2.5; /* Espaçamento entre linhas */
+      font-family: 'Public Sans';
+      text-align: center;
+    }
+
+    .alert-title {
+      font-size: 32px; /* Tamanho da fonte do cabeçalho */
+      font-weight: bold; /* Negrito no cabeçalho */
+      font-family: 'Public Sans';
+      text-align: center;
+    }
+
+    .alert-button{
+      font-size: 28px;
+    }
+
+    .alert-button-group{
+      justify-content: center;
+
+    }
+
+  }
+
+  ion-input{
+    margin-bottom: 0.5em;
+  }
+}
