@@ -1,58 +1,63 @@
 <ion-content>
-  <ion-card class="card">
-    <ion-card-header>
-      <img src="assets/logo-bellavisage.png" srcset="assets/logo-grande-bellavisage2.png 1200w" alt="logo-bellavisage">
-      <ion-title class="titulo">Insira dados pessoais</ion-title>
-    </ion-card-header>
-    <ion-card-content>
-      <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
-        <ion-list>
-          <ion-item>
-            <ion-input formControlName="nome" label="Nome :" type="text" ></ion-input>
-          </ion-item>
+  <div class="container">
 
-          <ion-text color="danger" *ngIf="campoEstaInvalido('nome')">
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('nome')?.errors?.['minlength'] ||
-              pacienteForm.get('nome')?.errors?.['required']">Nome tem que ter no minimo 3 caracteres.</p>
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('nome')?.errors?.['maxlength']">Nome tem que ter no máximo 50 caracteres.</p>
-          </ion-text>
+    <img srcset="assets/fundo-esq-bellavisage.png 1200w" class="fundo-bellavisage">
+    <ion-card class="card">
+      <ion-card-header>
+        <img src="assets/logo-bellavisage.png" srcset="assets/logo-grande-bellavisage2.png 1200w" alt="logo-bellavisage">
+        <ion-title class="titulo">Insira dados pessoais</ion-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
+          <ion-list>
+            <ion-item>
+              <ion-input formControlName="nome" label="Nome :" type="text" ></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-input formControlName="cpf" label="Cpf :" type="text" appCpfMask></ion-input>
-          </ion-item>
+            <ion-text color="danger" *ngIf="campoEstaInvalido('nome')">
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('nome')?.errors?.['minlength'] ||
+                pacienteForm.get('nome')?.errors?.['required']">Nome tem que ter no minimo 3 caracteres.</p>
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('nome')?.errors?.['maxlength']">Nome tem que ter no máximo 50 caracteres.</p>
+            </ion-text>
 
-          <ion-text color="danger" *ngIf="campoEstaInvalido('cpf')">
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('cpf')?.errors?.['invalidCpf']">Cpf é inválido.</p>
-          </ion-text>
+            <ion-item>
+              <ion-input formControlName="cpf" label="Cpf :" type="text" appCpfMask></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-input formControlName="telefone" label="Telefone :" appTelefoneMask></ion-input>
-          </ion-item>
+            <ion-text color="danger" *ngIf="campoEstaInvalido('cpf')">
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('cpf')?.errors?.['invalidCpf']">Cpf é inválido.</p>
+            </ion-text>
 
-          <ion-text color="danger" *ngIf="campoEstaInvalido('telefone')">
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('telefone')?.errors?.['required']">Telefone é obrigatório.</p>
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('telefone')?.errors?.['minlength'] ||
-              pacienteForm.get('telefone')?.errors?.['maxlength'] ">Telefone tem que ter 15 caracteres.</p>
-          </ion-text>
+            <ion-item>
+              <ion-input formControlName="telefone" label="Telefone :" appTelefoneMask></ion-input>
+            </ion-item>
 
-          <ion-item>
-            <ion-input formControlName="dataNascimento" label="Data de nascimento :" appDataNascimentoMask></ion-input>
-          </ion-item>
+            <ion-text color="danger" *ngIf="campoEstaInvalido('telefone')">
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('telefone')?.errors?.['required']">Telefone é obrigatório.</p>
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('telefone')?.errors?.['minlength'] ||
+                pacienteForm.get('telefone')?.errors?.['maxlength'] ">Telefone tem que ter 15 caracteres.</p>
+            </ion-text>
 
-          <ion-text color="danger" *ngIf="campoEstaInvalido('dataNascimento')">
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['required']">Data de nascimento é obrigatória.</p>
-            <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['minlength'] ||
-              pacienteForm.get('dataNascimento')?.errors?.['maxlength'] ">Data tem que ter 10 caracteres</p>
-          </ion-text>
-        </ion-list>
+            <ion-item>
+              <ion-input formControlName="dataNascimento" label="Data de nascimento :" appDataNascimentoMask></ion-input>
+            </ion-item>
 
-        <div class="redirecionamentos">
-          <ion-button  type="submit" class="botao" href="#">Cadastrar</ion-button>
-          <ion-button  color="medium"  (click)="voltarPaginaAnterior()">Voltar</ion-button>
-        </div>
-      </form>
+            <ion-text color="danger" *ngIf="campoEstaInvalido('dataNascimento')">
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['required']">Data de nascimento é obrigatória.</p>
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['minlength'] ||
+                pacienteForm.get('dataNascimento')?.errors?.['maxlength'] ">Data tem que ter 10 caracteres</p>
+            </ion-text>
+          </ion-list>
 
-    </ion-card-content>
-  </ion-card>
+          <div class="redirecionamentos">
+            <ion-button  type="submit" class="botao" href="#">Cadastrar</ion-button>
+            <ion-button  color="medium"  (click)="voltarPaginaAnterior()">Voltar</ion-button>
+          </div>
+        </form>
+
+      </ion-card-content>
+    </ion-card>
+    <img srcset="assets/fundo-dir-bellavisage.png 1200w" class="fundo-bellavisage">
+  </div>
 </ion-content>
 

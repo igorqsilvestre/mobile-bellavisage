@@ -1,4 +1,6 @@
-
+.fundo-bellavisage{
+  display: none;
+}
 
 .card{
   padding-top: 30%;
@@ -49,8 +51,21 @@ ion-button{
     font-size: 28px;
   }
 
+  .container{
+    display: flex;
+  }
+
+  .fundo-bellavisage{
+    display: block;
+  }
+
   .card{
     padding-top: 5%;
+    width: 80%;
+  }
+
+  ion-button{
+    width: 50%;
   }
 
   ion-title {
