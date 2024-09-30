@@ -5,16 +5,15 @@
       <button (click)="voltarPaginaAnterior()">
         <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
       </button>
-      <h1>Pilling de Diamante</h1>
+      <h1>{{ tratamentoDaDo.nome }}</h1>
       <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
 
-    <img src="assets/Peeling-Quimico-Maior.jpg" alt="foto do peeling quimico">
+    <img [src]="tratamentoDaDo.imagemMaior" [alt]="tratamentoDaDo.nome">
 
     <h2>Sobre:</h2>
     <p>
-      <ion-text>O peeling de diamante é um procedimento estético que realiza uma esfoliação profunda da pele, removendo células mortas e impurezas.
-        É feito com uma caneta que possui uma ponteira com lixa diamantada e um sistema de vácuo que aspira a pele</ion-text>
+      <ion-text>{{ tratamentoDaDo.descricao }}</ion-text>
     </p>
 
     <section>
@@ -25,7 +24,7 @@
 
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime id="datetime" presentation="date"></ion-datetime>
+          <ion-datetime id="datetime" presentation="date" [(ngModel)]="dataSelecionada" (ionChange)="onDateChange($event)"></ion-datetime>
         </ng-template>
       </ion-modal>
 
@@ -42,32 +41,6 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Dra Andreia</ion-card-title>
-          <span>Dermatologista</span>
-        </ion-card-header>
-
-        <ion-card-content>
-          <ion-button (click)="presentAlert()" fill="outline">10:24</ion-button>
-          <ion-button (click)="presentAlert()" fill="outline">12:30</ion-button>
-          <ion-button (click)="presentAlert()" fill="outline">13:15</ion-button>
-          <ion-button (click)="presentAlert()" fill="outline">16:00</ion-button>
-          <ion-button (click)="presentAlert()" fill="outline">16:30</ion-button>
-          <ion-button (click)="presentAlert()" fill="outline">18:00</ion-button>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Dr Romulo</ion-card-title>
-          <span>Dermatologista</span>
-        </ion-card-header>
-
-        <ion-card-content>
-          <ion-button (click)="presentAlert()" fill="outline">13:00</ion-button>
-        </ion-card-content>
-      </ion-card>
       <ion-alert
         class="custom-alert"
         header="Confirma o agendamento?"
