@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
+import { v4 as uuidv4 } from 'uuid';
 import { Tratamento } from 'src/app/models/tratamento';
 import { DataUtilsService } from 'src/app/shared/services/dataUtils.service';
+import { Agendamento } from 'src/app/models/agendamento';
+import { AgendamentoService } from 'src/app/services/agendamento.service';
 
 @Component({
   selector: 'app-agendamento-form2',
@@ -11,8 +14,10 @@ import { DataUtilsService } from 'src/app/shared/services/dataUtils.service';
 })
 export class AgendamentoForm2Page implements OnInit {
 
+  isAlertOpen = false;
   tratamentoDaDo!: Tratamento;
-  dataSelecionada!: Date;
+  data!: Date;
+  dataHorarioEscolhido!: Date;
 
   public alertButtons = [
     {
@@ -30,9 +35,10 @@ export class AgendamentoForm2Page implements OnInit {
 
   constructor(
     private navCtrl: NavController,
-    private alertController: AlertController,
     private router: Router,
-    private dataUtils: DataUtilsService
+    private dataUtils: DataUtilsService,
+    private agendamentoService: AgendamentoService,
+    private alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -42,11 +48,8 @@ export class AgendamentoForm2Page implements OnInit {
       throw new Error('Erro ao tentar recuperar os dados do agendamento');
     }
 
-    // Aqui você pode pegar a data inicial que o ion-datetime seleciona automaticamente
-    this.dataSelecionada = new Date();
-    console.log('Data inicial capturada:', this.dataSelecionada);
-
-    //this.geraHorariosParaOEspecialistaPelaData(this.dataSelecionada, this.tratamentoDaDo);
+    this.data = new Date();
+    this.geraHorariosParaOEspecialistaPelaData(this.data, this.tratamentoDaDo);
 
   }
 
@@ -68,26 +71,54 @@ export class AgendamentoForm2Page implements OnInit {
 
   onDateChange(event: any) {
     const selectedDate = event.detail.value;
-    console.log('Data selecionada:', selectedDate);
-    // Aqui você pode executar o código que deseja quando uma data for selecionada
+    this.data = new Date(selectedDate);
+    this.geraHorariosParaOEspecialistaPelaData(this.data, this.tratamentoDaDo)
   }
 
-  async presentAlert() {
-    const alert = await this.alertController.create({
-      header: 'Confirma o agendamento?',
-      buttons: this.alertButtons,
-      cssClass: 'custom-alert'
-    });
-
-    await alert.present();
+  presentAlertHorario(horario: Date) {
+    this.dataHorarioEscolhido = horario;
+    this.isAlertOpen = true;
   }
 
   voltarPaginaAnterior(){
     this.navCtrl.back();
   }
 
-  setResult(ev:any) {
-    console.log(`Dismissed with role: ${ev.detail.role}`);
+  async setResult(ev:any) {
+    if(ev.detail.role === 'confirm'){
+      const agendamentoId = uuidv4();
+
+      const agendamento = new Agendamento(
+       agendamentoId,
+       this.tratamentoDaDo?.nome,
+       this.tratamentoDaDo?.imagemPequena,
+       this.tratamentoDaDo?.avaliacao,
+       this.dataHorarioEscolhido,
+       this.tratamentoDaDo?.preco
+      );
+
+      try {
+        this.agendamentoService.addAgendamento(agendamento);
+        await this.presentAlert('sucesso', 'Agendamento realizado com sucesso!');
+        this.router.navigate(['/tabs/tab1']);
+
+      } catch (error) {
+        await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
+      }
+    }
+    this.isAlertOpen = false;
+  }
+
+  async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {
+    const alert = await this.alertController.create({
+      header: tipo === 'sucesso' ? 'Sucesso' : 'Erro',
+      message: mensagem,
+      buttons: ['OK'],
+      cssClass: 'custom-alert '
+    });
+
+    await alert.present();
+    return await alert.onDidDismiss();
   }
 
 }

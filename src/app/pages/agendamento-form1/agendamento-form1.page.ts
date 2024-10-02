@@ -25,19 +25,19 @@ export class AgendamentoForm1Page implements OnInit {
           id:'1',
           nome:'Dr Alessandro',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         },
         {
           id:'2',
           nome:'Dra Andreia',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         },
         {
           id:'3',
           nome:'Dr Romulo',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         }
       ]
     },
@@ -54,19 +54,19 @@ export class AgendamentoForm1Page implements OnInit {
           id:'1',
           nome:'Dr Alessandro',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         },
         {
           id:'2',
           nome:'Dra Andreia',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         },
         {
           id:'3',
           nome:'Dr Romulo',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         }
       ]
     },
@@ -83,19 +83,19 @@ export class AgendamentoForm1Page implements OnInit {
           id:'1',
           nome:'Dr Alessandro',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         },
         {
           id:'2',
           nome:'Dra Andreia',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         },
         {
           id:'3',
           nome:'Dr Romulo',
           especialidade: 'Dermatologista',
-          horarios: [new Date]
+          horarios: null
         }
       ]
     }

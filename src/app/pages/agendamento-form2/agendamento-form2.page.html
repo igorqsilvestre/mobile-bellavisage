@@ -24,29 +24,31 @@
 
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime id="datetime" presentation="date" [(ngModel)]="dataSelecionada" (ionChange)="onDateChange($event)"></ion-datetime>
+          <ion-datetime id="datetime" presentation="date" (ionChange)="onDateChange($event)"></ion-datetime>
         </ng-template>
       </ion-modal>
 
-      <ion-card>
+
+      <ion-card *ngFor="let especialista of tratamentoDaDo.especialistas" >
         <ion-card-header>
-          <ion-card-title>Dr Alessandro</ion-card-title>
-          <span>Dermatologista</span>
+          <ion-card-title>{{ especialista.nome }}</ion-card-title>
+          <span>{{ especialista.especialidade }}</span>
         </ion-card-header>
 
         <ion-card-content>
-          <ion-button (click)="presentAlert()" fill="outline">15:24</ion-button>
-          <ion-button (click)="presentAlert()" fill="outline">12:00</ion-button>
-          <ion-button (click)="presentAlert()" fill="outline">17:00</ion-button>
+          <ion-button (click)="presentAlertHorario(horario)" fill="outline" *ngFor="let horario of especialista.horarios" >
+            {{ horario | date: 'HH:mm' }}</ion-button>
         </ion-card-content>
       </ion-card>
 
       <ion-alert
+        [isOpen]="isAlertOpen"
         class="custom-alert"
         header="Confirma o agendamento?"
         [buttons]="alertButtons"
         (didDismiss)="setResult($event)">
       </ion-alert>
+
     </section>
   </main>
 </ion-content>

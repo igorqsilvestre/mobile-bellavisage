@@ -36,6 +36,19 @@
     <section>
       <h2>Próximos agendamentos</h2>
 
+      <ion-card class="card-agendamentos" *ngFor="let agendamento of agendamentos" >
+        <img [src]="agendamento.imagemTratamento" [alt]="agendamento.nomeTratamento"/>
+        <ion-card-content>
+          <ion-card-subtitle >{{ agendamento.nomeTratamento }}</ion-card-subtitle>
+          <p>Senior Surgeon</p>
+          <p>📅 {{ agendamento.dataHorario | date: 'dd/MM/yyyy' }}</p>
+          <p>⏰ {{ agendamento.dataHorario | date: 'HH:mm'  }}</p>
+          <p>Preço: {{ agendamento.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
+          <ion-icon name="star" color="warning"></ion-icon> {{ agendamento.avaliacaoTratamento }}
+        </ion-card-content>
+      </ion-card>
+
+      <!--
       <ion-card class="card-agendamentos">
         <img src="assets/Peeling-Quimico.jpg" alt="Pilling de Diamante"/>
         <ion-card-content>
@@ -47,31 +60,7 @@
           <ion-icon name="star" color="warning"></ion-icon> 4.9
         </ion-card-content>
       </ion-card>
-
-      <ion-card class="card-agendamentos">
-        <img src="assets/Laser-Venus.jpg" alt="Laser de Vênus"/>
-        <ion-card-content>
-          <ion-card-subtitle>Laser de Vênus</ion-card-subtitle>
-          <p>Senior Surgeon</p>
-          <p>📅 19/01/2024</p>
-          <p>⏰ 15:00</p>
-          <p>Preço: R$ 1000,00</p>
-          <ion-icon name="star" color="warning"></ion-icon> 5.0
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card class="card-agendamentos">
-        <img src="assets/Preenchimento-labial.jpeg" alt="Preenchimento labial"/>
-        <ion-card-content>
-          <ion-card-subtitle>Preenchimento labial</ion-card-subtitle>
-          <p>Senior Surgeon</p>
-          <p>📅 19/01/2024</p>
-          <p>⏰ 17:05</p>
-          <p>Preço: R$ 340,00</p>
-          <ion-icon name="star" color="warning"></ion-icon> 3.1
-        </ion-card-content>
-      </ion-card>
-
+      -->
 
     </section>
   </main>
