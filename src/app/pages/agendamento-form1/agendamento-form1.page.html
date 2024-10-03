@@ -10,45 +10,15 @@
     </div>
 
     <section>
-      <ion-card class="card-agendamentos">
-        <img src="assets/Peeling-Quimico.jpg" alt="Pilling de Diamante"/>
+      <ion-card class="card-agendamentos" *ngFor="let tratamento of tratamentos">
+        <img [src]="tratamento.imagemPequena" [alt]="tratamento.nome"/>
         <ion-card-content>
-          <ion-card-subtitle >Pilling de Diamante</ion-card-subtitle>
+          <ion-card-subtitle >{{ tratamento.nome }}</ion-card-subtitle>
           <p>Senior Surgeon</p>
-          <p>Preço: R$ 200,00</p>
+          <p>Preço: {{ tratamento.preco | currency:'BRL':'symbol':'1.2-2'}}</p>
           <div class="container-icones">
-            <span><ion-icon name="star" color="warning"></ion-icon> 4.9</span>
-            <button (click)="irParaProximaPaginaCadastro()">
-              <ion-icon slot="icon-only" name="arrow-forward-outline" color="dark"></ion-icon>
-            </button>
-          </div>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card class="card-agendamentos">
-        <img src="assets/Laser-Venus.jpg" alt="Laser de Vênus"/>
-        <ion-card-content>
-          <ion-card-subtitle>Laser de Vênus</ion-card-subtitle>
-          <p>Senior Surgeon</p>
-          <p>Preço: R$ 1000,00</p>
-          <div class="container-icones">
-            <span><ion-icon name="star" color="warning"></ion-icon> 5.0</span>
-            <button (click)="irParaProximaPaginaCadastro()">
-              <ion-icon slot="icon-only" name="arrow-forward-outline" color="dark"></ion-icon>
-            </button>
-          </div>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card class="card-agendamentos">
-        <img src="assets/Preenchimento-labial.jpeg" alt="Preenchimento labial"/>
-        <ion-card-content>
-          <ion-card-subtitle>Preenchimento labial</ion-card-subtitle>
-          <p>Senior Surgeon</p>
-          <p>Preço: R$ 340,00</p>
-          <div class="container-icones">
-            <span><ion-icon name="star" color="warning"></ion-icon> 3.1</span>
-            <button (click)="irParaProximaPaginaCadastro()">
+            <span><ion-icon name="star" color="warning"></ion-icon> {{ tratamento.avaliacao }}</span>
+            <button (click)="irParaProximaPaginaCadastro(tratamento)">
               <ion-icon slot="icon-only" name="arrow-forward-outline" color="dark"></ion-icon>
             </button>
           </div>

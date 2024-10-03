@@ -9,6 +9,12 @@ export class PacienteService {
 
   constructor(private databaseService: DatabaseService) {}
 
+  public async dropTable(): Promise<void> {
+    const query = `DROP TABLE IF EXISTS paciente`;
+    await this.databaseService.executeSql(query);
+    console.log('Tabela paciente excluída');
+  }
+
   // Criação de tabela no SQLite ou IndexedDB
   public async createTable(): Promise<void> {
     const query = `

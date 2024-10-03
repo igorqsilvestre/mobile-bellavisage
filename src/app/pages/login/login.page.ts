@@ -37,7 +37,7 @@ export class LoginPage implements OnInit{
             const data = await this.pacienteService.getPacienteByEmailAndSenha(paciente.email, paciente.senha);
             if (data) {
                 await this.presentAlert('sucesso', 'Login realizado com sucesso!');
-                this.route.navigate(['/tabs']);
+                this.route.navigate(['/tabs/tab1'], { state:{data}} );
             } else {
                 await this.presentAlert('erro', 'Usuário não encontrado.');
             }
