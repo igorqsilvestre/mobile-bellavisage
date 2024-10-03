@@ -25,7 +25,6 @@ export class Tab1Page implements OnInit{
     this.pacienteDaDo = this.recuperarInformacoesPacienteDaPaginaLogin();
     this.pacienteNome = this.pacienteDaDo?.nome;
     this.agendamentos = await this.agendamentoService.getAllAgendamentos();
-    console.log(this.agendamentos);
   }
 
   recuperarInformacoesPacienteDaPaginaLogin() {
