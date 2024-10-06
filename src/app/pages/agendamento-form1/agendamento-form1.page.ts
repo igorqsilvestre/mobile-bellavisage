@@ -8,11 +8,11 @@ import { Tratamento } from 'src/app/models/tratamento';
   templateUrl: './agendamento-form1.page.html',
   styleUrls: ['./agendamento-form1.page.scss'],
 })
-export class AgendamentoForm1Page implements OnInit {
+export class AgendamentoForm1Page {
 
   tratamentos:Tratamento[] = [
     {
-      id:'1',
+      id: 1,
       nome: 'Pilling de Diamante',
       preco: 200,
       avaliacao: 4.9,
@@ -42,7 +42,7 @@ export class AgendamentoForm1Page implements OnInit {
       ]
     },
     {
-      id:'2',
+      id: 2,
       nome: 'Laser de Vênus',
       preco: 1000,
       avaliacao: 5.0,
@@ -66,7 +66,7 @@ export class AgendamentoForm1Page implements OnInit {
       ]
     },
     {
-      id:'3',
+      id: 3,
       nome: 'Drenagem Linfática',
       preco: 440,
       avaliacao: 3.1,
@@ -102,7 +102,7 @@ export class AgendamentoForm1Page implements OnInit {
       ]
     },
     {
-      id:'4',
+      id: 4,
       nome: 'Hiperidrose - Suor Excessivo',
       preco: 620,
       avaliacao: 4.4,
@@ -133,9 +133,6 @@ export class AgendamentoForm1Page implements OnInit {
     private navCtrl: NavController,
     private router: Router
   ) { }
-
-  ngOnInit() {
-  }
 
   voltarPaginaAnterior(){
     this.navCtrl.back();

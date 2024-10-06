@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { v4 as uuidv4 } from 'uuid';
 import { Paciente } from 'src/app/models/paciente';
 import { CpfUtilValidator } from 'src/app/shared/validators/CpfUtilValidator';
 import { PacienteService } from 'src/app/services/paciente.service';
@@ -54,7 +53,7 @@ export class LoginUsuarioForm2Page implements OnInit {
         throw new Error('CPF já cadastrado.');
       }
 
-      const pacienteId = uuidv4();
+      const pacienteId = -1;
       const paciente = new Paciente(
         pacienteId,
         pacienteDado.email,
@@ -66,7 +65,7 @@ export class LoginUsuarioForm2Page implements OnInit {
       );
 
       try {
-        this.pacienteService.addPaciente(paciente);
+        await this.pacienteService.addPaciente(paciente);
         await this.presentAlert('sucesso', 'Cadastro realizado com sucesso!');
         this.router.navigate(['/login']);
 

@@ -43,7 +43,7 @@
           <p>Senior Surgeon</p>
           <p>📅 {{ agendamento.dataHorario | date: 'dd/MM/yyyy' }}</p>
           <p>⏰ {{ agendamento.dataHorario | date: 'HH:mm'  }}</p>
-          <p>Preço: {{ agendamento.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
+          <p>Preço: {{ agendamento.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
           <ion-icon name="star" color="warning"></ion-icon> {{ agendamento.avaliacaoTratamento }}
         </ion-card-content>
       </ion-card>

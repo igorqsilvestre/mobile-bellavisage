@@ -22,7 +22,11 @@ export class DatabaseService {
       return this.initSQLite();
     } else {
       // Web (IndexedDB)
-      return this.initIndexedDB();
+      return this.initIndexedDB([
+        //o correto seria criar isto no createTable, mas não encontramos uma maneira de fazer isso
+        'PACIENTE',
+        'AGENDAMENTO'
+      ]);
     }
   }
 
@@ -30,7 +34,7 @@ export class DatabaseService {
   private async initSQLite(): Promise<any> {
     try {
       this.dbInstance = await this.sqlite.create({
-        name: 'mydb.db',
+        name: 'mydb2.db',
         location: 'default',
       });
       console.log('Banco de dados SQLite criado');
@@ -42,14 +46,18 @@ export class DatabaseService {
   }
 
   // Inicialização do IndexedDB (para navegadores)
-  private async initIndexedDB(): Promise<any> {
+  private async initIndexedDB(
+    tables: string[]
+  ): Promise<any> {
     try {
-      this.dbInstance = await openDB('mydb', 1, {
+      this.dbInstance = await openDB('mydb2', 1, {
         upgrade(db) {
-          // Criar uma store no IndexedDB (equivalente a uma tabela no SQLite)
-          if (!db.objectStoreNames.contains('items')) {
-            db.createObjectStore('items', { keyPath: 'id', autoIncrement: true });
-          }
+          for(const table of tables) {
+            // Criar uma store no IndexedDB (equivalente a uma tabela no SQLite)
+            if (!db.objectStoreNames.contains(table)) {
+              db.createObjectStore(table, { keyPath: 'id', autoIncrement: true });
+            }
+        }
         }
       });
       console.log('Banco de dados IndexedDB criado');
@@ -71,7 +79,7 @@ export class DatabaseService {
     if (this.isSQLite(this.dbInstance)) {
       return this.executeSQLite(query, params);
     } else {
-      return this.executeIndexedDB(query, params);
+      return this.executeIndexedDB(query.split(' ')[1], query.split(' ')[0], params);
     }
   }
 
@@ -91,17 +99,27 @@ export class DatabaseService {
   }
 
   // Método para operações no IndexedDB
-  private async executeIndexedDB(query: string, params: any[] = []): Promise<any> {
+  private async executeIndexedDB(table: string, operation: string, params: any[] = []): Promise<any> {
     try {
-      const tx = (this.dbInstance as IDBPDatabase<any>).transaction('items', 'readwrite');
-      const store = tx.objectStore('items');
+      const tx = (this.dbInstance as IDBPDatabase<any>).transaction(table, 'readwrite');
+      const store = tx.objectStore(table);
 
       // Exemplo de operação de IndexedDB (inserir ou selecionar dados)
-      if (query === 'INSERT') {
+      if (operation === 'INSERT') {
         return await store.add(params[0]);  // Adicionando um item
-      } else if (query === 'SELECT') {
+      } else if (operation === 'SELECT') {
         return await store.getAll();  // Buscando todos os itens
+      } else if (operation === 'DELETE') {
+
+      if(params?.length) {
+        return await store.delete(params[0]);  // Deletando um item
+      } else {
+        const data = await store.getAll();
+        for (const item of data) {
+          await store.delete(item.id);  // Deletando todos os itens
+        }
       }
+    }
 
       await tx.done;
     } catch (error) {

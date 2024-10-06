@@ -1,5 +1,5 @@
 export class Paciente {
-  id: string;
+  id: number;
   email: string;
   senha: string;
   nome: string;
@@ -7,7 +7,7 @@ export class Paciente {
   telefone: string;
   dataNascimento: Date;
 
-  constructor(id: string, email: string, senha: string, nome: string, cpf: string, telefone: string, dataNascimento: Date){
+  constructor(id: number, email: string, senha: string, nome: string, cpf: string, telefone: string, dataNascimento: Date){
     this.id = id;
     this.email = email;
     this.senha = senha;

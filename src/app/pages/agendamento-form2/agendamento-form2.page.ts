@@ -1,7 +1,8 @@
+import { Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
-import { v4 as uuidv4 } from 'uuid';
+
 import { Tratamento } from 'src/app/models/tratamento';
 import { DataUtilsService } from 'src/app/shared/services/dataUtils.service';
 import { Agendamento } from 'src/app/models/agendamento';
@@ -86,7 +87,7 @@ export class AgendamentoForm2Page implements OnInit {
 
   async setResult(ev:any) {
     if(ev.detail.role === 'confirm'){
-      const agendamentoId = uuidv4();
+      const agendamentoId = -1;
 
       const agendamento = new Agendamento(
        agendamentoId,
@@ -94,7 +95,8 @@ export class AgendamentoForm2Page implements OnInit {
        this.tratamentoDaDo?.imagemPequena,
        this.tratamentoDaDo?.avaliacao,
        this.dataHorarioEscolhido,
-       this.tratamentoDaDo?.preco
+       this.tratamentoDaDo?.preco,
+       this.tratamentoDaDo.id
       );
 
       try {
