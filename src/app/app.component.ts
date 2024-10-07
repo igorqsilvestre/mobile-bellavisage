@@ -1,6 +1,6 @@
-import { AgendamentoRepository } from './services/agendamento.repository';
+import { AgendamentoRepository } from './repository/agendamento.repository';
 import { Component } from '@angular/core';
-import { PacienteRepository } from './services/paciente.repository';
+import { PacienteRepository } from './repository/paciente.repository';
 
 import { DatabaseService } from './services/database.service';
 

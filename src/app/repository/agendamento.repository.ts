@@ -1,8 +1,8 @@
 
-import { Agendamento } from './../models/agendamento';
-import { BvApiService } from './bv-api.service';
+import { Agendamento } from '../models/agendamento';
 import { Injectable } from '@angular/core';
-import { DatabaseService } from './database.service';
+import { DatabaseService } from '../services/database.service';
+import { BvApiService } from '../services/bv-api.service';
 
 @Injectable({
   providedIn: 'root'

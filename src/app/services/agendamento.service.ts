@@ -1,4 +1,4 @@
-import { AgendamentoRepository } from './agendamento.repository';
+import { AgendamentoRepository } from '../repository/agendamento.repository';
 
 import { Agendamento } from './../models/agendamento';
 import { BvApiService } from './bv-api.service';

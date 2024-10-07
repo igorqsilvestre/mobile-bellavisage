@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Paciente } from '../models/paciente';
 import { DatabaseService } from './database.service';
-import { PacienteRepository } from './paciente.repository';
+import { PacienteRepository } from '../repository/paciente.repository';
 import { BvApiService } from './bv-api.service';
 
 @Injectable({
