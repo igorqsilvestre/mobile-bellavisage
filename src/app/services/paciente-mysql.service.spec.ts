@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BvApiService } from './bv-api.service';
+import { PacienteMysqlService } from './paciente-mysql.service';
 
-describe('BvApiService', () => {
-  let service: BvApiService;
+describe('PacienteMysqService', () => {
+  let service: PacienteMysqlService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BvApiService);
+    service = TestBed.inject(PacienteMysqlService);
   });
 
   it('should be created', () => {

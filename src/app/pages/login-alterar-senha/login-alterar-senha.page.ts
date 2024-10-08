@@ -1,9 +1,9 @@
+import { PacienteRepository } from 'src/app/repository/paciente.repository';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Paciente } from 'src/app/models/paciente';
-import { PacienteService } from 'src/app/services/paciente.service';
 
 @Component({
   selector: 'app-login-alterar-senha',
@@ -19,7 +19,7 @@ export class LoginAlterarSenhaPage implements OnInit {
   constructor(
     private route: Router,
     private fb: FormBuilder,
-    private pacienteService: PacienteService,
+    private pacienteRepository: PacienteRepository,
     private alertController: AlertController
   ) { }
 
@@ -29,7 +29,7 @@ export class LoginAlterarSenhaPage implements OnInit {
       email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       senha: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
       confirmarSenha: ['', [Validators.required]]
-      });
+      }, { validators: this.verificaSenhasIguais.bind(this) });
   }
 
 
@@ -37,9 +37,9 @@ export class LoginAlterarSenhaPage implements OnInit {
     if (this.pacienteForm.valid) {
         const paciente = this.pacienteForm.value as Paciente;
         try {
-            const data = await this.pacienteService.getPacienteByEmail(paciente.email);
+            const data = await this.pacienteRepository.getPacienteByEmail(paciente.email);
             if (data) {
-                await this.pacienteService.updatePacienteSenha(data.id, paciente.senha)
+                await this.pacienteRepository.updatePacienteSenha(data, paciente.senha)
                 await this.presentAlert('sucesso', 'Senha alterada com sucesso!');
                 this.route.navigate(['/login']);
             } else {
@@ -62,7 +62,6 @@ verificaSenhasIguais(formulario: FormGroup){
 
   return false;
 }
-
 
   campoEstaInvalido(campo: string): boolean{
     const control = this.pacienteForm.get(campo);

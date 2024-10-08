@@ -1,5 +1,5 @@
 export class Paciente {
-  id: number;
+  id?: number;
   email: string;
   senha: string;
   nome: string;
@@ -7,13 +7,14 @@ export class Paciente {
   telefone: string;
   dataNascimento: Date;
 
-  constructor(id: number, email: string, senha: string, nome: string, cpf: string, telefone: string, dataNascimento: Date){
-    this.id = id;
+  constructor(email: string, senha: string, nome: string, cpf: string, telefone: string, dataNascimento: Date,id?: number){
     this.email = email;
     this.senha = senha;
     this.nome = nome;
     this.cpf = cpf;
     this.telefone = telefone;
     this.dataNascimento = dataNascimento;
+    this.id = id;
   }
+
 }

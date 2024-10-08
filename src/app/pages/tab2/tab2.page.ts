@@ -1,7 +1,7 @@
+import { AgendamentoRepository } from './../../repository/agendamento.repository';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
 import { Agendamento } from 'src/app/models/agendamento';
-import { AgendamentoService } from 'src/app/services/agendamento.service';
 
 @Component({
   selector: 'app-tab2',
@@ -28,7 +28,7 @@ export class Tab2Page implements OnInit{
 
   constructor(
     private navCtrl: NavController,
-    private agendamentoService: AgendamentoService,
+    private AgendamentoRepository: AgendamentoRepository,
     private alertController: AlertController
   ) {}
 
@@ -47,10 +47,11 @@ export class Tab2Page implements OnInit{
   }
 
   async setResult(ev:any) {
+    /*
     if(ev.detail.role === 'confirm'){
       if(this.agendamento){
         try{
-          this.agendamentoService.deleteAgendamento(this.agendamento.id);
+          this.AgendamentoRepository.deleteAgendamento(this.agendamento.id);
           await this.presentAlert('sucesso', 'Agendamento cancelado com sucesso!');
           this.atualizarLista();
         }catch(error){
@@ -58,11 +59,11 @@ export class Tab2Page implements OnInit{
         }
 
       }
-    }
+    }*/
   }
 
   private async atualizarLista(){
-    this.agendamentos = await this.agendamentoService.getAllAgendamentos();
+    //this.agendamentos = await this.AgendamentoRepository.getAllAgendamentos();
   }
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {

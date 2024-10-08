@@ -1,9 +1,9 @@
+import { PacienteRepository } from './../../repository/paciente.repository';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Paciente } from 'src/app/models/paciente';
-import { PacienteService } from 'src/app/services/paciente.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginPage implements OnInit{
   constructor(
     private route: Router,
     private fb: FormBuilder,
-    private pacienteService: PacienteService,
+    private PacienteRepository: PacienteRepository,
     private alertController: AlertController
   ) { }
 
@@ -34,7 +34,7 @@ export class LoginPage implements OnInit{
     if (this.pacienteForm.valid) {
         const paciente = this.pacienteForm.value as Paciente;
         try {
-            const data = await this.pacienteService.getPacienteByEmailAndSenha(paciente.email, paciente.senha);
+            const data = await this.PacienteRepository.getPacienteByEmailAndSenha(paciente.email, paciente.senha);
             if (data) {
                 await this.presentAlert('sucesso', 'Login realizado com sucesso!');
                 this.route.navigate(['/tabs/tab1'], { state:{data}} );

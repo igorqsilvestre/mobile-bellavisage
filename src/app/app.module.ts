@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
+import { HttpClientModule } from '@angular/common/http';
 
 // Registre a localidade para o Brasil
 registerLocaleData(localePt);
@@ -16,8 +17,8 @@ registerLocaleData(localePt);
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },SQLite, { provide: LOCALE_ID, useValue: 'pt-BR' }],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy } ,SQLite, { provide: LOCALE_ID, useValue: 'pt-BR' }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

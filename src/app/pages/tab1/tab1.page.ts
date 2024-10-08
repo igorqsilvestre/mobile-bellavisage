@@ -1,8 +1,8 @@
+import { AgendamentoRepository } from './../../repository/agendamento.repository';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Agendamento } from 'src/app/models/agendamento';
 import { Paciente } from 'src/app/models/paciente';
-import { AgendamentoService } from 'src/app/services/agendamento.service';
 
 @Component({
   selector: 'app-tab1',
@@ -17,14 +17,14 @@ export class Tab1Page implements OnInit{
 
   constructor(
     private router: Router,
-    private agendamentoService: AgendamentoService
+    private AgendamentoRepository: AgendamentoRepository
   ) {}
 
 
   async ngOnInit(): Promise<void> {
     this.pacienteDaDo = this.recuperarInformacoesPacienteDaPaginaLogin();
     this.pacienteNome = this.pacienteDaDo?.nome;
-    this.agendamentos = await this.agendamentoService.getAllAgendamentos();
+    //this.agendamentos = await this.agendamentoService.getAllAgendamentos();
   }
 
   recuperarInformacoesPacienteDaPaginaLogin() {

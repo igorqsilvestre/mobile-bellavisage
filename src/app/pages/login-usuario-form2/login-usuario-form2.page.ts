@@ -1,10 +1,11 @@
+import { PacienteRepository } from 'src/app/repository/paciente.repository';
+import { SourceLocation } from './../../../../node_modules/@types/estree/index.d';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { Paciente } from 'src/app/models/paciente';
 import { CpfUtilValidator } from 'src/app/shared/validators/CpfUtilValidator';
-import { PacienteService } from 'src/app/services/paciente.service';
 
 @Component({
   selector: 'app-login-usuario-form2',
@@ -20,7 +21,7 @@ export class LoginUsuarioForm2Page implements OnInit {
     private fb: FormBuilder,
     private navCtrl: NavController,
     private router: Router,
-    private pacienteService: PacienteService,
+    private PacienteRepository: PacienteRepository,
     private alertController: AlertController
   ) { }
 
@@ -46,26 +47,25 @@ export class LoginUsuarioForm2Page implements OnInit {
     if(this.pacienteForm.valid){
       const pacienteDado = this.pacienteForm?.value as Paciente;
 
-      const data = await this.pacienteService.getPacienteByCPF(pacienteDado.cpf);
+      const data = await this.PacienteRepository.getPacienteByCPF(pacienteDado.cpf);
 
       if(data !== null){
         await this.presentAlert('erro', ' CPF já cadastrado.');
         throw new Error('CPF já cadastrado.');
       }
 
-      const pacienteId = -1;
+
       const paciente = new Paciente(
-        pacienteId,
         pacienteDado.email,
         pacienteDado.senha,
         pacienteDado.nome,
         pacienteDado.cpf,
         pacienteDado.telefone,
-        pacienteDado.dataNascimento
+        new Date(pacienteDado.dataNascimento)
       );
 
       try {
-        await this.pacienteService.addPaciente(paciente);
+        this.PacienteRepository.addPaciente(paciente);
         await this.presentAlert('sucesso', 'Cadastro realizado com sucesso!');
         this.router.navigate(['/login']);
 

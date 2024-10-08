@@ -1,8 +1,8 @@
-import { AgendamentoRepository } from './repository/agendamento.repository';
 import { Component } from '@angular/core';
-import { PacienteRepository } from './repository/paciente.repository';
 
-import { DatabaseService } from './services/database.service';
+import { DatabaseSqliteService } from './services/database-sqlite.service';
+import { PacienteSqliteService } from './services/paciente-sqlite.service';
+import { AgendamentoSqliteService } from './services/agendamento-sqlite.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +11,9 @@ import { DatabaseService } from './services/database.service';
 })
 export class AppComponent {
   constructor(
-    private databaseService: DatabaseService,
-    private pacienteRepository: PacienteRepository,
-    private agendamentoRepository: AgendamentoRepository
+    private databaseService: DatabaseSqliteService,
+    private pacienteSqliteService: PacienteSqliteService,
+    private agendamentoSqliteService: AgendamentoSqliteService
 
   ) {}
 
@@ -21,8 +21,8 @@ export class AppComponent {
     // Cria o banco de dados
     await this.databaseService.createDatabase();
 
-    await this.pacienteRepository.createTable();
-    await this.agendamentoRepository.createTable();
+    await this.pacienteSqliteService.createTable();
+    await this.agendamentoSqliteService.createTable();
 
   }
 }

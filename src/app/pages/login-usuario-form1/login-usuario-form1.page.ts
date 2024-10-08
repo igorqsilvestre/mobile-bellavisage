@@ -1,9 +1,9 @@
+import { PacienteRepository } from './../../repository/paciente.repository';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Paciente } from 'src/app/models/paciente';
-import { PacienteService } from 'src/app/services/paciente.service';
 
 @Component({
   selector: 'app-login-usuario-form1',
@@ -17,7 +17,7 @@ export class LoginUsuarioForm1Page implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private pacienteService: PacienteService,
+    private pacienteRepository: PacienteRepository,
     private alertController: AlertController
   ) { }
 
@@ -34,7 +34,7 @@ export class LoginUsuarioForm1Page implements OnInit {
     if(this.pacienteForm.valid){
       const paciente = this.pacienteForm.value as Paciente;
 
-      const data = await this.pacienteService.getPacienteByEmail(paciente.email);
+      const data = await this.pacienteRepository.getPacienteByEmail(paciente.email);
 
       if(data !== null){
         await this.presentAlert('erro', ' E-mail já cadastrado.');

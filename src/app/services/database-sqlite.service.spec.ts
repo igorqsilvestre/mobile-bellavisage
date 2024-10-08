@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, inject } from '@angular/core/testing';
-import { DatabaseService } from './database.service';
+import { DatabaseSqliteService } from './database-sqlite.service';
 
 describe('Service: Database', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DatabaseService]
+      providers: [DatabaseSqliteService]
     });
   });
 
-  it('should ...', inject([DatabaseService], (service: DatabaseService) => {
+  it('should ...', inject([DatabaseSqliteService], (service: DatabaseSqliteService) => {
     expect(service).toBeTruthy();
   }));
 });
