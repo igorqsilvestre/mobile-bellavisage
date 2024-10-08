@@ -1,14 +1,14 @@
 export class Especialista {
 
-  id: string;
+  id?: number;
   nome: string;
   especialidade: string;
   horarios: Date[] | null;
 
-  constructor(id: string, nome: string, especialidade: string, horarios: Date[] | null){
-    this.id = id;
+  constructor(nome: string, especialidade: string, horarios: Date[] | null, id?: number){ 
     this.nome = nome;
     this.especialidade = especialidade;
     this.horarios = horarios;
+    this.id = id;
   }
 }

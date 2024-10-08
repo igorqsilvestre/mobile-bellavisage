@@ -1,7 +1,7 @@
 import { Especialista } from "./especialista";
 
 export class Tratamento {
-  id: number;
+  id?: number;
   nome: string;
   preco: number;
   avaliacao: number;
@@ -10,11 +10,10 @@ export class Tratamento {
   descricao:string;
   especialistas: Especialista[];
 
-  constructor(id: number, nome: string, preco: number,
+  constructor(nome: string, preco: number,
     avaliacao: number, imagemPequena: string,
-    imagemMaior: string, descricao: string, especialistas: Especialista[]){
+    imagemMaior: string, descricao: string, especialistas: Especialista[],id?: number){
 
-    this.id = id;
     this.nome = nome;
     this.preco = preco;
     this.avaliacao = avaliacao;
@@ -22,5 +21,6 @@ export class Tratamento {
     this.imagemMaior = imagemMaior;
     this.descricao = descricao;
     this.especialistas = especialistas;
+    this.id = id;
   }
 }
