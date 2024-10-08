@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { firstValueFrom, Observable, take, } from 'rxjs';
+import { catchError, firstValueFrom, map, Observable, of, take, } from 'rxjs';
 import { Paciente } from '../models/paciente';
 
 
@@ -13,6 +13,17 @@ export class PacienteMysqlService {
 
 
   constructor(private http: HttpClient) {}
+
+// Método para verificar se o MySQL está ativo
+verificarConexaoMysql(): Observable<boolean> {
+  return this.http.get(`${this.url}/ping`).pipe(
+    map(() => true), // Se a resposta for bem-sucedida, MySQL está ativo
+    catchError((error) => {
+      console.error('Erro ao verificar conexão com MySQL:', error);
+      return of(false); // Em caso de erro, MySQL está inativo
+    })
+  );
+}
 
   addPaciente(paciente: Paciente): Observable<Paciente> {
     return this.http.post<Paciente>(this.url, paciente).pipe(take(1));

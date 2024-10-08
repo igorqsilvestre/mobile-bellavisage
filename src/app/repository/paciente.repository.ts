@@ -16,16 +16,15 @@ export class PacienteRepository {
 
   // Adicionar paciente no Mysql ou Sqlite
   public async addPaciente(paciente: Paciente): Promise<void> {
-
     try {
-      // Adiciona no MySQL via API
-      const newPaciente = await firstValueFrom(this.pacientemysqlService.addPaciente(paciente));
-
-      // O ID retornado do MySQL é atribuído ao paciente
-      paciente.id = newPaciente.id;
-
-      // Agora salva o paciente no SQLite
-      await this.pacientesqliteService.addPaciente(paciente);
+      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+      if(mysqlAtivo){
+        // Adiciona no MySQL via API
+        await firstValueFrom(this.pacientemysqlService.addPaciente(paciente));
+      }else{
+         // Agora salva o paciente no SQLite
+        await this.pacientesqliteService.addPaciente(paciente);
+      }
       console.log('Sucesso ao adicionar paciente');
 
     } catch (error) {
@@ -37,10 +36,13 @@ export class PacienteRepository {
 
   // Atualizar senha do paciente no Mysql ou Sqlite
   public async updatePacienteSenha(paciente: Paciente, senha: string) : Promise<void>{
-
     try{
-      await firstValueFrom(this.pacientemysqlService.atualizaPacienteBySenha(senha, paciente));
-      await this.pacientesqliteService.updatePacienteSenha(paciente.id as number, senha);
+      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+      if(mysqlAtivo){
+        await firstValueFrom(this.pacientemysqlService.atualizaPacienteBySenha(senha, paciente));
+      }else{
+        await this.pacientesqliteService.updatePacienteSenha(paciente.id as number, senha);
+      }
       console.log('Sucesso ao atualizar senha');
 
     }catch(error){
@@ -55,13 +57,16 @@ export class PacienteRepository {
   public async getPacienteByEmailAndSenha(email: string, senha: string): Promise<any> {
     let paciente = null;
     try{
-      paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByEmailAndSenha(email, senha));
-      if(paciente){
-        return paciente;
+      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+      if(mysqlAtivo){
+        paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByEmailAndSenha(email, senha));
+        if(paciente){
+          return paciente;
+        }
       }
-
       paciente = await this.pacientesqliteService.getPacienteByEmailAndSenha(email, senha);
       return paciente;
+
 
     }catch(error){
       console.error('Erro ao buscar paciente', error);
@@ -73,11 +78,13 @@ export class PacienteRepository {
   public async getPacienteByEmail(email: string): Promise<any> {
     let paciente = null;
     try{
-      paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByEmail(email));
-      if(paciente){
-        return paciente;
+      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+      if(mysqlAtivo){
+        paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByEmail(email));
+        if(paciente){
+          return paciente;
+        }
       }
-
       paciente = await this.pacientesqliteService.getPacienteByEmail(email);
       return paciente;
 
@@ -91,9 +98,12 @@ export class PacienteRepository {
   public async getPacienteByCPF(cpf: string): Promise<any> {
     let paciente = null;
     try{
-      paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByCPF(cpf));
-      if(paciente){
-        return paciente;
+      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+      if(mysqlAtivo){
+        paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByCPF(cpf));
+        if(paciente){
+          return paciente;
+        }
       }
       paciente = await this.pacientesqliteService.getPacienteByCPF(cpf);
       return paciente;
@@ -102,5 +112,9 @@ export class PacienteRepository {
       console.error('Erro ao buscar paciente', error);
       throw new Error('Erro ao buscar paciente');
     }
+  }
+
+  private verificaStatusMysql(): Promise<boolean> {
+    return firstValueFrom(this.pacientemysqlService.verificarConexaoMysql());
   }
 }
