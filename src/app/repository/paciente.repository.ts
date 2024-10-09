@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { PacienteSqliteService } from '../services/paciente-sqlite.service';
-import { PacienteMysqlService } from '../services/paciente-mysql.service';
 import { Paciente } from '../models/paciente';
 import { firstValueFrom } from 'rxjs';
+import { ApiMysqlService } from '../services/api-mysql.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
 export class PacienteRepository {
   constructor(
     private pacientesqliteService: PacienteSqliteService,
-    private pacientemysqlService: PacienteMysqlService
+    private apiMysqlService: ApiMysqlService
   ) {}
 
   // Adicionar paciente no Mysql ou Sqlite
@@ -20,7 +20,7 @@ export class PacienteRepository {
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
         // Adiciona no MySQL via API
-        await firstValueFrom(this.pacientemysqlService.addPaciente(paciente));
+        await firstValueFrom(this.apiMysqlService.addPaciente(paciente));
       }else{
          // Agora salva o paciente no SQLite
         await this.pacientesqliteService.addPaciente(paciente);
@@ -39,7 +39,7 @@ export class PacienteRepository {
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        await firstValueFrom(this.pacientemysqlService.atualizaPacienteBySenha(senha, paciente));
+        await firstValueFrom(this.apiMysqlService.atualizaPacienteBySenha(senha, paciente));
       }else{
         await this.pacientesqliteService.updatePacienteSenha(paciente.id as number, senha);
       }
@@ -59,7 +59,7 @@ export class PacienteRepository {
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByEmailAndSenha(email, senha));
+        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByEmailAndSenha(email, senha));
         if(paciente){
           return paciente;
         }
@@ -80,7 +80,7 @@ export class PacienteRepository {
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByEmail(email));
+        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByEmail(email));
         if(paciente){
           return paciente;
         }
@@ -100,7 +100,7 @@ export class PacienteRepository {
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        paciente = await firstValueFrom(this.pacientemysqlService.getPacienteByCPF(cpf));
+        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByCPF(cpf));
         if(paciente){
           return paciente;
         }
@@ -115,6 +115,6 @@ export class PacienteRepository {
   }
 
   private verificaStatusMysql(): Promise<boolean> {
-    return firstValueFrom(this.pacientemysqlService.verificarConexaoMysql());
+    return firstValueFrom(this.apiMysqlService.verificarConexaoMysql());
   }
 }

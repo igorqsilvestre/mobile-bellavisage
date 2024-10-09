@@ -1,12 +1,11 @@
-import { HorarioEspecialista } from "./horarioEspecialista";
-
 export class Especialista {
+
   id?: number;
   nome: string;
   especialidade: string;
-  horarios: HorarioEspecialista[]; // Lista de horários
+  horarios: Date[] | null;
 
-  constructor(nome: string, especialidade: string, horarios: HorarioEspecialista[] = [], id?: number) {
+  constructor(nome: string, especialidade: string, horarios: Date[] | null,id?: number){
     this.nome = nome;
     this.especialidade = especialidade;
     this.horarios = horarios;

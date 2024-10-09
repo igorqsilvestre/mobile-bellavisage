@@ -1,27 +1,18 @@
 export class Agendamento {
   id?: number;
+  nomeTratamento: string;
+  imagemTratamento: string;
+  avaliacaoTratamento: number;
   dataHorario: Date;
-  valor: number;
-  pacienteId: number;
-  tratamentoId: number;
-  especialistaId: number;
-  horarioEspecialistaId: number; // Referência ao horário específico
+  preco: number;
 
-  constructor(
-    dataHorario: Date,
-    valor: number,
-    pacienteId: number,
-    tratamentoId: number,
-    especialistaId: number,
-    horarioEspecialistaId: number,
-    id?: number,
-  ) {
+  constructor(nomeTratamento: string, imagemTratamento:string, avaliacaoTratamento: number, dataHorario: Date, preco: number,id?: number){
+    this.nomeTratamento = nomeTratamento;
+    this.imagemTratamento = imagemTratamento;
+    this.avaliacaoTratamento = avaliacaoTratamento;
     this.dataHorario = dataHorario;
-    this.valor = valor;
-    this.pacienteId = pacienteId;
-    this.tratamentoId = tratamentoId;
-    this.especialistaId = especialistaId;
-    this.horarioEspecialistaId = horarioEspecialistaId;
+    this.preco = preco;
     this.id = id;
   }
+
 }

@@ -9,17 +9,11 @@ export class PacienteSqliteService {
 
   constructor(private databaseService: DatabaseSqliteService) {}
 
-  public async dropTable(): Promise<void> {
-    const query = `DROP TABLE IF EXISTS paciente`;
-    await this.databaseService.executeSql(query);
-    console.log('Tabela paciente excluída');
-  }
-
   // Criação de tabela no SQLite
   public async createTable(): Promise<void> {
     const query = `
       CREATE TABLE IF NOT EXISTS paciente (
-        id INT PRIMARY KEY,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT,
         senha TEXT,
         nome TEXT,

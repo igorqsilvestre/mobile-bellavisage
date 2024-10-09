@@ -6,6 +6,7 @@ import { Tratamento } from 'src/app/models/tratamento';
 import { DataUtilsService } from 'src/app/shared/services/dataUtils.service';
 
 import { AgendamentoRepository } from 'src/app/repository/agendamento.repository';
+import { Agendamento } from 'src/app/models/agendamento';
 
 @Component({
   selector: 'app-agendamento-form2',
@@ -85,18 +86,14 @@ export class AgendamentoForm2Page implements OnInit {
   }
 
   async setResult(ev:any) {
-    /*
     if(ev.detail.role === 'confirm'){
-      const agendamentoId = -1;
 
       const agendamento = new Agendamento(
-       agendamentoId,
        this.tratamentoDaDo?.nome,
        this.tratamentoDaDo?.imagemPequena,
        this.tratamentoDaDo?.avaliacao,
        this.dataHorarioEscolhido,
-       this.tratamentoDaDo?.preco,
-       this.tratamentoDaDo.id
+       this.tratamentoDaDo?.preco
       );
 
       try {
@@ -109,7 +106,6 @@ export class AgendamentoForm2Page implements OnInit {
       }
     }
     this.isAlertOpen = false;
-    */
   }
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {
