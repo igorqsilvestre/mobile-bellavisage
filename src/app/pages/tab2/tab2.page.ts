@@ -8,7 +8,7 @@ import { Agendamento } from 'src/app/models/agendamento';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit{
+export class Tab2Page{
   isAlertOpen = false;
   agendamentos!: Agendamento[];
   agendamento!: Agendamento;
@@ -28,11 +28,12 @@ export class Tab2Page implements OnInit{
 
   constructor(
     private navCtrl: NavController,
-    private AgendamentoRepository: AgendamentoRepository,
+    private agendamentoRepository: AgendamentoRepository,
     private alertController: AlertController
   ) {}
 
-  async ngOnInit(): Promise<void> {
+  // Executa sempre que a página for exibida
+  ionViewWillEnter() {
     this.atualizarLista();
   }
 
@@ -47,11 +48,10 @@ export class Tab2Page implements OnInit{
   }
 
   async setResult(ev:any) {
-    /*
     if(ev.detail.role === 'confirm'){
       if(this.agendamento){
         try{
-          this.AgendamentoRepository.deleteAgendamento(this.agendamento.id);
+          this.agendamentoRepository.deleteAgendamento(this.agendamento.id as number);
           await this.presentAlert('sucesso', 'Agendamento cancelado com sucesso!');
           this.atualizarLista();
         }catch(error){
@@ -59,11 +59,11 @@ export class Tab2Page implements OnInit{
         }
 
       }
-    }*/
+    }
   }
 
   private async atualizarLista(){
-    //this.agendamentos = await this.AgendamentoRepository.getAllAgendamentos();
+    this.agendamentos = await this.agendamentoRepository.getAllAgendamentos();
   }
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {

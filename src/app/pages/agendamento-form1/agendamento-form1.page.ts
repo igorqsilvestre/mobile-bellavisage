@@ -8,7 +8,7 @@ import { Tratamento } from 'src/app/models/tratamento';
   templateUrl: './agendamento-form1.page.html',
   styleUrls: ['./agendamento-form1.page.scss'],
 })
-export class AgendamentoForm1Page {
+export class AgendamentoForm1Page{
 
   tratamentos:Tratamento[] = [
     {
@@ -22,19 +22,19 @@ export class AgendamentoForm1Page {
         É feito com uma caneta que possui uma ponteira com lixa diamantada e um sistema de vácuo que aspira a pele`,
       especialistas: [
         {
-          id:'1',
+          id:1,
           nome:'Dr Alessandro',
           especialidade: 'Dermatologista',
           horarios: null
         },
         {
-          id:'2',
+          id:2,
           nome:'Dra Andreia',
           especialidade: 'Dermatologista',
           horarios: null
         },
         {
-          id:'3',
+          id:3,
           nome:'Dr Romulo',
           especialidade: 'Dermatologista',
           horarios: null
@@ -52,13 +52,13 @@ export class AgendamentoForm1Page {
       focada em melhorar a aparência da pele e tratar diversas condições. Ele usa uma combinação de energia laser e radiofrequência que penetra nas camadas mais profundas da pele`,
       especialistas: [
         {
-          id:'1',
+          id:1,
           nome:'Dra Fernanda',
           especialidade: 'Dermatologista',
           horarios: null
         },
         {
-          id:'2',
+          id:2,
           nome:'Dr Pedro',
           especialidade: 'Dermatologista',
           horarios: null
@@ -76,25 +76,25 @@ export class AgendamentoForm1Page {
       Tradicionalmente é realizada de forma manual, mas pode ser realizada também pelo aparelho de endermoterapia`,
       especialistas: [
         {
-          id:'1',
+          id:1,
           nome:'Dr Marcelo',
           especialidade: 'Dermatologista',
           horarios: null
         },
         {
-          id:'2',
+          id:2,
           nome:'Dra Andreia',
           especialidade: 'Fisioterapeuta',
           horarios: null
         },
         {
-          id:'3',
+          id:3,
           nome:'Dr Romulo',
           especialidade: 'Fisioterapeuta',
           horarios: null
         },
         {
-          id:'4',
+          id:4,
           nome:'Dr Joao',
           especialidade: 'Dermatologista',
           horarios: null
@@ -112,13 +112,13 @@ export class AgendamentoForm1Page {
       reduzindo significativamente a produção de suor. Uma sessão pode te deixar livre do suor excessivo por até 6 meses.`,
       especialistas: [
         {
-          id:'1',
+          id:1,
           nome:'Dr Joao',
           especialidade: 'Dermatologista',
           horarios: null
         },
         {
-          id:'2',
+          id:2,
           nome:'Dr Marcelo',
           especialidade: 'Dermatologista',
           horarios: null

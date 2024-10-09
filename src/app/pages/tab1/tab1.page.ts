@@ -17,14 +17,18 @@ export class Tab1Page implements OnInit{
 
   constructor(
     private router: Router,
-    private AgendamentoRepository: AgendamentoRepository
+    private agendamentoRepository: AgendamentoRepository
   ) {}
 
 
   async ngOnInit(): Promise<void> {
     this.pacienteDaDo = this.recuperarInformacoesPacienteDaPaginaLogin();
     this.pacienteNome = this.pacienteDaDo?.nome;
-    //this.agendamentos = await this.agendamentoService.getAllAgendamentos();
+  }
+
+  // Executa sempre que a página for exibida
+  ionViewWillEnter() {
+    this.atualizarLista();
   }
 
   recuperarInformacoesPacienteDaPaginaLogin() {
@@ -34,4 +38,7 @@ export class Tab1Page implements OnInit{
     }
   }
 
+  private async atualizarLista(){
+    this.agendamentos = await this.agendamentoRepository.getAllAgendamentos();
+  }
 }
