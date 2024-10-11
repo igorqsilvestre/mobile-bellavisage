@@ -12,15 +12,22 @@ export class PacienteSqliteService {
   // Criação de tabela no SQLite
   public async createTable(): Promise<void> {
     const query = `
-      CREATE TABLE IF NOT EXISTS paciente (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        email TEXT,
-        senha TEXT,
-        nome TEXT,
-        cpf TEXT,
-        telefone TEXT,
-        dataNascimento TEXT
-      )`;
+    CREATE TABLE IF NOT EXISTS paciente (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      email TEXT,
+      senha TEXT,
+      nome TEXT,
+      cpf TEXT,
+      telefone TEXT,
+      dataNascimento TEXT,
+      cep TEXT,
+      numero TEXT,
+      complemento TEXT,
+      bairro TEXT,
+      logradouro TEXT,
+      cidade TEXT,
+      estado TEXT
+    )`;
 
     if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
       await this.databaseService.executeSql(query);
@@ -31,15 +38,24 @@ export class PacienteSqliteService {
   // Adicionar paciente no SQLite
   public async addPaciente(paciente: Paciente): Promise<void> {
     if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
-      const query = `INSERT INTO paciente (id, email, senha, nome, cpf, telefone, dataNascimento) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      const query = `
+        INSERT INTO paciente (email, senha, nome, cpf, telefone, dataNascimento, cep, numero, complemento, bairro, logradouro, cidade, estado)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
       await this.databaseService.executeSql(query, [
-        paciente.id,
         paciente.email,
         paciente.senha,
         paciente.nome,
         paciente.cpf,
         paciente.telefone,
-        paciente.dataNascimento
+        paciente.dataNascimento.toISOString(),
+        paciente.endereco.cep,
+        paciente.endereco.numero || '',
+        paciente.endereco.complemento || '',
+        paciente.endereco.bairro,
+        paciente.endereco.logradouro,
+        paciente.endereco.cidade,
+        paciente.endereco.estado
       ]);
     }
   }
@@ -100,7 +116,6 @@ export class PacienteSqliteService {
     }
   }
 
-  // Método auxiliar para mapear resultados de SQL para um objeto Paciente
   private mapRowToPaciente(row: any): Paciente {
     return new Paciente(
       row.email,
@@ -108,8 +123,17 @@ export class PacienteSqliteService {
       row.nome,
       row.cpf,
       row.telefone,
-      row.dataNascimento,
-      row.id  // Adicionando o id aqui
+      new Date(row.dataNascimento),  // Convertendo data para um objeto Date
+      {
+        cep: row.cep,
+        numero: row.numero || '',         // Se número for opcional
+        complemento: row.complemento || '', // Se complemento for opcional
+        bairro: row.bairro,
+        logradouro: row.logradouro,
+        cidade: row.cidade,
+        estado: row.estado
+      },
+      row.id // Incluindo o id do paciente
     );
   }
 

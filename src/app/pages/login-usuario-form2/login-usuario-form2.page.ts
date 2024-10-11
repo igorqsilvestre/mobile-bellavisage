@@ -54,25 +54,7 @@ export class LoginUsuarioForm2Page implements OnInit {
         throw new Error('CPF já cadastrado.');
       }
 
-
-      const paciente = new Paciente(
-        pacienteDado.email,
-        pacienteDado.senha,
-        pacienteDado.nome,
-        pacienteDado.cpf,
-        pacienteDado.telefone,
-        new Date(pacienteDado.dataNascimento)
-      );
-
-      try {
-        this.PacienteRepository.addPaciente(paciente);
-        await this.presentAlert('sucesso', 'Cadastro realizado com sucesso!');
-        this.router.navigate(['/login']);
-
-      } catch (error) {
-        await this.presentAlert('erro', 'Ocorreu um erro ao realizar o cadastro.');
-      }
-
+      this.router.navigate(['/login/novo-usuario-parte3'], { state:{ pacienteDado } })
 
     }else{
       this.marcarCamposInvalidosComoTocado(this.pacienteForm);

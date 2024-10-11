@@ -1,0 +1,85 @@
+<ion-content>
+  <div class="container">
+
+    <img srcset="assets/fundo-esq-bellavisage.png 1200w" class="fundo-bellavisage">
+    <ion-card class="card">
+      <ion-card-header>
+        <img src="assets/logo-bellavisage.png" srcset="assets/logo-grande-bellavisage2.png 1200w" alt="logo-bellavisage">
+        <ion-title class="titulo">Insira seu endereço</ion-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
+          <ion-list>
+            <div formGroupName="endereco">
+              <ion-item>
+                <ion-input formControlName="cep" label="Cep : "></ion-input>
+              </ion-item>
+
+              <ion-row class="ion-justify-content-center">
+                <ion-button (click)="onBuscaCep()" class="botao" >Buscar</ion-button>
+              </ion-row>
+
+              <ion-text color="danger" *ngIf="campoEstaInvalido('endereco.cep')">
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.cep')?.errors?.['pattern']">Somente números são aceitos.</p>
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.cep')?.errors?.['minlength'] ||
+                  pacienteForm.get('endereco.cep')?.errors?.['required']">Cep tem que ter no minimo 8 caracteres.</p>
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.cep')?.errors?.['maxlength']">Cep tem que ter no máximo 8 caracteres.</p>
+              </ion-text>
+
+              <ion-item>
+                <ion-input formControlName="logradouro" label="Logradouro : " ></ion-input>
+              </ion-item>
+
+              <ion-text color="danger" *ngIf="campoEstaInvalido('endereco.logradouro')">
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.logradouro')?.errors?.['required']">Logradouro é obrigatório.</p>
+              </ion-text>
+
+              <ion-item>
+                <ion-input formControlName="bairro" label="Bairro :"></ion-input>
+              </ion-item>
+
+              <ion-text color="danger" *ngIf="campoEstaInvalido('endereco.bairro')">
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.bairro')?.errors?.['required']">Bairro é obrigatório.</p>
+              </ion-text>
+
+              <ion-item>
+                <ion-input formControlName="cidade" label="Cidade :"></ion-input>
+              </ion-item>
+
+              <ion-text color="danger" *ngIf="campoEstaInvalido('endereco.cidade')">
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.cidade')?.errors?.['required']">Cidade é obrigatório.</p>
+              </ion-text>
+
+              <ion-item>
+                <ion-input formControlName="estado" label="Estado :" ></ion-input>
+              </ion-item>
+
+              <ion-text color="danger" *ngIf="campoEstaInvalido('endereco.estado')">
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.estado')?.errors?.['required']">Estado é obrigatório.</p>
+              </ion-text>
+
+              <ion-item>
+                <ion-input formControlName="numero" label="Número :"></ion-input>
+              </ion-item>
+
+              <ion-text color="danger" *ngIf="campoEstaInvalido('endereco.numero')">
+                <p class="mensagem-erro" *ngIf="pacienteForm.get('endereco.numero')?.errors?.['pattern']">Somente números são aceitos.</p>
+              </ion-text>
+
+              <ion-item>
+                <ion-input formControlName="complemento" label="Complemento :"></ion-input>
+              </ion-item>
+            </div>
+          </ion-list>
+
+          <div class="redirecionamentos">
+            <ion-button  type="submit" class="botao" href="#">Cadastrar</ion-button>
+            <ion-button  color="medium"  (click)="voltarPaginaAnterior()">Voltar</ion-button>
+          </div>
+        </form>
+
+      </ion-card-content>
+    </ion-card>
+    <img srcset="assets/fundo-dir-bellavisage.png 1200w" class="fundo-bellavisage">
+  </div>
+</ion-content>
