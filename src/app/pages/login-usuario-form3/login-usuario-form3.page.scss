@@ -1,0 +1,94 @@
+.fundo-bellavisage{
+  display: none;
+}
+
+.card{
+  padding-top: 30%;
+  margin: 0;
+  box-shadow: none;
+}
+
+.titulo{
+  margin-top: 1.5em;
+  text-align: center;
+}
+
+form{
+  margin: 1em 0;
+}
+
+.mensagem-erro{
+  margin-top: 4px;
+  margin-left: 16px;
+}
+
+.redirecionamentos{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+ion-button{
+  width: 30%;
+}
+
+.botao{
+  margin-top: 2em;
+}
+
+
+.texto-criarConta{
+  margin-top: 2em;
+}
+
+.texto-criarConta a{
+  color:#F5066C;
+}
+
+@media(min-width:1200px) {
+
+  *{
+    font-size: 28px;
+  }
+
+  .container{
+    display: flex;
+  }
+
+  .fundo-bellavisage{
+    display: block;
+  }
+
+  .card{
+    padding-top: 5%;
+    width: 80%;
+  }
+
+  ion-button{
+    width: 50%;
+  }
+
+  ion-title {
+    font-size: 40px;
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mensagem-erro{
+    font-size: 24px;
+    margin-bottom: 0.5em;
+  }
+
+  .redirecionamentos{
+    width: 50%;
+  }
+
+  img{
+    display: block;
+    margin: 0 auto;
+  }
+}

@@ -39,7 +39,7 @@ export class LoginPage implements OnInit{
                 await this.presentAlert('sucesso', 'Login realizado com sucesso!');
                 this.route.navigate(['/tabs/tab1'], { state:{data}} );
             } else {
-                await this.presentAlert('erro', 'Usuário não encontrado.');
+                await this.presentAlert('erro', 'Usuário ou senha inválida.');
             }
         } catch (error) {
             await this.presentAlert('erro', 'Ocorreu um erro ao tentar fazer o login.');
