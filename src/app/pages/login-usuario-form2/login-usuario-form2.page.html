@@ -46,6 +46,7 @@
               <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['required']">Data de nascimento é obrigatória.</p>
               <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['minlength'] ||
                 pacienteForm.get('dataNascimento')?.errors?.['maxlength'] ">Data tem que ter 10 caracteres</p>
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('dataNascimento')?.errors?.['menorDeIdade']">Não pode ser menor de idade.</p>
             </ion-text>
           </ion-list>
 

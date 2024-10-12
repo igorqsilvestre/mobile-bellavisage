@@ -1,8 +1,9 @@
+import { AuthService } from './../../guards/auth.service';
 import { AgendamentoRepository } from './../../repository/agendamento.repository';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Agendamento } from 'src/app/models/agendamento';
-import { Paciente } from 'src/app/models/paciente';
+import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-compartilhado.service';
 
 @Component({
   selector: 'app-tab1',
@@ -11,24 +12,49 @@ import { Paciente } from 'src/app/models/paciente';
 })
 export class Tab1Page implements OnInit{
 
-  pacienteDaDo!: Paciente;
   pacienteNome: string = '';
   agendamentos!: Agendamento[];
 
   constructor(
-    private router: Router,
-    private agendamentoRepository: AgendamentoRepository
+    private agendamentoRepository: AgendamentoRepository,
+    private pacienteCompartilhadoService: PacienteCompartilhadoService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
 
-  async ngOnInit(): Promise<void> {
-    this.pacienteDaDo = this.recuperarInformacoesPacienteDaPaginaLogin();
-    this.pacienteNome = this.pacienteDaDo?.nome;
+  ngOnInit(): void {
+    const paciente = this.recuperarInformacoesPacienteDaPaginaLogin();
+    if(paciente){
+      this.pacienteCompartilhadoService.setPaciente(paciente);
+    }
+
   }
 
-  // Executa sempre que a página for exibida
-  ionViewWillEnter() {
+
+  ionViewDidEnter() {
+    const paciente = this.pacienteCompartilhadoService.getPaciente();
+    if(paciente){
+      this.pacienteNome = paciente.nome;
+    }
+
     this.atualizarLista();
+  }
+
+  deslogar(){
+    this.authService.realizarLogout();
+    this.pacienteCompartilhadoService.clearPaciente();
+    this.router.navigate(['']).then(() => {
+      window.location.reload();  // Força um recarregamento completo
+    });
+  }
+
+  private async atualizarLista(){
+    const paciente = this.pacienteCompartilhadoService.getPaciente();
+    if(paciente && paciente.id){
+      const pacienteId =  paciente.id;
+      this.agendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteId(pacienteId);
+    }
   }
 
   recuperarInformacoesPacienteDaPaginaLogin() {
@@ -36,9 +62,5 @@ export class Tab1Page implements OnInit{
     if(navigation?.extras?.state?.['data']){
       return navigation.extras.state?.['data'];
     }
-  }
-
-  private async atualizarLista(){
-    this.agendamentos = await this.agendamentoRepository.getAllAgendamentos();
   }
 }

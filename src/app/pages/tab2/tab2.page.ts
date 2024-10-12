@@ -1,3 +1,4 @@
+import { PacienteCompartilhadoService } from './../../shared/services/paciente-compartilhado.service';
 import { AgendamentoRepository } from './../../repository/agendamento.repository';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
@@ -13,27 +14,16 @@ export class Tab2Page{
   agendamentos!: Agendamento[];
   agendamento!: Agendamento;
 
-  public alertButtons = [
-    {
-      text: 'Não',
-      role: 'cancel',
-      cssClass: 'alert-button-cancel',
-    },
-    {
-      text: 'Sim',
-      role: 'confirm',
-      cssClass: 'alert-button-confirm',
-    },
-  ];
-
   constructor(
     private navCtrl: NavController,
     private agendamentoRepository: AgendamentoRepository,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private pacienteCompartilhadoService: PacienteCompartilhadoService,
   ) {}
 
+
   // Executa sempre que a página for exibida
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.atualizarLista();
   }
 
@@ -42,28 +32,56 @@ export class Tab2Page{
     this.navCtrl.back();
   }
 
-  alertaDecancelarAgendamento(agendamento: Agendamento){
+  async alertaDecancelarAgendamento(agendamento: Agendamento) {
     this.agendamento = agendamento;
-    this.isAlertOpen = true;
+    const alert = await this.alertController.create({
+      header: 'Cancelar Agendamento?',
+      cssClass: 'custom-alert', // Adicione sua classe personalizada aqui
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+        },
+        {
+          text: 'Sim',
+          role: 'confirm',
+          cssClass: 'alert-button-confirm',
+          handler: () => this.confirmarCancelamento(),
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
-  async setResult(ev:any) {
-    if(ev.detail.role === 'confirm'){
-      if(this.agendamento){
-        try{
-          this.agendamentoRepository.deleteAgendamento(this.agendamento.id as number);
-          await this.presentAlert('sucesso', 'Agendamento cancelado com sucesso!');
-          this.atualizarLista();
-        }catch(error){
-          await this.presentAlert('erro', 'Ocorreu um erro ao cancelar o agendamento.');
-        }
-
+  async confirmarCancelamento() {
+    const pacienteId = this.buscarIdPaciente();
+    if (this.agendamento && this.agendamento.id && pacienteId) {
+      try {
+        await this.agendamentoRepository.deleteAgendamentoByPacienteId(this.agendamento.id, pacienteId);
+        await this.presentAlert('sucesso', 'Agendamento cancelado com sucesso!');
+        this.atualizarLista();
+      } catch (error) {
+        await this.presentAlert('erro', 'Ocorreu um erro ao cancelar o agendamento.');
       }
     }
   }
 
+  buscarIdPaciente():number {
+    const paciente = this.pacienteCompartilhadoService.getPaciente();
+    if(paciente && paciente.id){
+      return paciente.id;
+    }
+    throw new Error('Não foi possível buscar o id do paciente.');
+  }
+
   private async atualizarLista(){
-    this.agendamentos = await this.agendamentoRepository.getAllAgendamentos();
+    const paciente = this.pacienteCompartilhadoService.getPaciente();
+    if(paciente && paciente.id){
+      const pacienteId =  paciente.id;
+      this.agendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteId(pacienteId);
+    }
   }
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {
@@ -71,7 +89,7 @@ export class Tab2Page{
       header: tipo === 'sucesso' ? 'Sucesso' : 'Erro',
       message: mensagem,
       buttons: ['OK'],
-      cssClass: 'custom-alert '
+      cssClass: 'custom-alert', // Adicione sua classe personalizada aqui
     });
 
     await alert.present();

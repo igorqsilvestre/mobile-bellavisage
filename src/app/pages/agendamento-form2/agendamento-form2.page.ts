@@ -7,6 +7,8 @@ import { DataUtilsService } from 'src/app/shared/services/dataUtils.service';
 
 import { AgendamentoRepository } from 'src/app/repository/agendamento.repository';
 import { Agendamento } from 'src/app/models/agendamento';
+import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-compartilhado.service';
+import { Paciente } from 'src/app/models/paciente';
 
 @Component({
   selector: 'app-agendamento-form2',
@@ -39,7 +41,8 @@ export class AgendamentoForm2Page implements OnInit {
     private router: Router,
     private dataUtils: DataUtilsService,
     private agendamentoRepository: AgendamentoRepository,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private pacienteCompartilhadoService: PacienteCompartilhadoService,
   ) { }
 
   ngOnInit() {
@@ -88,24 +91,38 @@ export class AgendamentoForm2Page implements OnInit {
   async setResult(ev:any) {
     if(ev.detail.role === 'confirm'){
 
-      const agendamento = new Agendamento(
-       this.tratamentoDaDo?.nome,
-       this.tratamentoDaDo?.imagemPequena,
-       this.tratamentoDaDo?.avaliacao,
-       this.dataHorarioEscolhido,
-       this.tratamentoDaDo?.preco
-      );
+      const pacienteId = this.buscarIdPaciente();
 
-      try {
-        this.agendamentoRepository.addAgendamento(agendamento);
-        await this.presentAlert('sucesso', 'Agendamento realizado com sucesso!');
-        this.router.navigate(['/tabs/tab1']);
+      if(pacienteId){
+        const agendamento = new Agendamento(
+          this.tratamentoDaDo?.nome,
+          this.tratamentoDaDo?.imagemPequena,
+          this.tratamentoDaDo?.avaliacao,
+          this.dataHorarioEscolhido,
+          this.tratamentoDaDo?.preco,
+          pacienteId
+         );
 
-      } catch (error) {
-        await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
+         try {
+           this.agendamentoRepository.addAgendamento(agendamento);
+           await this.presentAlert('sucesso', 'Agendamento realizado com sucesso!');
+           this.router.navigate(['/tabs/tab1']);
+
+         } catch (error) {
+           await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
+         }
       }
     }
     this.isAlertOpen = false;
+  }
+
+
+  buscarIdPaciente():number {
+    const paciente = this.pacienteCompartilhadoService.getPaciente();
+    if(paciente && paciente.id){
+      return paciente.id;
+    }
+    throw new Error('Não foi possível buscar o id do paciente.');
   }
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {

@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Paciente } from 'src/app/models/paciente';
+import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-compartilhado.service';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +10,6 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor(){}
 
 }

@@ -11,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
 })
 
 export class AgendamentoRepository {
-  
+
   constructor(
     private agendamentoSqliteService: AgendamentoSqliteService,
     private apiMysqlService: ApiMysqlService
@@ -30,7 +30,7 @@ export class AgendamentoRepository {
           await this.agendamentoSqliteService.addAgendamento(agendamento);
         }
         console.log('Sucesso ao adicionar agendamento');
-  
+
       } catch (error) {
         console.error('Erro ao adicionar agendamento', error);
         throw new Error('Erro ao adicionar agendamento');
@@ -38,13 +38,13 @@ export class AgendamentoRepository {
     }
 
 
-    public async deleteAgendamento(id: number): Promise<void> {
+    public async deleteAgendamentoByPacienteId(id: number, pacienteId:number): Promise<void> {
       try {
         const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
         if(mysqlAtivo){
-          await firstValueFrom(this.apiMysqlService.deleteAgendamento(id));
+          await firstValueFrom(this.apiMysqlService.deleteAgendamentoByPacienteId(id, pacienteId));
         }else{
-          await this.agendamentoSqliteService.deleteAgendamento(id);
+          await this.agendamentoSqliteService.deleteAgendamentoByPacienteId(id,pacienteId);
         }
       } catch (error) {
         console.error('Erro ao excluir agendamento', error);
@@ -52,13 +52,13 @@ export class AgendamentoRepository {
       }
     }
 
-    public async getAllAgendamentos(): Promise<Agendamento[]> {
+    public async getAllAgendamentosByPacienteId(pacienteId: number): Promise<Agendamento[]> {
       try {
         const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
         if(mysqlAtivo){
-          return await firstValueFrom(this.apiMysqlService.getAllAgendamentos());
+          return await firstValueFrom(this.apiMysqlService.getAllAgendamentosByPacienteId(pacienteId));
         }else{
-          return this.agendamentoSqliteService.getAllAgendamentos();
+          return this.agendamentoSqliteService.getAllAgendamentosByPacienteId(pacienteId);
         }
       } catch (error) {
         console.error('Erro ao retornar agendamentos', error);
@@ -67,7 +67,6 @@ export class AgendamentoRepository {
     }
 
 
-  
     private verificaStatusMysql(): Promise<boolean> {
       return firstValueFrom(this.apiMysqlService.verificarConexaoMysql());
     }

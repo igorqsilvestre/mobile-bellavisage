@@ -55,12 +55,12 @@ export class ApiMysqlService {
     return this.http.post<Agendamento>(this.urlAgendamento, agendamento).pipe(take(1));
   }
 
-  getAllAgendamentos(): Observable<Agendamento[]> {
-    return this.http.get<Agendamento[]>(`${this.urlAgendamento}`).pipe(take(1));
+  getAllAgendamentosByPacienteId(pacienteId:number): Observable<Agendamento[]> {
+    return this.http.get<Agendamento[]>(`${this.urlAgendamento}/paciente/${pacienteId}`).pipe(take(1));
   }
 
-  deleteAgendamento(id:number): Observable<Agendamento> {
-    return this.http.delete<Agendamento>(`${this.urlAgendamento}/${id}`).pipe(take(1));
+  deleteAgendamentoByPacienteId(id:number, pacienteId:number): Observable<Agendamento> {
+    return this.http.delete<Agendamento>(`${this.urlAgendamento}/${id}/paciente/${pacienteId}`).pipe(take(1));
   }
 
 }

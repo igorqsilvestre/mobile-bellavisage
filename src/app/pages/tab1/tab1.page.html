@@ -1,6 +1,9 @@
 <ion-content>
   <main class="principal">
-    <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
+    <div class="container-header">
+      <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
+      <span><a class="sair" (click)="deslogar()">Sair</a></span>
+    </div>
     <h1><span class="titulo">Olá</span> {{ pacienteNome }} !</h1>
     <ion-searchbar placeholder="Pesquisar" class="custom"></ion-searchbar>
 

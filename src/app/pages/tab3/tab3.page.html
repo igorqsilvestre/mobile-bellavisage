@@ -1,17 +1,20 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>
-      Tab 3
-    </ion-title>
+    <ion-title>Editar Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+<ion-content class="ion-padding">
+  <div class="profile-container">
+    <img 
+      *ngIf="profileImage; else defaultImage" 
+      [src]="profileImage" 
+      alt="Foto de Perfil" 
+      class="profile-image" 
+    />
+    <ng-template #defaultImage>
+      <div class="profile-image default"></div>
+    </ng-template>
+    <ion-button (click)="chooseImage()" class="upload-button">Escolher Foto</ion-button>
+  </div>
 </ion-content>

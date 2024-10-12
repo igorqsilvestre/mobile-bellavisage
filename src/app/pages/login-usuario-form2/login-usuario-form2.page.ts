@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 import { Paciente } from 'src/app/models/paciente';
 import { CpfUtilValidator } from 'src/app/shared/validators/CpfUtilValidator';
+import { idadeValidator } from 'src/app/shared/validators/validaIdade';
 
 @Component({
   selector: 'app-login-usuario-form2',
@@ -36,7 +37,7 @@ export class LoginUsuarioForm2Page implements OnInit {
       nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)] ],
       cpf: ['', [Validators.required, CpfUtilValidator.validate()]],
       telefone: ['', [Validators.required, Validators.minLength(15), Validators.maxLength(15)] ],
-      dataNascimento: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(10)] ],
+      dataNascimento: ['', [ Validators.required, Validators.minLength(10), Validators.maxLength(10), idadeValidator()] ],
       email: [this.pacienteDaDo.email],
       senha: [this.pacienteDaDo.senha]
       });

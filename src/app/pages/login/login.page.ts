@@ -1,3 +1,5 @@
+import { AuthService } from './../../guards/auth.service';
+import { AuthGuard } from './../../guards/auth.guard';
 import { PacienteRepository } from './../../repository/paciente.repository';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -18,7 +20,8 @@ export class LoginPage implements OnInit{
     private route: Router,
     private fb: FormBuilder,
     private PacienteRepository: PacienteRepository,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +39,7 @@ export class LoginPage implements OnInit{
         try {
             const data = await this.PacienteRepository.getPacienteByEmailAndSenha(paciente.email, paciente.senha);
             if (data) {
+                this.authService.realizarLogin();
                 await this.presentAlert('sucesso', 'Login realizado com sucesso!');
                 this.route.navigate(['/tabs/tab1'], { state:{data}} );
             } else {
