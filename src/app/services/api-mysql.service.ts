@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, take } from 'rxjs';
 import { Paciente } from '../models/paciente';
 import { Agendamento } from '../models/agendamento';
+import { PacienteUpdate } from '../models/paciente-update';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +31,8 @@ export class ApiMysqlService {
     return this.http.post<Paciente>(this.urlPaciente, paciente).pipe(take(1));
   }
 
-  atualizaPacienteBySenha(senha:string, paciente: Paciente): Observable<Paciente> {
-    return this.http.patch<Paciente>(`${this.urlPaciente}/senha/${senha}`, paciente).pipe(take(1));
+  atualizaPacienteParcialmente(id:number, paciente: PacienteUpdate): Observable<Paciente> {
+    return this.http.patch<Paciente>(`${this.urlPaciente}/${id}`, paciente).pipe(take(1));
   }
 
   getPacienteByID(id: number): Observable<Paciente> {

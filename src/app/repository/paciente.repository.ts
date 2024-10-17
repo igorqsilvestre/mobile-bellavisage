@@ -1,3 +1,4 @@
+import { PacienteUpdate } from './../models/paciente-update';
 import { Injectable } from '@angular/core';
 import { PacienteSqliteService } from '../services/paciente-sqlite.service';
 import { Paciente } from '../models/paciente';
@@ -34,24 +35,44 @@ export class PacienteRepository {
 
   }
 
-  // Atualizar senha do paciente no Mysql ou Sqlite
-  public async updatePacienteSenha(paciente: Paciente, senha: string) : Promise<void>{
+   // Atualizar senha do paciente no Mysql ou Sqlite
+   public async updatePacienteParcialmente(id:number, pacienteUpdate: PacienteUpdate) : Promise<void>{
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        await firstValueFrom(this.apiMysqlService.atualizaPacienteBySenha(senha, paciente));
+        await firstValueFrom(this.apiMysqlService.atualizaPacienteParcialmente(id, pacienteUpdate));
       }else{
-        await this.pacientesqliteService.updatePacienteSenha(paciente.id as number, senha);
+        await this.pacientesqliteService.updatePacienteParcialmente(id, pacienteUpdate);
       }
-      console.log('Sucesso ao atualizar senha');
+      console.log('Sucesso ao atualizar');
 
     }catch(error){
-      console.error('Erro ao atualizar senha', error);
-      throw new Error('Erro ao atualizar senha');
+      console.error('Erro ao atualizar ', error);
+      throw new Error('Erro ao atualizar ');
     }
-
-
   }
+
+  // Buscar paciente por id no Mysql ou Sqlite
+  public async getPacienteById(id:number): Promise<any> {
+    let paciente = null;
+    try{
+      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+      if(mysqlAtivo){
+        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByID(id));
+        if(paciente){
+          return paciente;
+        }
+      }
+      paciente = await this.pacientesqliteService.getPacienteById(id);
+      return paciente;
+
+
+    }catch(error){
+      console.error('Erro ao buscar paciente', error);
+      throw new Error('Erro ao buscar paciente');
+    }
+  }
+
 
   // Buscar paciente por email e senha no Mysql ou Sqlite
   public async getPacienteByEmailAndSenha(email: string, senha: string): Promise<any> {

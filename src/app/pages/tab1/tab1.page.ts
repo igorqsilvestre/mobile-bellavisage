@@ -35,7 +35,7 @@ export class Tab1Page implements OnInit{
   ionViewDidEnter() {
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente){
-      this.pacienteNome = paciente.nome;
+      this.pacienteNome = paciente.nome.split(" ")[0];
     }
 
     this.atualizarLista();

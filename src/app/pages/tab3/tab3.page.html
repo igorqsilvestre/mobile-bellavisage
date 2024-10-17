@@ -1,20 +1,241 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Editar Perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <main class="principal">
+    <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
 
-<ion-content class="ion-padding">
-  <div class="profile-container">
-    <img 
-      *ngIf="profileImage; else defaultImage" 
-      [src]="profileImage" 
-      alt="Foto de Perfil" 
-      class="profile-image" 
-    />
-    <ng-template #defaultImage>
-      <div class="profile-image default"></div>
-    </ng-template>
-    <ion-button (click)="chooseImage()" class="upload-button">Escolher Foto</ion-button>
-  </div>
+    <div class="container-titulo">
+      <h1>{{ paciente?.nome }}</h1>
+      <ion-icon class="icone-user" name="information-circle-outline"></ion-icon>
+    </div>
+    <div class="container-botao-titular">
+      <button class="botao-titular">Titular</button>
+    </div>
+
+    <section>
+
+      <ion-card class="card">
+        <ion-card-header>
+          <ion-card-subtitle class="card-subtitulo">Email</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="naoQuerAlterarEmail; else templateAlteraEmail">
+            <div class="card-conteudo">
+              <ion-icon class="card-icone" name="mail-outline"></ion-icon>
+              <ion-text class="card-texto">{{ paciente?.email }}</ion-text>
+            </div>
+            <ion-button class="card-botao-alterar" fill="clear" (click)="mudarStatusAlterarEmail()">Alterar</ion-button>
+          </div>
+          <ng-template #templateAlteraEmail>
+            <form [formGroup]="pacienteFormEmail" (ngSubmit)="onSubmitEmail()">
+              <ion-list>
+                <ion-item>
+                  <ion-input formControlName="email" fill="outline" placeholder="Email"></ion-input>
+                </ion-item>
+                <ion-text color="danger" *ngIf="campoEstaInvalido('email', pacienteFormEmail)">
+                  <p class="mensagem-erro" *ngIf="pacienteFormEmail.get('email')?.errors">Email é inválido.</p>
+                </ion-text>
+              </ion-list>
+              <div class="card-botoes-form">
+                <ion-button (click)="mudarStatusAlterarEmail()">Cancelar</ion-button>
+                <ion-button type="submit">Salvar</ion-button>
+              </div>
+            </form>
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="card">
+        <ion-card-header>
+          <ion-card-subtitle class="card-subtitulo">Telefone</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <div *ngIf="naoQuerAlterarTelefone; else templateAlteraTelefone">
+            <div class="card-conteudo">
+              <ion-icon class="card-icone" name="phone-portrait-outline"></ion-icon>
+              <ion-text class="card-texto">{{ paciente?.telefone }}</ion-text>
+            </div>
+            <ion-button class="card-botao-alterar" fill="clear" (click)="mudarStatusAlterarTelefone()">Alterar</ion-button>
+          </div>
+          <ng-template #templateAlteraTelefone>
+            <form [formGroup]="pacienteFormTelefone" (ngSubmit)="onSubmitTelefone()">
+              <ion-list>
+                <ion-item>
+                  <ion-input formControlName="telefone" fill="outline" placeholder="Telefone" appTelefoneMask></ion-input>
+                </ion-item>
+
+                <ion-text color="danger" *ngIf="campoEstaInvalido('telefone',pacienteFormTelefone)">
+                  <p class="mensagem-erro" *ngIf="pacienteFormTelefone.get('telefone')?.errors?.['required']">Telefone é obrigatório.</p>
+                  <p class="mensagem-erro" *ngIf="pacienteFormTelefone.get('telefone')?.errors?.['minlength'] ||
+                    pacienteFormTelefone.get('telefone')?.errors?.['maxlength'] ">Telefone tem que ter 15 caracteres.</p>
+                </ion-text>
+              </ion-list>
+              <div class="card-botoes-form">
+                <ion-button (click)="mudarStatusAlterarTelefone()">Cancelar</ion-button>
+                <ion-button type="submit">Salvar</ion-button>
+              </div>
+            </form>
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="card">
+        <ion-card-content>
+          <div *ngIf="naoQuerVisualizarEndereco; else templateEndereco">
+            <div class="card-conteudo-2">
+              <div class="card-conteudo-container">
+                <ion-icon class="icone-endereco" name="location-sharp"></ion-icon>
+                <h2>Endereço</h2>
+              </div>
+                <ion-button class="card-botao-seta" fill="clear" (click)="mudarStatusVisualizarEndereco()">
+                  <ion-icon class="icone-seta" name="chevron-down-outline"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          <ng-template #templateEndereco >
+            <div class="card-conteudo-2">
+              <div class="card-conteudo-container">
+                <ion-icon class="icone-endereco" name="location-sharp"></ion-icon>
+                <h2>Endereço</h2>
+              </div>
+                <ion-button class="card-botao-seta" fill="clear" (click)="mudarStatusVisualizarEndereco()">
+                  <ion-icon class="icone-seta" name="chevron-up-outline"></ion-icon>
+                </ion-button>
+            </div>
+            <div *ngIf="naoQuerAtualizarEndereco; else templateAlteraEndereco">
+              <ion-list>
+                <ion-grid>
+                  <ion-item>
+                    <ion-input labelPlacement="stacked" label="Cep : " [value]="paciente?.endereco?.cep" readonly></ion-input>
+                  </ion-item>
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-input labelPlacement="stacked" label="Logradouro : " [value]="paciente?.endereco?.logradouro" readonly></ion-input>
+                      </ion-item>
+                    </ion-col>
+
+                    <ion-col>
+                      <ion-item>
+                        <ion-input labelPlacement="stacked" label="Número :" [value]="paciente?.endereco?.numero" readonly></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+
+                  <ion-item>
+                    <ion-input labelPlacement="stacked" label="Bairro :" [value]="paciente?.endereco?.bairro" readonly></ion-input>
+                  </ion-item>
+
+                  <ion-row>
+                    <ion-col>
+                      <ion-item>
+                        <ion-input labelPlacement="stacked" label="Cidade :" [value]="paciente?.endereco?.cidade" readonly></ion-input>
+                      </ion-item>
+                    </ion-col>
+
+                    <ion-col>
+                      <ion-item>
+                        <ion-input labelPlacement="stacked" label="Estado :" [value]="paciente?.endereco?.estado" readonly></ion-input>
+                      </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-list>
+              <ion-button class="card-botao-alterar" fill="clear" (click)="mudarStatusAlterarEndereco()">Alterar</ion-button>
+            </div>
+
+          </ng-template>
+          <ng-template #templateAlteraEndereco>
+            <form [formGroup]="pacienteFormCep" (ngSubmit)="onSubmitCep()">
+              <ion-list>
+                <ion-item>
+                  <ion-input formControlName="cep" fill="outline" placeholder="Cep"></ion-input>
+                </ion-item>
+
+                <ion-text color="danger" *ngIf="campoEstaInvalido('cep',pacienteFormCep)">
+                  <p class="mensagem-erro" *ngIf="pacienteFormCep.get('cep')?.errors?.['pattern']">Somente números são aceitos.</p>
+                  <p class="mensagem-erro" *ngIf="pacienteFormCep.get('cep')?.errors?.['minlength'] ||
+                    pacienteFormCep.get('cep')?.errors?.['required']">Cep tem que ter no minimo 8 caracteres.</p>
+                  <p class="mensagem-erro" *ngIf="pacienteFormCep.get('cep')?.errors?.['maxlength']">Cep tem que ter no máximo 8 caracteres.</p>
+                </ion-text>
+              </ion-list>
+              <div class="card-botoes-form">
+                <ion-button (click)="mudarStatusAlterarEndereco()">Cancelar</ion-button>
+                <ion-button type="submit">Salvar</ion-button>
+              </div>
+            </form>
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card  class="card">
+        <ion-card-content>
+          <div *ngIf="naoQuerAlterarSenha; else templateAlterarSenha">
+            <div class="card-conteudo-2">
+              <div class="card-conteudo-container">
+                <ion-icon class="icone-senha" name="lock-closed-outline"></ion-icon>
+                <h2>Alterar Senha</h2>
+              </div>
+                <ion-button class="card-botao-seta" fill="clear" (click)="mudarStatusAlterarSenha()">
+                  <ion-icon class="icone-seta" name="chevron-down-outline"></ion-icon>
+                </ion-button>
+            </div>
+          </div>
+          <ng-template #templateAlterarSenha>
+            <div class="card-conteudo-2">
+              <div class="card-conteudo-container">
+                <ion-icon class="icone-senha" name="lock-closed-outline"></ion-icon>
+                <h2>Alterar Senha</h2>
+              </div>
+                <ion-button class="card-botao-seta" fill="clear" (click)="mudarStatusAlterarSenha()">
+                  <ion-icon class="icone-seta" name="chevron-up-outline"></ion-icon>
+                </ion-button>
+            </div>
+            <form [formGroup]="pacienteFormSenha" (ngSubmit)="onSubmitSenha()">
+              <ion-list>
+                <ion-item>
+                  <ion-input formControlName="senha" type="password" fill="outline" placeholder="Nova senha"></ion-input>
+                </ion-item>
+
+                <ion-text color="danger" *ngIf="campoEstaInvalido('senha',pacienteFormSenha)">
+                  <p class="mensagem-erro" *ngIf="pacienteFormSenha.get('senha')?.errors?.['minlength'] ||
+                    pacienteFormSenha.get('senha')?.errors?.['required']">Senha tem que ter no minimo 3 caracteres.</p>
+                  <p class="mensagem-erro" *ngIf="pacienteFormSenha.get('senha')?.errors?.['maxlength']">Senha tem que ter no máximo 16 caracteres.</p>
+                </ion-text>
+              </ion-list>
+              <div class="card-botoes-form">
+                <ion-button (click)="mudarStatusAlterarSenha()">Cancelar</ion-button>
+                <ion-button type="submit">Salvar</ion-button>
+              </div>
+            </form>
+          </ng-template>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="card">
+        <ion-card-content>
+          <div class="card-conteudo-2">
+            <div class="card-conteudo-container">
+              <ion-icon class="icone-avaliacao" name="star-half-outline"></ion-icon>
+              <h2>Avaliar Aplicativo</h2>
+            </div>
+              <ion-button class="card-botao-seta" fill="clear">
+                <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+              </ion-button>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+
+        <ion-card class="card">
+          <ion-card-content>
+            <ion-button (click)="deslogar()" class="card-botao-deslogar" fill="clear">
+              <div class="card-conteudo-container">
+                <ion-icon class="icone-sair" name="exit-outline"></ion-icon>
+                <h2 class="texto-deslogar">Sair da conta</h2>
+              </div>
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+
+    </section>
+    </main>
 </ion-content>

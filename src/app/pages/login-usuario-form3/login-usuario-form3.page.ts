@@ -42,13 +42,13 @@ export class LoginUsuarioForm3Page implements OnInit {
       email: [this.pacienteDaDo.email],
       senha: [this.pacienteDaDo.senha],
       endereco: this.fb.group({
-        cep: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-9]*$/)]],
-        numero: ['', Validators.pattern(/^[0-9]*$/)],
-        complemento: [''],
-        bairro: ['', Validators.required],
-        logradouro: ['', Validators.required],
-        cidade: ['', Validators.required],
-        estado: ['', Validators.required]
+        cep: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(8),Validators.pattern(/^[0-9]*$/)]],
+        numero: [null, Validators.pattern(/^[0-9]*$/)],
+        complemento: [null],
+        bairro: [null, Validators.required],
+        logradouro: [null, Validators.required],
+        cidade: [null, Validators.required],
+        estado: [null, Validators.required]
       }),
     });
 

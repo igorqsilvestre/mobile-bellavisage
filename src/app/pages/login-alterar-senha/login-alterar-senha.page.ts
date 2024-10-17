@@ -26,9 +26,9 @@ export class LoginAlterarSenhaPage implements OnInit {
   ngOnInit(): void {
     this.pacienteForm = this.fb.group(
       {
-      email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      senha: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
-      confirmarSenha: ['', [Validators.required]]
+      email: [null, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      senha: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
+      confirmarSenha: [null, [Validators.required]]
       }, { validators: this.verificaSenhasIguais.bind(this) });
   }
 
@@ -37,13 +37,15 @@ export class LoginAlterarSenhaPage implements OnInit {
     if (this.pacienteForm.valid) {
         const paciente = this.pacienteForm.value as Paciente;
         try {
-            const data = await this.pacienteRepository.getPacienteByEmail(paciente.email);
-            if (data) {
-                await this.pacienteRepository.updatePacienteSenha(data, paciente.senha)
-                await this.presentAlert('sucesso', 'Senha alterada com sucesso!');
-                this.route.navigate(['/login']);
-            } else {
-                await this.presentAlert('erro', 'E-mail não encontrado.');
+            if(paciente && paciente.email){
+              const data = await this.pacienteRepository.getPacienteByEmail(paciente.email);
+              if (data) {
+                  await this.pacienteRepository.updatePacienteParcialmente(data.id, { senha: paciente.senha });
+                  await this.presentAlert('sucesso', 'Senha alterada com sucesso!');
+                  this.route.navigate(['/login']);
+              } else {
+                  await this.presentAlert('erro', 'E-mail não encontrado.');
+              }
             }
         } catch (error) {
             await this.presentAlert('erro', 'Ocorreu um erro ao tentar alterar senha.');

@@ -1,36 +1,103 @@
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  
-  .profile-image {
-    width: 100px; /* Tamanho do círculo */
-    height: 100px; /* Tamanho do círculo */
-    border-radius: 50%; /* Faz a imagem ser circular */
-    object-fit: cover; /* Cobre a área da imagem */
-    border: 3px solid #fff; /* Borda branca em torno da imagem */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
-  }
-  
-  .profile-image.default {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background-color: #ddd; /* Cor de fundo padrão */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: #888;
-    border: 3px solid #fff; /* Borda branca */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
-  }
-  
-  .upload-button {
-    margin-top: 10px;
-    background-color: #3f729b; /* Cor do botão */
-    color: #fff; /* Cor do texto do botão */
-  }
+.principal{
+  padding: 0 1em;
+}
+
+.container-logo{
+  width: 40%;
+  margin: 1em 0;
+}
+
+ion-icon{
+  font-size: 22px;
+}
+
+button{
+  background: #950341;
+  padding: 0.3em;
+  border-radius: 8px;
+}
+
+.container-titulo, .container-botao-titular{
+  display: flex;
+  justify-content: center;
+}
+
+.container-titulo{
+  align-items: baseline;
+  margin-top: 2em;
+  gap:0.3em
+}
+
+.container-botao-titular button{
+  background-color: #dadada;
+  padding: 0.6em;
+  border-radius: 16px;
+  font-family: 'Public Sans';
+}
+
+h1, .icone-user, .card-icone,.card-botao-alterar,
+  .icone-endereco,.icone-seta,.icone-senha,.icone-avaliacao,.icone-sair,.texto-deslogar{
+  color:#950341;
+}
+
+.icone-endereco, .icone-senha, .icone-avaliacao{
+  background: #dadada ;
+  border-radius: 16px;
+  padding: 0.3em;
+}
+
+.card{
+  margin: 4em 0;
+}
+
+.card-subtitulo{
+  color:  #6B6E71;
+}
+
+.card-conteudo{
+  display: flex;
+  gap:4px;
+  margin-top: 0.5em;
+}
+
+.card-conteudo-2{
+  justify-content: space-between;
+}
+
+.card-conteudo-container{
+  gap:4px;
+}
+
+.card-conteudo-2,.card-conteudo-container{
+  display: flex;
+  align-items: center;
+}
+
+.card-texto{
+  color: #000;
+}
+
+.card-botao-alterar{
+  --background: none;
+  margin-top: 0.8em;
+  margin-left: 70%;
+}
+
+.card-botao-seta,.card-botao-deslogar{
+  --background: none;
+}
+
+.card-botao-deslogar{
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+ion-button{
+  width: 30%;
+}
+
+.card-botoes-form{
+  display: flex;
+  justify-content: center;
+}

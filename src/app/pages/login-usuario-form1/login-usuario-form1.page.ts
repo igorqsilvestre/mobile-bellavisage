@@ -24,9 +24,9 @@ export class LoginUsuarioForm1Page implements OnInit {
   ngOnInit() {
     this.pacienteForm = this.fb.group(
       {
-      email: ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      senha: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
-      confirmarSenha: ['', Validators.required]
+      email: [null, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
+      senha: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(16)]],
+      confirmarSenha: [null, Validators.required]
       }, { validators: this.verificaSenhasIguais.bind(this) });
   }
 

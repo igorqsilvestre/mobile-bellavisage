@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DatabaseSqliteService } from './database-sqlite.service';
 import { Paciente } from '../models/paciente';
+import { PacienteUpdate } from '../models/paciente-update';
 
 @Injectable({
   providedIn: 'root'
@@ -60,12 +61,73 @@ export class PacienteSqliteService {
     }
   }
 
-  // Atualizar senha do paciente no SQLite
-  public async updatePacienteSenha(id: number, novaSenha: string): Promise<void> {
+  // Atualizar paciente no SQLite genérico
+  public async updatePacienteParcialmente(id: number, pacienteUpdate: PacienteUpdate): Promise<boolean> {
     if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
-      const query = `UPDATE paciente SET senha = ? WHERE id = ?`;
-      await this.databaseService.executeSql(query, [novaSenha, id]);
+      const updates: string[] = [];
+      const params: any[] = [];
+
+      if (pacienteUpdate.senha) {
+        updates.push(`senha = ?`);
+        params.push(pacienteUpdate.senha);
+      }
+      if (pacienteUpdate.email) {
+        updates.push(`email = ?`);
+        params.push(pacienteUpdate.email);
+      }
+
+      if (pacienteUpdate.telefone) {
+        updates.push(`telefone = ?`);
+        params.push(pacienteUpdate.telefone);
+      }
+
+      // Atualiza os campos do endereço
+      if (pacienteUpdate.endereco) {
+        const endereco = pacienteUpdate.endereco;
+        if (endereco.cep) {
+          updates.push(`cep = ?`);
+          params.push(endereco.cep);
+        }
+        if (endereco.numero) {
+          updates.push(`numero = ?`);
+          params.push(endereco.numero);
+        }
+        if (endereco.complemento) {
+          updates.push(`complemento = ?`);
+          params.push(endereco.complemento);
+        }
+        if (endereco.bairro) {
+          updates.push(`bairro = ?`);
+          params.push(endereco.bairro);
+        }
+        if (endereco.logradouro) {
+          updates.push(`logradouro = ?`);
+          params.push(endereco.logradouro);
+        }
+        if (endereco.cidade) {
+          updates.push(`cidade = ?`);
+          params.push(endereco.cidade);
+        }
+        if (endereco.estado) {
+          updates.push(`estado = ?`);
+          params.push(endereco.estado);
+        }
+      }
+
+      if (updates.length > 0) {
+        const query = `UPDATE paciente SET ${updates.join(', ')} WHERE id = ?`;
+        params.push(id);
+
+        try {
+          await this.databaseService.executeSql(query, params);
+          return true; // Atualização bem-sucedida
+        } catch (error) {
+          console.error('Erro ao atualizar paciente:', error);
+          return false; // Atualização falhou
+        }
+      }
     }
+    return false; // Nenhuma atualização foi feita
   }
 
   // Buscar paciente por email e senha no SQLite
@@ -81,6 +143,22 @@ export class PacienteSqliteService {
       }
     }else{
       return null
+    }
+  }
+
+  // Buscar paciente por id no SQLite
+  public async getPacienteById(id: number): Promise<Paciente | null> {
+    if (this.databaseService.isSQLite(this.databaseService.dbInstance)) {
+      const query = 'SELECT * FROM paciente WHERE id = ?';
+      const result = await this.databaseService.executeSql(query, [id]);
+      if (result.rows.length > 0) {
+        const row = result.rows.item(0);
+        return this.mapRowToPaciente(row);
+      } else {
+        return null;
+      }
+    } else {
+     return null;
     }
   }
 
