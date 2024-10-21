@@ -1,0 +1,75 @@
+<div class="emoji-container">
+
+  <!-- Carinha Irritada -->
+  <div class="emoji-wrapper">
+    <button class="emoji-button" (click)="selecionarEmoji('raiva')">
+      <div class="emoji angry">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
+      </div>
+    </button>
+    <div class="selection" [class.selected]="emojiAtual === 'raiva'"></div>
+  </div>
+
+
+
+  <!-- Carinha Triste -->
+  <div class="emoji-wrapper">
+    <button class="emoji-button" (click)="selecionarEmoji('triste')">
+      <div class="emoji sad">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
+      </div>
+    </button>
+    <div class="selection" [class.selected]="emojiAtual === 'triste'"></div>
+  </div>
+
+
+
+  <!-- Carinha Neutra -->
+  <div class="emoji-wrapper">
+    <button class="emoji-button" (click)="selecionarEmoji('neutro')">
+      <div class="emoji neutral">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
+      </div>
+    </button>
+    <div class="selection" [class.selected]="emojiAtual === 'neutro'"></div>
+  </div>
+
+
+
+   <!-- Carinha Feliz -->
+   <div class="emoji-wrapper">
+    <button class="emoji-button" (click)="selecionarEmoji('feliz')">
+      <div class="emoji happy">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
+      </div>
+   </button>
+   <div class="selection" [class.selected]="emojiAtual === 'feliz'"></div>
+  </div>
+
+
+
+  <!-- Carinha Sorridente -->
+  <div class="emoji-wrapper">
+    <button class="emoji-button" (click)="selecionarEmoji('sorridente')">
+      <div class="emoji smiling">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="mouth"></div>
+      </div>
+    </button>
+    <div class="selection" [class.selected]="emojiAtual === 'sorridente'"></div>
+  </div>
+
+</div>
+<div class="container-texto">
+  <p>Muito insatisfeito</p>
+  <p>Muito satisfeito</p>
+</div>

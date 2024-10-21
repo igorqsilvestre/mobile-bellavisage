@@ -22,8 +22,9 @@ export class FeedbackPage implements OnInit {
     this.navCtrl.back();
   }
 
-  selecionarEmoji(emoji:string){
-    this.emojiSelecionado = emoji;
+  onEmojiSelecionado(emoji: string) {
+    this.emojiSelecionado = emoji; // Armazena o emoji selecionado
+    console.log('Emoji selecionado:', emoji); // Exibe no console para verificação
   }
 
 }

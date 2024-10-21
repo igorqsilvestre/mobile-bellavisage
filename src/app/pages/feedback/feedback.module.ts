@@ -7,14 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { FeedbackPageRoutingModule } from './feedback-routing.module';
 
 import { FeedbackPage } from './feedback.page';
+import { EmojisComponent } from 'src/app/shared/components/emojis/emojis.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    FeedbackPageRoutingModule
+    FeedbackPageRoutingModule,
+
   ],
-  declarations: [FeedbackPage]
+  declarations: [FeedbackPage, EmojisComponent]
 })
 export class FeedbackPageModule {}
