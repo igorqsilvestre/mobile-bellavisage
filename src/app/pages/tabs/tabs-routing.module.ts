@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('../agendamento-form2/agendamento-form2.module').then(m => m.AgendamentoForm2PageModule)
       },
       {
+        path: 'avaliacao',
+        loadChildren: () => import('../feedback/feedback.module').then(m => m.FeedbackPageModule)
+      },
+      {
         path: '',
         redirectTo: 'tab1',
         pathMatch: 'full'

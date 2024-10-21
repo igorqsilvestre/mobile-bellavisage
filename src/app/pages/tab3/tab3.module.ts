@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Tab3Page } from './tab3.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab3PageRoutingModule } from './tab3-routing.module';
 import { TelefoneMaskDirective } from 'src/app/directives/telefone-mask.directive';
@@ -14,7 +13,6 @@ import { TelefoneMaskDirective } from 'src/app/directives/telefone-mask.directiv
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    ExploreContainerComponentModule,
     Tab3PageRoutingModule,
     TelefoneMaskDirective
   ],

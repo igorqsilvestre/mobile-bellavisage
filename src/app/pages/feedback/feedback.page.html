@@ -1,0 +1,103 @@
+<ion-content>
+  <main class="principal">
+    <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
+    <div class="container-titulo">
+      <button (click)="voltarPaginaAnterior()">
+        <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
+      </button>
+      <h1> Avaliar aplicativo</h1>
+      <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
+    </div>
+
+    <section>
+      <div class="emoji-container">
+
+        <!-- Carinha Irritada -->
+        <div class="emoji-wrapper">
+          <button class="emoji-button" (click)="selecionarEmoji('raiva')">
+            <div class="emoji angry">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+          </button>
+          <div class="selection" [class.selected]="emojiSelecionado === 'raiva'"></div>
+        </div>
+
+
+
+        <!-- Carinha Triste -->
+        <div class="emoji-wrapper">
+          <button class="emoji-button" (click)="selecionarEmoji('triste')">
+            <div class="emoji sad">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+          </button>
+          <div class="selection" [class.selected]="emojiSelecionado === 'triste'"></div>
+        </div>
+
+
+
+        <!-- Carinha Neutra -->
+        <div class="emoji-wrapper">
+          <button class="emoji-button" (click)="selecionarEmoji('neutro')">
+            <div class="emoji neutral">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+          </button>
+          <div class="selection" [class.selected]="emojiSelecionado === 'neutro'"></div>
+        </div>
+
+
+
+         <!-- Carinha Feliz -->
+         <div class="emoji-wrapper">
+          <button class="emoji-button" (click)="selecionarEmoji('feliz')">
+            <div class="emoji happy">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+         </button>
+         <div class="selection" [class.selected]="emojiSelecionado === 'feliz'"></div>
+        </div>
+
+
+
+        <!-- Carinha Sorridente -->
+        <div class="emoji-wrapper">
+          <button class="emoji-button" (click)="selecionarEmoji('sorridente')">
+            <div class="emoji smiling">
+              <div class="eye left"></div>
+              <div class="eye right"></div>
+              <div class="mouth"></div>
+            </div>
+          </button>
+          <div class="selection" [class.selected]="emojiSelecionado === 'sorridente'"></div>
+        </div>
+
+      </div>
+      <div class="container-texto">
+        <p>Muito insatisfeito</p>
+        <p>Muito satisfeito</p>
+      </div>
+    </section>
+
+    <section>
+      <h3 class="titulo-feedback">Compartilhe sua experiência</h3>
+      <form>
+        <div class="container-feedback">
+          <textarea></textarea>
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+
+    </section>
+
+
+  </main>
+</ion-content>
