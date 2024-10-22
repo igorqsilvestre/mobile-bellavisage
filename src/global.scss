@@ -76,10 +76,12 @@ p{
 
 ion-searchbar.custom {
   --background: #FAFAFA;
-  --color: #fff;
   --placeholder-color: #000;
-  --icon-color: #000;
   --border-radius: 8px;
+}
+
+ion-searchbar .searchbar-clear-icon {
+  color: #6B6E71; /* Escolha a cor desejada */
 }
 
 .label-text{
