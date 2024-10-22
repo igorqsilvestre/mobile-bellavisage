@@ -124,7 +124,69 @@ export class AgendamentoForm1Page{
           horarios: null
         },
       ]
-    }
+    },
+    {
+      id: 5,
+      nome: 'Carboxiterapia',
+      preco: 2200,
+      avaliacao: 5.0,
+      imagemPequena: 'assets/carboxiterapia.jpg',
+      imagemMaior: 'assets/carboxiterapia-maior.jpg',
+      descricao: `A carboxiterapia é um tratamento estético e terapêutico que envolve a injeção de dióxido de carbono (CO₂) sob a pele com
+        a finalidade de melhorar a circulação, estimular a produção de colágeno e promover a oxigenação dos tecidos.`,
+      especialistas: [
+        {
+          id:1,
+          nome:'Dra Fernanda',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
+        {
+          id:2,
+          nome:'Dr Pedro',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
+        {
+          id:3,
+          nome:'Dr Renan',
+          especialidade: 'Biomedico',
+          horarios: null
+        },
+        {
+          id:4,
+          nome:'Dra Amanda',
+          especialidade: 'Biomedica',
+          horarios: null
+        },
+      ]
+    },
+    {
+      id: 6,
+      nome: 'Ultrassom microfocado',
+      preco: 366,
+      avaliacao: 4.7,
+      imagemPequena: 'assets/Ultrassom-microfocado.jpg',
+      imagemMaior: 'assets/Ultrassom-microfocado-maior.jpg',
+      descricao: `É um tratamento estético não invasivo que utiliza ondas
+        de ultrassom para penetrar nas camadas mais profundas da pele, promovendo o
+        quecimento controlado do tecido. Esse calor estimula a produção de colágeno e elastina, resultando em um efeito de lifting e firmeza da pele. `,
+      especialistas: [
+        {
+          id:1,
+          nome:'Dr Rai',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
+        {
+          id:2,
+          nome:'Dr Andre',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
+
+      ]
+    },
   ]
 
 
