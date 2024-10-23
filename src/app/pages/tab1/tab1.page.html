@@ -5,7 +5,7 @@
       <span><a class="sair" (click)="deslogar()">Sair</a></span>
     </div>
     <h1><span class="titulo">Olá</span> {{ pacienteNome }} !</h1>
-    <ion-searchbar placeholder="Pesquisar" class="custom"></ion-searchbar>
+    <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" placeholder="Pesquisar agendamentos" class="custom"></ion-searchbar>
 
     <section>
       <h2>Serviços</h2>

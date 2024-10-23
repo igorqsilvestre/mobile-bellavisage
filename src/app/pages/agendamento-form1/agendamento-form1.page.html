@@ -6,12 +6,12 @@
       <button (click)="voltarPaginaAnterior()">
         <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
       </button>
-      <ion-searchbar placeholder="Pesquisar" class="custom"></ion-searchbar>
+      <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" placeholder="Pesquisar por nome" class="custom"></ion-searchbar>
     </div>
 
 
     <section>
-      <ion-card class="card-agendamentos" *ngFor="let tratamento of tratamentos">
+      <ion-card class="card-agendamentos" *ngFor="let tratamento of tratamentosAExibir">
         <img [src]="tratamento.imagemPequena" [alt]="tratamento.nome"/>
         <ion-card-content>
           <ion-card-subtitle >{{ tratamento.nome }}</ion-card-subtitle>

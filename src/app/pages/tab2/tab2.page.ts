@@ -27,6 +27,15 @@ export class Tab2Page{
     this.atualizarLista();
   }
 
+  handleInput(event:CustomEvent) {
+    const query = event.detail.value.toLowerCase() as string;
+    if(query.trim() === ""){
+      this.atualizarLista();
+    }else{
+      this.agendamentos = this.agendamentos.filter((d) => d.nomeTratamento.toLowerCase().indexOf(query) > -1);
+    }
+  }
+
 
   voltarPaginaAnterior(){
     this.navCtrl.back();

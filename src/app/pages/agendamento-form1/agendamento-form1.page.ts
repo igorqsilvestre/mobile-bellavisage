@@ -8,9 +8,11 @@ import { Tratamento } from 'src/app/models/tratamento';
   templateUrl: './agendamento-form1.page.html',
   styleUrls: ['./agendamento-form1.page.scss'],
 })
-export class AgendamentoForm1Page{
+export class AgendamentoForm1Page implements OnInit{
 
-  tratamentos:Tratamento[] = [
+  tratamentosAExibir!: Tratamento[];
+
+  private tratamentos:Tratamento[] = [
     {
       id: 1,
       nome: 'Pilling de Diamante',
@@ -194,8 +196,18 @@ export class AgendamentoForm1Page{
     private router: Router
   ) { }
 
+
+  ngOnInit(): void {
+    this.tratamentosAExibir = this.tratamentos;
+  }
+
   voltarPaginaAnterior(){
     this.navCtrl.back();
+  }
+
+  handleInput(event:CustomEvent) {
+    const query = event.detail.value.toLowerCase();
+    this.tratamentosAExibir = this.tratamentos.filter((d) => d.nome.toLowerCase().indexOf(query) > -1);
   }
 
   irParaProximaPaginaCadastro(tratamento: Tratamento){
