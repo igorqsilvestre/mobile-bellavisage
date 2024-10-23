@@ -32,6 +32,10 @@ const routes: Routes = [
         loadChildren: () => import('../feedback/feedback.module').then(m => m.FeedbackPageModule)
       },
       {
+        path: 'lista-tratamentos',
+        loadChildren: () => import('../lista-tratamentos/lista-tratamentos.module').then( m => m.ListaTratamentosPageModule)
+      },
+      {
         path: '',
         redirectTo: 'tab1',
         pathMatch: 'full'

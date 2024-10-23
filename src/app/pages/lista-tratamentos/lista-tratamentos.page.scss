@@ -1,0 +1,41 @@
+.principal{
+    padding: 0 1em;
+  }
+  
+  .container-logo{
+    width: 40%;
+    margin: 1em 0;
+  }
+
+  .container-titulo{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+   }
+
+  ion-icon{
+    font-size: 22px;
+  }
+  
+   ion-button{
+    --background: none;
+    --color: #950341;
+    --border-color: #950341;
+    width: 80px;
+  }
+  
+  button{
+    background: #950341;
+    padding: 0.3em;
+    border-radius: 8px;
+  }
+
+  .navegacao-pagina{
+    text-align: center;
+    margin-top: 0.5em;
+  }
+
+  a{
+    padding-right: 0.5em;
+  }
