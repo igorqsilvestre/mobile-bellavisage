@@ -8,32 +8,137 @@
       <h1>Lista de tratamentos</h1>
       <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
-    
+
     <nav class="navegacao-pagina">
-      <a>C |</a>
-      <a>D |</a>
-      <a>H |</a>
-      <a>L |</a>
-      <a>P |</a>
-      <a>U</a>
+      <a class="scroll-link" data-target="c">C |</a>
+      <a class="scroll-link" data-target="d">D |</a>
+      <a class="scroll-link" data-target="h">H |</a>
+      <a class="scroll-link" data-target="l">L |</a>
+      <a class="scroll-link" data-target="p">P |</a>
+      <a class="scroll-link" data-target="u">U</a>
     </nav>
 
     <section class="sessao-tratamentos">
-      <div>
-        <h2><a>C</a></h2>
+      <div id="c" class="container-tratamentos">
+        <h2 class="titulo-letra"><a>C</a></h2>
         <ul>
           <li>
-            <button></button>
+            <ion-card class="card">
+              <ion-card-content>
+                <div class="card-conteudo">
+                  <h2>Carboxiterapia</h2>
+                  <ion-button class="card-botao-seta" fill="clear">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
           </li>
         </ul>
       </div>
-      <!--
-      <div>D</div>
-      <div>H</div>
-      <div>L</div>
-      <div>P</div>
-      <div>U</div>
-      -->
+
+      <div id="d" class="container-tratamentos">
+        <h2 class="titulo-letra"><a>D</a></h2>
+        <ul>
+          <li>
+            <ion-card class="card">
+              <ion-card-content>
+                <div class="card-conteudo">
+                  <h2>Depilação a laser</h2>
+                  <ion-button class="card-botao-seta" fill="clear">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </li>
+
+          <li>
+            <ion-card class="card">
+              <ion-card-content>
+                <div class="card-conteudo">
+                  <h2>Drenagem Linfática</h2>
+                  <ion-button class="card-botao-seta" fill="clear">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </li>
+        </ul>
+      </div>
+
+      <div id="h" class="container-tratamentos">
+        <h2 class="titulo-letra"><a>H</a></h2>
+        <ul>
+          <li>
+            <ion-card class="card">
+              <ion-card-content>
+                <div class="card-conteudo">
+                  <h2>Hiperidrose - Suor Excessivo</h2>
+                  <ion-button class="card-botao-seta" fill="clear">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </li>
+        </ul>
+      </div>
+
+      <div id="l" class="container-tratamentos">
+        <h2 class="titulo-letra"><a>L</a></h2>
+        <ul>
+          <li>
+            <ion-card class="card">
+              <ion-card-content>
+                <div class="card-conteudo">
+                  <h2>Laser de Vênus</h2>
+                  <ion-button class="card-botao-seta" fill="clear">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </li>
+        </ul>
+      </div>
+
+      <div id="p" class="container-tratamentos">
+        <h2 class="titulo-letra"><a>P</a></h2>
+        <ul>
+          <li>
+            <ion-card class="card">
+              <ion-card-content>
+                <div class="card-conteudo">
+                  <h2>Pilling de Diamante</h2>
+                  <ion-button class="card-botao-seta" fill="clear">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </li>
+        </ul>
+      </div>
+
+      <div id="u" class="container-tratamentos">
+        <h2 class="titulo-letra"><a>U</a></h2>
+        <ul>
+          <li>
+            <ion-card class="card">
+              <ion-card-content>
+                <div class="card-conteudo">
+                  <h2>Ultrassom microfocado</h2>
+                  <ion-button class="card-botao-seta" fill="clear">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                  </ion-button>
+                </div>
+              </ion-card-content>
+            </ion-card>
+          </li>
+        </ul>
+      </div>
     </section>
   </main>
 </ion-content>
