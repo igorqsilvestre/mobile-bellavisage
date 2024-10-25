@@ -15,43 +15,13 @@ export class AgendamentoForm1Page implements OnInit{
   private tratamentos:Tratamento[] = [
     {
       id: 1,
-      nome: 'Pilling de Diamante',
-      preco: 200,
-      avaliacao: 4.9,
-      imagemPequena: 'assets/Peeling-Quimico.jpg',
-      imagemMaior: 'assets/Peeling-Quimico-Maior.jpg',
-      descricao: `O peeling de diamante é um procedimento estético que realiza uma esfoliação profunda da pele, removendo células mortas e impurezas.
-        É feito com uma caneta que possui uma ponteira com lixa diamantada e um sistema de vácuo que aspira a pele`,
-      especialistas: [
-        {
-          id:1,
-          nome:'Dr Alessandro',
-          especialidade: 'Dermatologista',
-          horarios: null
-        },
-        {
-          id:2,
-          nome:'Dra Andreia',
-          especialidade: 'Dermatologista',
-          horarios: null
-        },
-        {
-          id:3,
-          nome:'Dr Romulo',
-          especialidade: 'Dermatologista',
-          horarios: null
-        }
-      ]
-    },
-    {
-      id: 2,
-      nome: 'Laser de Vênus',
-      preco: 1000,
+      nome: 'Carboxiterapia',
+      preco: 2200,
       avaliacao: 5.0,
-      imagemPequena: 'assets/Laser-Venus.jpg',
-      imagemMaior: 'assets/Laser-Venus-Maior.jpg',
-      descricao: `O Venus Laser é uma tecnologia avançada utilizada para procedimentos estéticos e dermatológicos,
-      focada em melhorar a aparência da pele e tratar diversas condições. Ele usa uma combinação de energia laser e radiofrequência que penetra nas camadas mais profundas da pele`,
+      imagemPequena: 'assets/carboxiterapia.jpg',
+      imagemMaior: 'assets/carboxiterapia-maior.jpg',
+      descricao: `A carboxiterapia é um tratamento estético e terapêutico que envolve a injeção de um gás sob a pele com
+        a finalidade de melhorar a circulação, estimular a produção de colágeno e promover a oxigenação dos tecidos.`,
       especialistas: [
         {
           id:1,
@@ -65,6 +35,42 @@ export class AgendamentoForm1Page implements OnInit{
           especialidade: 'Dermatologista',
           horarios: null
         },
+        {
+          id:3,
+          nome:'Dr Renan',
+          especialidade: 'Biomedico',
+          horarios: null
+        },
+        {
+          id:4,
+          nome:'Dra Amanda',
+          especialidade: 'Biomedica',
+          horarios: null
+        },
+      ]
+    },
+    {
+      id: 2,
+      nome: 'Depilação a laser',
+      preco: 431,
+      avaliacao: 4.2,
+      imagemPequena: 'assets/Depilacao-a-laser.jpg',
+      imagemMaior: 'assets/Depilacao-a-laser-Maior.jpg',
+      descricao: `A depilação a laser é um tratamento estético utilizado para remover os pelos de forma duradoura, através da aplicação de luz concentrada emitida por um aparelho de laser.
+        Essa luz penetra na pele e atinge o folículo piloso, onde o pelo cresce, destruindo-o gradualmente e impedindo que novos pelos se formem.`,
+      especialistas: [
+        {
+          id:1,
+          nome:'Dr Lucas',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
+        {
+          id:2,
+          nome:'Dra Andreia',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
       ]
     },
     {
@@ -74,8 +80,11 @@ export class AgendamentoForm1Page implements OnInit{
       avaliacao: 3.1,
       imagemPequena: 'assets/Drenagem-lifatica.jpg',
       imagemMaior: 'assets/Drenagem-lifatica-Maior.jpg',
-      descricao: `É uma técnica desenvolvida com o intuito de remover líquido e resíduos extra-celulares dos tecidos.
-      Tradicionalmente é realizada de forma manual, mas pode ser realizada também pelo aparelho de endermoterapia`,
+      descricao: `
+      É uma técnica desenvolvida com o intuito de remover líquido e resíduos extra-celulares dos tecidos.
+      Tradicionalmente é realizada de forma manual, mas pode ser realizada também pelo aparelho de endermoterapia,
+      aplicando-se uma pressão leve e de baixa velocidade em direção aos gânglios linfáticos.
+      `,
       especialistas: [
         {
           id:1,
@@ -129,13 +138,13 @@ export class AgendamentoForm1Page implements OnInit{
     },
     {
       id: 5,
-      nome: 'Carboxiterapia',
-      preco: 2200,
+      nome: 'Laser de Vênus',
+      preco: 1000,
       avaliacao: 5.0,
-      imagemPequena: 'assets/carboxiterapia.jpg',
-      imagemMaior: 'assets/carboxiterapia-maior.jpg',
-      descricao: `A carboxiterapia é um tratamento estético e terapêutico que envolve a injeção de dióxido de carbono (CO₂) sob a pele com
-        a finalidade de melhorar a circulação, estimular a produção de colágeno e promover a oxigenação dos tecidos.`,
+      imagemPequena: 'assets/Laser-Venus.jpg',
+      imagemMaior: 'assets/Laser-Venus-Maior.jpg',
+      descricao: `O Venus Laser é uma tecnologia avançada utilizada para procedimentos estéticos e dermatológicos,
+      focada em melhorar a aparência da pele e tratar diversas condições. Ele usa uma combinação de energia laser e radiofrequência que penetra nas camadas mais profundas da pele`,
       especialistas: [
         {
           id:1,
@@ -149,22 +158,40 @@ export class AgendamentoForm1Page implements OnInit{
           especialidade: 'Dermatologista',
           horarios: null
         },
-        {
-          id:3,
-          nome:'Dr Renan',
-          especialidade: 'Biomedico',
-          horarios: null
-        },
-        {
-          id:4,
-          nome:'Dra Amanda',
-          especialidade: 'Biomedica',
-          horarios: null
-        },
       ]
     },
     {
       id: 6,
+      nome: 'Pilling de Diamante',
+      preco: 200,
+      avaliacao: 4.9,
+      imagemPequena: 'assets/Peeling-Quimico.jpg',
+      imagemMaior: 'assets/Peeling-Quimico-Maior.jpg',
+      descricao: `O peeling de diamante é um procedimento estético que realiza uma esfoliação profunda da pele, removendo células mortas e impurezas.
+        É feito com uma caneta que possui uma ponteira com lixa diamantada e um sistema de vácuo que aspira a pele`,
+      especialistas: [
+        {
+          id:1,
+          nome:'Dr Alessandro',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
+        {
+          id:2,
+          nome:'Dra Andreia',
+          especialidade: 'Dermatologista',
+          horarios: null
+        },
+        {
+          id:3,
+          nome:'Dr Romulo',
+          especialidade: 'Dermatologista',
+          horarios: null
+        }
+      ]
+    },
+    {
+      id: 7,
       nome: 'Ultrassom microfocado',
       preco: 366,
       avaliacao: 4.7,

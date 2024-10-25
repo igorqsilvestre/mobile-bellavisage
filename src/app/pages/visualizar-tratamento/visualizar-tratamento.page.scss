@@ -1,0 +1,54 @@
+.principal{
+  padding: 0 1em;
+}
+
+.container-logo{
+  width: 40%;
+  margin: 1em 0;
+}
+
+.container-titulo{
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+ }
+
+ion-icon{
+  font-size: 22px;
+}
+
+button{
+  background: #950341;
+  padding: 0.3em;
+  border-radius: 8px;
+}
+
+img{
+  border-radius: 8px;
+  margin-top: 2em;
+}
+
+section h2{
+  font-size: 20px;
+  margin-top: 2em;
+}
+
+ion-text{
+  color:  #6B6E71;
+  font-family: 'Public Sans';
+}
+
+ul{
+  margin: 0; /* Remove o recuo padrão */
+  padding: 0; /* Remove o recuo interno */
+  list-style-position: inside; /* Garante que os marcadores fiquem dentro do espaço do padding */
+  font-family: 'Public Sans';
+  font-size: 16px;
+  color:  #6B6E71;
+  margin-bottom: 0.5em;
+}
+
+li::marker {
+  color: #950341;
+}

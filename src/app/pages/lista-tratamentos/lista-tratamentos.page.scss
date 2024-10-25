@@ -1,0 +1,79 @@
+.principal{
+    padding: 0 1em;
+  }
+
+  .container-logo{
+    width: 40%;
+    margin: 1em 0;
+  }
+
+  .container-titulo{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+   }
+
+  ion-icon{
+    font-size: 22px;
+  }
+
+   ion-button{
+    --background: none;
+    --color: #950341;
+    --border-color: #950341;
+    width: 80px;
+  }
+
+  button{
+    background: #950341;
+    padding: 0.3em;
+    border-radius: 8px;
+  }
+
+  .navegacao-pagina{
+    text-align: center;
+    margin-top: 0.5em;
+  }
+
+  a{
+    padding-right: 0.5em;
+  }
+
+  .sessao-tratamentos{
+    margin-top: 7em;
+    padding: 0 1.6em;
+  }
+
+  .container-tratamentos{
+    margin-top: 4em;
+  }
+
+  .titulo-letra{
+    border-bottom: 1px solid #950341;
+  }
+
+  ul{
+    list-style: none;
+    margin:0;
+    padding: 0;
+  }
+
+  .card{
+    margin: 1.5em 0;
+  }
+
+  .card-conteudo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  .card-botao-seta{
+    --background: none;
+  }
+
+  .icone-seta{
+    color:#950341;
+  }
