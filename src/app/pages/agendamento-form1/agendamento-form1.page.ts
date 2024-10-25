@@ -20,7 +20,7 @@ export class AgendamentoForm1Page implements OnInit{
       avaliacao: 5.0,
       imagemPequena: 'assets/carboxiterapia.jpg',
       imagemMaior: 'assets/carboxiterapia-maior.jpg',
-      descricao: `A carboxiterapia é um tratamento estético e terapêutico que envolve a injeção de dióxido de carbono (CO₂) sob a pele com
+      descricao: `A carboxiterapia é um tratamento estético e terapêutico que envolve a injeção de um gás sob a pele com
         a finalidade de melhorar a circulação, estimular a produção de colágeno e promover a oxigenação dos tecidos.`,
       especialistas: [
         {
@@ -80,8 +80,11 @@ export class AgendamentoForm1Page implements OnInit{
       avaliacao: 3.1,
       imagemPequena: 'assets/Drenagem-lifatica.jpg',
       imagemMaior: 'assets/Drenagem-lifatica-Maior.jpg',
-      descricao: `É uma técnica desenvolvida com o intuito de remover líquido e resíduos extra-celulares dos tecidos.
-      Tradicionalmente é realizada de forma manual, mas pode ser realizada também pelo aparelho de endermoterapia`,
+      descricao: `
+      É uma técnica desenvolvida com o intuito de remover líquido e resíduos extra-celulares dos tecidos.
+      Tradicionalmente é realizada de forma manual, mas pode ser realizada também pelo aparelho de endermoterapia,
+      aplicando-se uma pressão leve e de baixa velocidade em direção aos gânglios linfáticos.
+      `,
       especialistas: [
         {
           id:1,

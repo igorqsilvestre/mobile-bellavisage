@@ -36,6 +36,10 @@ const routes: Routes = [
         loadChildren: () => import('../lista-tratamentos/lista-tratamentos.module').then( m => m.ListaTratamentosPageModule)
       },
       {
+        path: 'visualizar-tratamento',
+        loadChildren: () => import('../visualizar-tratamento/visualizar-tratamento.module').then( m => m.VisualizarTratamentoPageModule)
+      },
+      {
         path: '',
         redirectTo: 'tab1',
         pathMatch: 'full'

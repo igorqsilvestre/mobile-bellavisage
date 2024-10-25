@@ -1,0 +1,33 @@
+
+<ion-content [fullscreen]="true">
+  <main class="principal">
+    <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
+    <div class="container-titulo">
+      <button (click)="voltarPaginaAnterior()">
+        <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
+      </button>
+      <h1>{{ tratamento.nome }}</h1>
+      <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
+    </div>
+
+    <img [src]="tratamento.imagemMaior" [alt]="tratamento.nome">
+
+    <section>
+      <h2>Descrição</h2>
+      <ion-text>
+        {{ tratamento.descricao }}
+      </ion-text>
+
+      <h2>Funcionamento</h2>
+      <ion-text>
+        {{ tratamento.funcionamento }}
+      </ion-text>
+    </section>
+
+    <h2>Indicações:</h2>
+    <ul>
+      <li *ngFor="let item of listaIndicacoes">{{ item }}</li>
+    </ul>
+
+  </main>
+</ion-content>
