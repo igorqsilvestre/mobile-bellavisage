@@ -4,6 +4,7 @@ import { PacienteSqliteService } from '../services/paciente-sqlite.service';
 import { Paciente } from '../models/paciente';
 import { firstValueFrom } from 'rxjs';
 import { ApiMysqlService } from '../services/api-mysql.service';
+import { Login } from '../models/Login';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,27 @@ export class PacienteRepository {
     }
 
   }
+
+
+  public async verificaCredenciaisLogin(login: Login): Promise<boolean> {
+    let existeLogin = false;
+    try {
+      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+      if(mysqlAtivo){
+        // Adiciona no MySQL via API
+        existeLogin = await firstValueFrom(this.apiMysqlService.existsLogin(login));
+      }else{
+         // Agora salva o paciente no SQLite
+        //await this.pacientesqliteService.addPaciente(paciente);
+      }
+      return existeLogin;
+
+    } catch (error) {
+      console.error('Erro ao adicionar paciente', error);
+      throw new Error('Erro ao adicionar paciente');
+    }
+  }
+
 
    // Atualizar senha do paciente no Mysql ou Sqlite
    public async updatePacienteParcialmente(id:number, pacienteUpdate: PacienteUpdate) : Promise<void>{
@@ -73,30 +95,7 @@ export class PacienteRepository {
     }
   }
 
-
-  // Buscar paciente por email e senha no Mysql ou Sqlite
-  public async getPacienteByEmailAndSenha(email: string, senha: string): Promise<any> {
-    let paciente = null;
-    try{
-      const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
-      if(mysqlAtivo){
-        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByEmailAndSenha(email, senha));
-        if(paciente){
-          return paciente;
-        }
-      }
-      paciente = await this.pacientesqliteService.getPacienteByEmailAndSenha(email, senha);
-      return paciente;
-
-
-    }catch(error){
-      console.error('Erro ao buscar paciente', error);
-      throw new Error('Erro ao buscar paciente');
-    }
-  }
-
-  // Buscar paciente por email no Mysql ou Sqlite
-  public async getPacienteByEmail(email: string): Promise<any> {
+  public async getPacienteByEmail(email: string): Promise<Paciente | null> {
     let paciente = null;
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
@@ -105,8 +104,9 @@ export class PacienteRepository {
         if(paciente){
           return paciente;
         }
+
       }
-      paciente = await this.pacientesqliteService.getPacienteByEmail(email);
+      //paciente = await this.pacientesqliteService.getPacienteByEmail(email);
       return paciente;
 
     }catch(error){
@@ -126,7 +126,7 @@ export class PacienteRepository {
           return paciente;
         }
       }
-      paciente = await this.pacientesqliteService.getPacienteByCPF(cpf);
+      //paciente = await this.pacientesqliteService.getPacienteByCPF(cpf);
       return paciente;
 
     }catch(error){

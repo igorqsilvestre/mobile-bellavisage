@@ -34,9 +34,9 @@ export class LoginUsuarioForm1Page implements OnInit {
     if(this.pacienteForm.valid){
       const paciente = this.pacienteForm.value as Paciente;
 
-      const data = await this.pacienteRepository.getPacienteByEmail(paciente.email);
+      const pacienteEncontrado = await this.pacienteRepository.getPacienteByEmail(paciente.email);
 
-      if(data !== null){
+      if(pacienteEncontrado !== null){
         await this.presentAlert('erro', ' E-mail já cadastrado.');
         throw new Error('E-mail já cadastrado');
       }

@@ -34,7 +34,7 @@ export class LoginUsuarioForm2Page implements OnInit {
 
     this.pacienteForm = this.fb.group(
       {
-      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(50)] ],
+      nome: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(100)] ],
       cpf: [null, [Validators.required, CpfUtilValidator.validate()]],
       telefone: [null, [Validators.required, Validators.minLength(15), Validators.maxLength(15)] ],
       dataNascimento: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(10), idadeValidator()] ],

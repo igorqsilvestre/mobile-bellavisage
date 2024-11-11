@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Paciente } from 'src/app/models/paciente';
+import { Login } from 'src/app/models/Login';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +14,18 @@ import { Paciente } from 'src/app/models/paciente';
 })
 export class LoginPage implements OnInit{
 
-  pacienteForm: FormGroup = this.fb.group({});;
+  loginForm: FormGroup = this.fb.group({});;
 
   constructor(
     private route: Router,
     private fb: FormBuilder,
-    private PacienteRepository: PacienteRepository,
+    private pacienteRepository: PacienteRepository,
     private alertController: AlertController,
     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.pacienteForm = this.fb.group(
+    this.loginForm = this.fb.group(
       {
       email: ['', [Validators.required]],
       senha: ['', [Validators.required]],
@@ -34,14 +34,17 @@ export class LoginPage implements OnInit{
 
 
   async onSubmit(){
-    if (this.pacienteForm.valid) {
-        const paciente = this.pacienteForm.value as Paciente;
+    if (this.loginForm.valid) {
+        const login = this.loginForm.value as Login;
         try {
-            const data = await this.PacienteRepository.getPacienteByEmailAndSenha(paciente.email, paciente.senha);
-            if (data) {
-                this.authService.realizarLogin();
-                await this.presentAlert('sucesso', 'Login realizado com sucesso!');
-                this.route.navigate(['/tabs/tab1'], { state:{data}} );
+            const pacienteExiste = await this.pacienteRepository.verificaCredenciaisLogin(login);
+            if (pacienteExiste) {
+                const paciente = await this.pacienteRepository.getPacienteByEmail(login.email);
+                if(paciente){
+                  this.authService.realizarLogin();
+                  await this.presentAlert('sucesso', 'Login realizado com sucesso!');
+                  this.route.navigate(['/tabs/tab1'], { state:{paciente}} );
+                }
             } else {
                 await this.presentAlert('erro', 'Usuário ou senha inválida.');
             }
@@ -49,13 +52,13 @@ export class LoginPage implements OnInit{
             await this.presentAlert('erro', 'Ocorreu um erro ao tentar fazer o login.');
         }
     } else {
-        this.marcarCamposInvalidosComoTocado(this.pacienteForm);
+        this.marcarCamposInvalidosComoTocado(this.loginForm);
     }
 }
 
 
   campoEstaInvalido(campo: string): boolean{
-    const control = this.pacienteForm.get(campo);
+    const control = this.loginForm.get(campo);
     return control ? control.invalid && (control.dirty || control.touched) : false;
   }
 

@@ -35,16 +35,16 @@ export class Tab1Page implements OnInit{
   ionViewDidEnter() {
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente){
-      this.pacienteNome = paciente.nome.split(" ")[0];
+      this.pacienteNome = paciente.nome.includes(" ") ? paciente.nome.split(" ")[0] : paciente.nome;
     }
 
-    this.atualizarLista();
+    //this.atualizarLista();
   }
 
   handleInput(event:CustomEvent) {
     const query = event.detail.value.toLowerCase() as string;
     if(query.trim() === ""){
-      this.atualizarLista();
+      //this.atualizarLista();
     }else{
       this.agendamentos = this.agendamentos.filter((d) => d.nomeTratamento.toLowerCase().indexOf(query) > -1);
     }
@@ -68,8 +68,8 @@ export class Tab1Page implements OnInit{
 
   recuperarInformacoesPacienteDaPaginaLogin() {
     const navigation = this.router.getCurrentNavigation();
-    if(navigation?.extras?.state?.['data']){
-      return navigation.extras.state?.['data'];
+    if(navigation?.extras?.state?.['paciente']){
+      return navigation.extras.state?.['paciente'];
     }
   }
 }

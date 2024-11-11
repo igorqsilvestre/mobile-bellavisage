@@ -4,14 +4,15 @@ import { catchError, map, Observable, of, take } from 'rxjs';
 import { Paciente } from '../models/paciente';
 import { Agendamento } from '../models/agendamento';
 import { PacienteUpdate } from '../models/paciente-update';
+import { Login } from '../models/Login';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiMysqlService {
 
-  private readonly urlPaciente = 'http://localhost:8080/api/v1/paciente';
-  private readonly urlAgendamento = 'http://localhost:8080/api/v1/agendamento';
+  private readonly urlPaciente = 'http://localhost:8081/api/v1/paciente';
+  private readonly urlAgendamento = 'http://localhost:8081/api/v1/agendamento';
 
 
   constructor(private http: HttpClient) {}
@@ -47,9 +48,10 @@ export class ApiMysqlService {
     return this.http.get<Paciente>(`${this.urlPaciente}/email/${email}`).pipe(take(1));
   }
 
-  getPacienteByEmailAndSenha(email: string, senha: string): Observable<Paciente> {
-    return this.http.get<Paciente>(`${this.urlPaciente}/email/${email}/senha/${senha}`).pipe(take(1));
+  existsLogin(login: Login): Observable<boolean>{
+    return this.http.post<boolean>(`${this.urlPaciente}/logar`, login).pipe(take(1));
   }
+
 
   //Parte do agendamento
   addAgendamento(agendamento: Agendamento): Observable<Agendamento> {
