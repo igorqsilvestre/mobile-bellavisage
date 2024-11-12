@@ -1,3 +1,4 @@
+import { TratamentoRepository } from './../../repository/tratamento.repository';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
@@ -10,8 +11,9 @@ import { Tratamento } from 'src/app/models/tratamento';
 })
 export class AgendamentoForm1Page implements OnInit{
 
-  tratamentosAExibir!: Tratamento[];
+  tratamentosAExibir!: Tratamento[] | null;
 
+  /*
   private tratamentos:Tratamento[] = [
     {
       id: 1,
@@ -217,24 +219,33 @@ export class AgendamentoForm1Page implements OnInit{
       ]
     },
   ]
+  */
 
   constructor(
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private tratamentoRepository:TratamentoRepository
   ) { }
 
 
-  ngOnInit(): void {
-    this.tratamentosAExibir = this.tratamentos;
+  async ngOnInit(): Promise<void> {
+    this.tratamentosAExibir =  await this.tratamentoRepository.getAllTratamento();
   }
 
   voltarPaginaAnterior(){
     this.navCtrl.back();
   }
 
-  handleInput(event:CustomEvent) {
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
+  }
+
+  async handleInput(event:CustomEvent) {
     const query = event.detail.value.toLowerCase();
-    this.tratamentosAExibir = this.tratamentos.filter((d) => d.nome.toLowerCase().indexOf(query) > -1);
+    const lista = await this.tratamentoRepository.getAllTratamentosByNomeStartingWith(query);
+    if(lista){
+      this.tratamentosAExibir = lista;
+    }
   }
 
   irParaProximaPaginaCadastro(tratamento: Tratamento){

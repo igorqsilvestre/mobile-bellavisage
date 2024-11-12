@@ -1,19 +1,20 @@
+import { PacienteMysqlService } from './../services/paciente-mysql.service';
 import { PacienteUpdate } from './../models/paciente-update';
 import { Injectable } from '@angular/core';
 import { PacienteSqliteService } from '../services/paciente-sqlite.service';
 import { Paciente } from '../models/paciente';
 import { firstValueFrom } from 'rxjs';
-import { ApiMysqlService } from '../services/api-mysql.service';
-import { Login } from '../models/Login';
+import { Login } from '../models/login';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class PacienteRepository {
+
   constructor(
     private pacientesqliteService: PacienteSqliteService,
-    private apiMysqlService: ApiMysqlService
+    private pacienteMysqlService: PacienteMysqlService
   ) {}
 
   // Adicionar paciente no Mysql ou Sqlite
@@ -22,7 +23,7 @@ export class PacienteRepository {
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
         // Adiciona no MySQL via API
-        await firstValueFrom(this.apiMysqlService.addPaciente(paciente));
+        await firstValueFrom(this.pacienteMysqlService.addPaciente(paciente));
       }else{
          // Agora salva o paciente no SQLite
         await this.pacientesqliteService.addPaciente(paciente);
@@ -43,7 +44,7 @@ export class PacienteRepository {
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
         // Adiciona no MySQL via API
-        existeLogin = await firstValueFrom(this.apiMysqlService.existsLogin(login));
+        existeLogin = await firstValueFrom(this.pacienteMysqlService.existsLogin(login));
       }else{
          // Agora salva o paciente no SQLite
         //await this.pacientesqliteService.addPaciente(paciente);
@@ -62,7 +63,7 @@ export class PacienteRepository {
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        await firstValueFrom(this.apiMysqlService.atualizaPacienteParcialmente(id, pacienteUpdate));
+        await firstValueFrom(this.pacienteMysqlService.atualizaPacienteParcialmente(id, pacienteUpdate));
       }else{
         await this.pacientesqliteService.updatePacienteParcialmente(id, pacienteUpdate);
       }
@@ -75,12 +76,12 @@ export class PacienteRepository {
   }
 
   // Buscar paciente por id no Mysql ou Sqlite
-  public async getPacienteById(id:number): Promise<any> {
+  public async getPacienteById(id:number): Promise<Paciente | null> {
     let paciente = null;
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByID(id));
+        paciente = await firstValueFrom(this.pacienteMysqlService.getPacienteByID(id));
         if(paciente){
           return paciente;
         }
@@ -100,7 +101,7 @@ export class PacienteRepository {
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByEmail(email));
+        paciente = await firstValueFrom(this.pacienteMysqlService.getPacienteByEmail(email));
         if(paciente){
           return paciente;
         }
@@ -116,12 +117,12 @@ export class PacienteRepository {
   }
 
   // Buscar paciente por CPF no Mysql ou Sqlite
-  public async getPacienteByCPF(cpf: string): Promise<any> {
+  public async getPacienteByCPF(cpf: string): Promise<Paciente | null> {
     let paciente = null;
     try{
       const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
       if(mysqlAtivo){
-        paciente = await firstValueFrom(this.apiMysqlService.getPacienteByCPF(cpf));
+        paciente = await firstValueFrom(this.pacienteMysqlService.getPacienteByCPF(cpf));
         if(paciente){
           return paciente;
         }
@@ -136,6 +137,6 @@ export class PacienteRepository {
   }
 
   private verificaStatusMysql(): Promise<boolean> {
-    return firstValueFrom(this.apiMysqlService.verificarConexaoMysql());
+    return firstValueFrom(this.pacienteMysqlService.verificarConexaoMysql());
   }
 }

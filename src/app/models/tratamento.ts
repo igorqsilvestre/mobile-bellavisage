@@ -1,26 +1,24 @@
-import { Especialista } from "./especialista";
 
 export class Tratamento {
-  id?: number;
+  id?:number;
   nome: string;
-  preco: number;
-  avaliacao: number;
-  imagemPequena: string;
-  imagemMaior: string;
-  descricao:string;
-  especialistas: Especialista[];
+  valor: number;
+  descricao: string;
+  funcionamento: string;
+  indicacoes: string;
+  imagem: string; // Imagem em Base64
+  tipoImagem?:string;
 
-  constructor(nome: string, preco: number,
-    avaliacao: number, imagemPequena: string,
-    imagemMaior: string, descricao: string, especialistas: Especialista[],id?: number){
+  constructor(nome: string,valor:number,descricao:string,
+    funcionamento:string,indicacoes:string, imagem:string,tipoImagem?:string,id?: number){
 
     this.nome = nome;
-    this.preco = preco;
-    this.avaliacao = avaliacao;
-    this.imagemPequena = imagemPequena;
-    this.imagemMaior = imagemMaior;
+    this.valor = valor;
     this.descricao = descricao;
-    this.especialistas = especialistas;
+    this.funcionamento = funcionamento;
+    this.indicacoes = indicacoes;
+    this.imagem = imagem;
+    this.tipoImagem = tipoImagem;
     this.id = id;
   }
 }

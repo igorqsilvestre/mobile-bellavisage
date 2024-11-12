@@ -1,15 +1,19 @@
 <ion-content>
   <main class="principal">
     <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
+
     <div class="container-titulo">
       <button (click)="voltarPaginaAnterior()">
         <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
       </button>
+
       <h1>{{ tratamentoDaDo.nome }}</h1>
       <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
 
-    <img [src]="tratamentoDaDo.imagemMaior" [alt]="tratamentoDaDo.nome">
+
+    <img [src]="getImageUrl(tratamentoDaDo.imagem, tratamentoDaDo.tipoImagem)" [alt]="tratamentoDaDo.nome" height="214px" width="320px">
+
 
     <h2>Sobre:</h2>
     <p>
@@ -28,16 +32,17 @@
         </ng-template>
       </ion-modal>
 
-
-      <ion-card *ngFor="let especialista of tratamentoDaDo.especialistas" >
+      <ion-card *ngFor="let especialista of especialistasUnicos" >
         <ion-card-header>
           <ion-card-title>{{ especialista.nome }}</ion-card-title>
           <span>{{ especialista.especialidade }}</span>
         </ion-card-header>
 
         <ion-card-content>
-          <ion-button (click)="presentAlertHorario(horario)" fill="outline" *ngFor="let horario of especialista.horarios" >
-            {{ horario | date: 'HH:mm' }}</ion-button>
+          <div *ngFor="let horario of horarios">
+            <ion-button (click)="presentAlertHorario(horario.data)" fill="outline" *ngIf="especialista.nome === horario.especialista.nome">
+              {{ horario.data | date: 'HH:mm' }}</ion-button>
+          </div>
         </ion-card-content>
       </ion-card>
 
@@ -50,5 +55,6 @@
       </ion-alert>
 
     </section>
+
   </main>
 </ion-content>

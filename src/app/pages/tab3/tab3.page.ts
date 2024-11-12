@@ -145,7 +145,9 @@ async onSubmitSenha(){
   private async atualizarRepositorioLocalAuxiliar(id: number) {
     if(id){
       const paciente = await this.pacienteRepository.getPacienteById(id);
-      this.pacienteCompartilhadoService.setPaciente(paciente);
+      if(paciente){
+        this.pacienteCompartilhadoService.setPaciente(paciente);
+      }
     }
   }
 

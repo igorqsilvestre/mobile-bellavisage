@@ -1,3 +1,4 @@
+import { HorarioRepository } from './../../repository/horario.repository';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
@@ -9,6 +10,8 @@ import { AgendamentoRepository } from 'src/app/repository/agendamento.repository
 import { Agendamento } from 'src/app/models/agendamento';
 import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-compartilhado.service';
 import { Paciente } from 'src/app/models/paciente';
+import { Horario } from 'src/app/models/horario';
+import { Especialista } from 'src/app/models/especialista';
 
 @Component({
   selector: 'app-agendamento-form2',
@@ -21,6 +24,8 @@ export class AgendamentoForm2Page implements OnInit {
   tratamentoDaDo!: Tratamento;
   data!: Date;
   dataHorarioEscolhido!: Date;
+  horarios!: Horario[];
+  especialistasUnicos!: Especialista[];
 
   public alertButtons = [
     {
@@ -43,7 +48,9 @@ export class AgendamentoForm2Page implements OnInit {
     private agendamentoRepository: AgendamentoRepository,
     private alertController: AlertController,
     private pacienteCompartilhadoService: PacienteCompartilhadoService,
+    private horarioRepository:HorarioRepository
   ) { }
+
 
   ngOnInit() {
     this.tratamentoDaDo = this.recuperarInformacoesPacienteDaPaginaAgendamentoForm1();
@@ -52,18 +59,10 @@ export class AgendamentoForm2Page implements OnInit {
       throw new Error('Erro ao tentar recuperar os dados do agendamento');
     }
 
-    this.data = new Date();
-    this.geraHorariosParaOEspecialistaPelaData(this.data, this.tratamentoDaDo);
-
   }
 
-
-  geraHorariosParaOEspecialistaPelaData(dataSelecionada: Date, tratamentoDaDo: Tratamento) {
-    if(tratamentoDaDo){
-      tratamentoDaDo.especialistas.forEach(especialista => {
-        especialista.horarios = this.dataUtils.gerarHorariosAleatorios(dataSelecionada);
-      });
-    }
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
   }
 
   recuperarInformacoesPacienteDaPaginaAgendamentoForm1(){
@@ -73,10 +72,23 @@ export class AgendamentoForm2Page implements OnInit {
     }
   }
 
-  onDateChange(event: any) {
-    const selectedDate = event.detail.value;
-    this.data = new Date(selectedDate);
-    this.geraHorariosParaOEspecialistaPelaData(this.data, this.tratamentoDaDo)
+  async onDateChange(event: any) {
+
+    if(this.tratamentoDaDo){
+      const idTratamento = this.tratamentoDaDo.id;
+      const data = new Date(event.detail.value);
+
+      if(idTratamento){
+        const lista = await this.horarioRepository.obterTodosApartirtratamentoEData(idTratamento, data);
+
+        if(lista){
+          this.horarios = lista;
+          this.especialistasUnicos = Array.from(
+            new Map(lista.map(horario => [horario.especialista.id, horario.especialista])).values()
+          );
+        }
+      }
+    }
   }
 
   presentAlertHorario(horario: Date) {
@@ -89,6 +101,7 @@ export class AgendamentoForm2Page implements OnInit {
   }
 
   async setResult(ev:any) {
+    /*
     if(ev.detail.role === 'confirm'){
 
       const pacienteId = this.buscarIdPaciente();
@@ -114,6 +127,7 @@ export class AgendamentoForm2Page implements OnInit {
       }
     }
     this.isAlertOpen = false;
+    */
   }
 
 
@@ -136,5 +150,4 @@ export class AgendamentoForm2Page implements OnInit {
     await alert.present();
     return await alert.onDidDismiss();
   }
-
 }

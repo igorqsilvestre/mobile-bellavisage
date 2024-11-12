@@ -1,8 +1,8 @@
+import { AgendamentoMysqlService } from './../services/agendamento-mysql.service';
 import { Agendamento } from 'src/app/models/agendamento';
 
 import { Injectable } from '@angular/core';
 import { AgendamentoSqliteService } from '../services/agendamento-sqlite.service';
-import { ApiMysqlService } from '../services/api-mysql.service';
 import { firstValueFrom } from 'rxjs';
 
 
@@ -14,7 +14,7 @@ export class AgendamentoRepository {
 
   constructor(
     private agendamentoSqliteService: AgendamentoSqliteService,
-    private apiMysqlService: ApiMysqlService
+    private agendamentoMysqlService: AgendamentoMysqlService
   ) {}
 
     // Adicionar agendamento no SQLite ou IndexedDB
@@ -24,7 +24,7 @@ export class AgendamentoRepository {
         const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
         if(mysqlAtivo){
           // Adiciona no MySQL via API
-          await firstValueFrom(this.apiMysqlService.addAgendamento(agendamento));
+          await firstValueFrom(this.agendamentoMysqlService.addAgendamento(agendamento));
         }else{
            // Agora salva o paciente no SQLite
           await this.agendamentoSqliteService.addAgendamento(agendamento);
@@ -42,7 +42,7 @@ export class AgendamentoRepository {
       try {
         const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
         if(mysqlAtivo){
-          await firstValueFrom(this.apiMysqlService.deleteAgendamentoByPacienteId(id, pacienteId));
+          await firstValueFrom(this.agendamentoMysqlService.deleteAgendamentoByPacienteId(id, pacienteId));
         }else{
           await this.agendamentoSqliteService.deleteAgendamentoByPacienteId(id,pacienteId);
         }
@@ -56,7 +56,7 @@ export class AgendamentoRepository {
       try {
         const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
         if(mysqlAtivo){
-          return await firstValueFrom(this.apiMysqlService.getAllAgendamentosByPacienteId(pacienteId));
+          return await firstValueFrom(this.agendamentoMysqlService.getAllAgendamentosByPacienteId(pacienteId));
         }else{
           return this.agendamentoSqliteService.getAllAgendamentosByPacienteId(pacienteId);
         }
@@ -68,7 +68,7 @@ export class AgendamentoRepository {
 
 
     private verificaStatusMysql(): Promise<boolean> {
-      return firstValueFrom(this.apiMysqlService.verificarConexaoMysql());
+      return firstValueFrom(this.agendamentoMysqlService.verificarConexaoMysql());
     }
 }
 

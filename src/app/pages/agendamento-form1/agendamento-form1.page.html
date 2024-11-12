@@ -12,13 +12,12 @@
 
     <section>
       <ion-card class="card-agendamentos" *ngFor="let tratamento of tratamentosAExibir">
-        <img [src]="tratamento.imagemPequena" [alt]="tratamento.nome"/>
+        <img [src]="getImageUrl(tratamento.imagem, tratamento.tipoImagem)" [alt]="tratamento.nome" height="100px" width="133px"/>
         <ion-card-content>
           <ion-card-subtitle >{{ tratamento.nome }}</ion-card-subtitle>
           <p>Senior Surgeon</p>
-          <p>Preço: {{ tratamento.preco | currency:'BRL':'symbol':'1.2-2'}}</p>
+          <p>Preço: {{ tratamento.valor| currency:'BRL':'symbol':'1.2-2'}}</p>
           <div class="container-icones">
-            <span><ion-icon name="star" color="warning"></ion-icon> {{ tratamento.avaliacao }}</span>
             <button (click)="irParaProximaPaginaCadastro(tratamento)">
               <ion-icon slot="icon-only" name="arrow-forward-outline" color="dark"></ion-icon>
             </button>

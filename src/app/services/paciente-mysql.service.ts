@@ -2,20 +2,17 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, take } from 'rxjs';
 import { Paciente } from '../models/paciente';
-import { Agendamento } from '../models/agendamento';
 import { PacienteUpdate } from '../models/paciente-update';
-import { Login } from '../models/Login';
+import { Login } from '../models/login';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiMysqlService {
+export class PacienteMysqlService {
 
   private readonly urlPaciente = 'http://localhost:8081/api/v1/paciente';
-  private readonly urlAgendamento = 'http://localhost:8081/api/v1/agendamento';
 
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // Método para verificar se o MySQL está ativo
   verificarConexaoMysql(): Observable<boolean> {
@@ -50,20 +47,6 @@ export class ApiMysqlService {
 
   existsLogin(login: Login): Observable<boolean>{
     return this.http.post<boolean>(`${this.urlPaciente}/logar`, login).pipe(take(1));
-  }
-
-
-  //Parte do agendamento
-  addAgendamento(agendamento: Agendamento): Observable<Agendamento> {
-    return this.http.post<Agendamento>(this.urlAgendamento, agendamento).pipe(take(1));
-  }
-
-  getAllAgendamentosByPacienteId(pacienteId:number): Observable<Agendamento[]> {
-    return this.http.get<Agendamento[]>(`${this.urlAgendamento}/paciente/${pacienteId}`).pipe(take(1));
-  }
-
-  deleteAgendamentoByPacienteId(id:number, pacienteId:number): Observable<Agendamento> {
-    return this.http.delete<Agendamento>(`${this.urlAgendamento}/${id}/paciente/${pacienteId}`).pipe(take(1));
   }
 
 }

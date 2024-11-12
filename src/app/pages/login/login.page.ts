@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
-import { Login } from 'src/app/models/Login';
+import { Login } from 'src/app/models/login';
 
 @Component({
   selector: 'app-login',
