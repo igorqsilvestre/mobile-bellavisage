@@ -130,9 +130,25 @@ ion-tab-bar{
   }
 
   .alert-button-group{
+    display: flex;
     justify-content: center;
 
   }
+
+  .alert-radio-group {
+    display: flex;
+   padding-bottom: 2em;
+  }
+  
+  .alert-radio-label {
+    display: flex;
+    flex-direction: column-reverse; /* Número embaixo, rádio em cima */
+    align-items: center; /* Centraliza o rádio e o número */
+    margin-top: 3em;
+    padding: 0; /* Remove preenchimentos extras */
+  }
+
+
 
 }
 

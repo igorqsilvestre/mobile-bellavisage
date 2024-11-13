@@ -39,8 +39,8 @@
         </ion-card-header>
 
         <ion-card-content>
-          <div *ngFor="let horario of horarios">
-            <ion-button (click)="presentAlertHorario(horario.data)" fill="outline" *ngIf="especialista.nome === horario.especialista.nome">
+          <div *ngFor="let horario of horarios" class="container-horario">
+            <ion-button (click)="presentAlertHorario(horario)" fill="outline" *ngIf="especialista.nome === horario.especialista.nome">
               {{ horario.data | date: 'HH:mm' }}</ion-button>
           </div>
         </ion-card-content>

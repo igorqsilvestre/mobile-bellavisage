@@ -39,16 +39,18 @@
     <section>
       <h2>Próximos agendamentos</h2>
       <ion-card class="card-agendamentos" *ngFor="let agendamento of agendamentos" >
-          <img [src]="agendamento.imagemTratamento" [alt]="agendamento.nomeTratamento"/>
-          <ion-card-content>
-            <ion-card-subtitle >{{ agendamento.nomeTratamento }}</ion-card-subtitle>
-            <p>Senior Surgeon</p>
-            <p>📅 {{ agendamento.dataHorario | date: 'dd/MM/yyyy' }}</p>
-            <p>⏰ {{ agendamento.dataHorario | date: 'HH:mm'  }}</p>
-            <p>Preço: {{ agendamento.preco | currency:'BRL':'symbol':'1.2-2' }}</p>
-            <ion-icon name="star" color="warning"></ion-icon> {{ agendamento.avaliacaoTratamento }}
-          </ion-card-content>
+        <img [src]="getImageUrl(agendamento.tratamento.imagem, 
+        agendamento.tratamento.tipoImagem)" [alt]="agendamento.tratamento.nome" height="100px" width="133px"/>
+        <ion-card-content>
+          <ion-card-subtitle >{{ agendamento.tratamento.nome }}</ion-card-subtitle>
+          <p>Senior Surgeon</p>
+          <p>📅 {{ agendamento.horario.data | date: 'dd/MM/yyyy' }}</p>
+          <p>⏰ {{ agendamento.horario.data | date: 'HH:mm'  }}</p>
+          <p>Preço: {{ agendamento.tratamento.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
+          <!--<ion-icon name="star" color="warning"></ion-icon> {{ agendamento.avaliacaoTratamento }}-->
+        </ion-card-content>
       </ion-card>
+    
     </section>
   </main>
 </ion-content>

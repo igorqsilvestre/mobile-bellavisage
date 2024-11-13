@@ -1,7 +1,7 @@
 import { PacienteCompartilhadoService } from './../../shared/services/paciente-compartilhado.service';
 import { AgendamentoRepository } from './../../repository/agendamento.repository';
-import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { AlertController, AlertInput, NavController } from '@ionic/angular';
 import { Agendamento } from 'src/app/models/agendamento';
 
 @Component({
@@ -27,12 +27,12 @@ export class Tab2Page{
     this.atualizarLista();
   }
 
-  handleInput(event:CustomEvent) {
+  async handleInput(event:CustomEvent) {
     const query = event.detail.value.toLowerCase() as string;
-    if(query.trim() === ""){
-      this.atualizarLista();
-    }else{
-      this.agendamentos = this.agendamentos.filter((d) => d.nomeTratamento.toLowerCase().indexOf(query) > -1);
+
+    const lista = await this.agendamentoRepository.getAllAgendamentosTratamentosNomeStartingWithAndStatus(query,"Aberto");
+    if(lista){
+      this.agendamentos = lista;
     }
   }
 
@@ -41,11 +41,31 @@ export class Tab2Page{
     this.navCtrl.back();
   }
 
-  async alertaDecancelarAgendamento(agendamento: Agendamento) {
+  async alertaDeConfirmarOuCancelarAgendamento(agendamento: Agendamento, confirmar = false) {
+
+    let cabecalho ='Cancelar Agendamento?';
+    let messagem = '';
+    let alertaInputs!:AlertInput[];
+
+    if(confirmar){
+      cabecalho = 'Confirmar Agendamento?';
+      messagem = 'Avalie o agendamento:';
+      alertaInputs = [
+        { label: '1', type: 'radio', value: 1 }, 
+        { label: '2', type: 'radio', value: 2 },
+        { label: '3', type: 'radio', value: 3 },
+        { label: '4', type: 'radio', value: 4 },
+        { label: '5', type: 'radio', value: 5 },
+      ];
+     
+    }
+
     this.agendamento = agendamento;
     const alert = await this.alertController.create({
-      header: 'Cancelar Agendamento?',
+      header: cabecalho,
       cssClass: 'custom-alert', // Adicione sua classe personalizada aqui
+      message: messagem,
+      inputs: alertaInputs,
       buttons: [
         {
           text: 'Não',
@@ -56,7 +76,13 @@ export class Tab2Page{
           text: 'Sim',
           role: 'confirm',
           cssClass: 'alert-button-confirm',
-          handler: () => this.confirmarCancelamento(),
+          handler: (avaliacao) => {
+            if(confirmar){
+              this.confirmarAgendamento(avaliacao);
+            }else{
+              this.confirmarCancelamento();
+            }
+          },
         },
       ],
     });
@@ -65,14 +91,30 @@ export class Tab2Page{
   }
 
   async confirmarCancelamento() {
-    const pacienteId = this.buscarIdPaciente();
-    if (this.agendamento && this.agendamento.id && pacienteId) {
+    if (this.agendamento && this.agendamento.id) {
       try {
-        await this.agendamentoRepository.deleteAgendamentoByPacienteId(this.agendamento.id, pacienteId);
+        await this.agendamentoRepository.deleteAgendamento(this.agendamento.id);
         await this.presentAlert('sucesso', 'Agendamento cancelado com sucesso!');
         this.atualizarLista();
       } catch (error) {
         await this.presentAlert('erro', 'Ocorreu um erro ao cancelar o agendamento.');
+      }
+    }
+  }
+
+  async confirmarAgendamento(avaliacao: number) {
+    const avaliado = avaliacao ? avaliacao : null;
+    const status = "Concluido";
+
+    if (this.agendamento) {
+      this.agendamento.avaliacao = avaliado;
+      this.agendamento.status = status;
+      try {
+        await this.agendamentoRepository.atualizarParteAgendamento(this.agendamento);
+        await this.presentAlert('sucesso', 'Agendamento confirmado com sucesso!');
+        this.atualizarLista();
+      } catch (error) {
+        await this.presentAlert('erro', 'Ocorreu um erro ao confirmar o agendamento.');
       }
     }
   }
@@ -89,8 +131,15 @@ export class Tab2Page{
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente && paciente.id){
       const pacienteId =  paciente.id;
-      this.agendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteId(pacienteId);
+      const listaAgendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteIdAndStatus(pacienteId, "Aberto");
+      if(listaAgendamentos){
+        this.agendamentos = listaAgendamentos;
+      }
     }
+  }
+
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
   }
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {

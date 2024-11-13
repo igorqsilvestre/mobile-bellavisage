@@ -27,7 +27,7 @@ export class AgendamentoRepository {
           await firstValueFrom(this.agendamentoMysqlService.addAgendamento(agendamento));
         }else{
            // Agora salva o paciente no SQLite
-          await this.agendamentoSqliteService.addAgendamento(agendamento);
+          //await this.agendamentoSqliteService.addAgendamento(agendamento);
         }
         console.log('Sucesso ao adicionar agendamento');
 
@@ -37,14 +37,32 @@ export class AgendamentoRepository {
       }
     }
 
-
-    public async deleteAgendamentoByPacienteId(id: number, pacienteId:number): Promise<void> {
+    public async atualizarParteAgendamento(agendamento: Agendamento): Promise<void> {
       try {
         const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
         if(mysqlAtivo){
-          await firstValueFrom(this.agendamentoMysqlService.deleteAgendamentoByPacienteId(id, pacienteId));
+          // Adiciona no MySQL via API
+          await firstValueFrom(this.agendamentoMysqlService.atualizarParteAgendamento(agendamento));
         }else{
-          await this.agendamentoSqliteService.deleteAgendamentoByPacienteId(id,pacienteId);
+           // Agora salva o paciente no SQLite
+          //await this.agendamentoSqliteService.addAgendamento(agendamento);
+        }
+        console.log('Sucesso ao atualizar agendamento');
+
+      } catch (error) {
+        console.error('Erro ao atualizar agendamento', error);
+        throw new Error('Erro ao atualizar agendamento');
+      }
+    }
+
+
+    public async deleteAgendamento(id: number): Promise<void> {
+      try {
+        const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
+        if(mysqlAtivo){
+          await firstValueFrom(this.agendamentoMysqlService.deleteAgendamento(id));
+        }else{
+          //await this.agendamentoSqliteService.deleteAgendamentoByPacienteId(id,pacienteId);
         }
       } catch (error) {
         console.error('Erro ao excluir agendamento', error);
@@ -52,17 +70,34 @@ export class AgendamentoRepository {
       }
     }
 
-    public async getAllAgendamentosByPacienteId(pacienteId: number): Promise<Agendamento[]> {
+
+    public async getAllAgendamentosByPacienteIdAndStatus(pacienteId: number, status:string): Promise<Agendamento[] | null> {
       try {
         const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
         if(mysqlAtivo){
-          return await firstValueFrom(this.agendamentoMysqlService.getAllAgendamentosByPacienteId(pacienteId));
+          return await firstValueFrom(this.agendamentoMysqlService.getAllAgendamentosByPacienteIdAndStatus(pacienteId, status));
         }else{
-          return this.agendamentoSqliteService.getAllAgendamentosByPacienteId(pacienteId);
+          //return this.agendamentoSqliteService.getAllAgendamentosByPacienteId(pacienteId);
+          return null;
         }
       } catch (error) {
         console.error('Erro ao retornar agendamentos', error);
         throw new Error('Erro ao retornar agendamentos');
+      }
+    }
+
+    async getAllAgendamentosTratamentosNomeStartingWithAndStatus(nome: string, status:string): Promise<Agendamento[] | null>{
+      let agendamentos = null;
+      try {
+        const mysqlAtivo = await this.verificaStatusMysql();
+        if(mysqlAtivo){
+          agendamentos = await firstValueFrom(this.agendamentoMysqlService.getAllAgendamentosTratamentosNomeStartingWithAndStatus(nome,status));
+        }
+        return agendamentos;
+  
+      } catch (error) {
+        console.error('Erro ao buscar agendamentos', error);
+        throw new Error('Erro ao buscar agendamentos');
       }
     }
 

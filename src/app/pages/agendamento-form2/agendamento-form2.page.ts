@@ -23,7 +23,7 @@ export class AgendamentoForm2Page implements OnInit {
   isAlertOpen = false;
   tratamentoDaDo!: Tratamento;
   data!: Date;
-  dataHorarioEscolhido!: Date;
+  horarioEscolhido!: Horario;
   horarios!: Horario[];
   especialistasUnicos!: Especialista[];
 
@@ -91,8 +91,8 @@ export class AgendamentoForm2Page implements OnInit {
     }
   }
 
-  presentAlertHorario(horario: Date) {
-    this.dataHorarioEscolhido = horario;
+  presentAlertHorario(horario: Horario) {
+    this.horarioEscolhido = horario;
     this.isAlertOpen = true;
   }
 
@@ -101,19 +101,21 @@ export class AgendamentoForm2Page implements OnInit {
   }
 
   async setResult(ev:any) {
-    /*
+    
     if(ev.detail.role === 'confirm'){
 
+      
       const pacienteId = this.buscarIdPaciente();
 
       if(pacienteId){
         const agendamento = new Agendamento(
-          this.tratamentoDaDo?.nome,
-          this.tratamentoDaDo?.imagemPequena,
-          this.tratamentoDaDo?.avaliacao,
-          this.dataHorarioEscolhido,
-          this.tratamentoDaDo?.preco,
-          pacienteId
+          pacienteId,
+          this.horarioEscolhido.especialista.id,
+          this.tratamentoDaDo.id,
+          this.horarioEscolhido.id,
+          this.tratamentoDaDo.valor,
+          null,
+          null
          );
 
          try {
@@ -125,12 +127,14 @@ export class AgendamentoForm2Page implements OnInit {
            await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
          }
       }
+         
+      this.isAlertOpen = false;
     }
-    this.isAlertOpen = false;
-    */
+    
+   
   }
 
-
+  
   buscarIdPaciente():number {
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente && paciente.id){
@@ -138,6 +142,7 @@ export class AgendamentoForm2Page implements OnInit {
     }
     throw new Error('Não foi possível buscar o id do paciente.');
   }
+  
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {
     const alert = await this.alertController.create({

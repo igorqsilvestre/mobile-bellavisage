@@ -29,6 +29,7 @@ export class AgendamentoSqliteService {
     }
   }
 
+  /*
   // Adicionar agendamento no SQLite
   public async addAgendamento(agendamento: Agendamento): Promise<void> {
 
@@ -46,6 +47,7 @@ export class AgendamentoSqliteService {
       console.log('Agendamento adicionado no SQLite');
     }
   }
+  */
 
 
   public async getAllAgendamentosByPacienteId(pacienteId:number): Promise<Agendamento[]> {

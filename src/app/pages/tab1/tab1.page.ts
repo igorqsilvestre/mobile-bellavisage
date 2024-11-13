@@ -38,16 +38,20 @@ export class Tab1Page implements OnInit{
       this.pacienteNome = paciente.nome.includes(" ") ? paciente.nome.split(" ")[0] : paciente.nome;
     }
 
-    //this.atualizarLista();
+    this.atualizarLista();
   }
 
-  handleInput(event:CustomEvent) {
+  async handleInput(event:CustomEvent) {
     const query = event.detail.value.toLowerCase() as string;
-    if(query.trim() === ""){
-      //this.atualizarLista();
-    }else{
-      this.agendamentos = this.agendamentos.filter((d) => d.nomeTratamento.toLowerCase().indexOf(query) > -1);
+
+    const lista = await this.agendamentoRepository.getAllAgendamentosTratamentosNomeStartingWithAndStatus(query,"Aberto");
+    if(lista){
+      this.agendamentos = lista;
     }
+  }
+
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
   }
 
   deslogar(){
@@ -62,7 +66,10 @@ export class Tab1Page implements OnInit{
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente && paciente.id){
       const pacienteId =  paciente.id;
-      this.agendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteId(pacienteId);
+      const listaAgendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteIdAndStatus(pacienteId, "Aberto");
+      if(listaAgendamentos){
+        this.agendamentos = listaAgendamentos;
+      }
     }
   }
 
