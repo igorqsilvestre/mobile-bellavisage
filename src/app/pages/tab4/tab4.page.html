@@ -8,13 +8,13 @@
       <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" placeholder="Pesquisar por nome" class="custom"></ion-searchbar>
     </div>
 
-
     <section>
-    <h1>Meus agendamentos</h1>
+      <h1>Meu histórico</h1>
 
+      
       <div  *ngFor="let agendamento of agendamentos">
         <ion-card class="card-agendamentos">
-          <img [src]="getImageUrl(agendamento.tratamento.imagem,
+          <img [src]="getImageUrl(agendamento.tratamento.imagem, 
             agendamento.tratamento.tipoImagem)" [alt]="agendamento.tratamento.nome" height="100px" width="133px"/>
           <ion-card-content>
             <ion-card-subtitle >{{ agendamento.tratamento.nome }}</ion-card-subtitle>
@@ -22,20 +22,14 @@
             <p>📅 {{ agendamento.horario.data | date: 'dd/MM/yyyy' }}</p>
             <p>⏰ {{ agendamento.horario.data | date: 'HH:mm'  }}</p>
             <p>Preço: {{ agendamento.tratamento.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
+            <div class="avaliacoes">
+              <div *ngFor="let i of [].constructor(agendamento.avaliacao); let index = index">
+                <ion-icon name="star" color="warning"></ion-icon>
+              </div>
+            </div>
           </ion-card-content>
         </ion-card>
-
-        <div class="container-botoes">
-          <ion-button (click)="alertaDeConfirmarOuCancelarAgendamento(agendamento, true)" size="small">
-            <ion-icon name="checkmark-circle-outline"></ion-icon>
-          </ion-button>
-          <ion-button (click)="alertaDeConfirmarOuCancelarAgendamento(agendamento, false)" size="small">
-            <ion-icon name="close-circle-outline"></ion-icon>
-          </ion-button>
         </div>
-      </div>
-
-
     </section>
   </main>
 </ion-content>

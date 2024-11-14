@@ -8,137 +8,33 @@
       <h1>Lista de tratamentos</h1>
       <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
-
-    <nav class="navegacao-pagina">
-      <a class="scroll-link" data-target="c">C |</a>
-      <a class="scroll-link" data-target="d">D |</a>
-      <a class="scroll-link" data-target="h">H |</a>
-      <a class="scroll-link" data-target="l">L |</a>
-      <a class="scroll-link" data-target="p">P |</a>
-      <a class="scroll-link" data-target="u">U</a>
-    </nav>
-
-    <section class="sessao-tratamentos">
-      <div id="c" class="container-tratamentos">
-        <h2 class="titulo-letra"><a>C</a></h2>
-        <ul>
-          <li>
-            <ion-card class="card">
-              <ion-card-content>
-                <div class="card-conteudo">
-                  <h2>Carboxiterapia</h2>
-                  <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento('Carboxiterapia')">
-                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
-                  </ion-button>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </li>
-        </ul>
-      </div>
-
-      <div id="d" class="container-tratamentos">
-        <h2 class="titulo-letra"><a>D</a></h2>
-        <ul>
-          <li>
-            <ion-card class="card">
-              <ion-card-content>
-                <div class="card-conteudo">
-                  <h2>Depilação a laser</h2>
-                  <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento('Depilação a laser')">
-                    <ion-icon class="icone-seta" name="arrow-forward-outline" ></ion-icon>
-                  </ion-button>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </li>
-
-          <li>
-            <ion-card class="card">
-              <ion-card-content>
-                <div class="card-conteudo">
-                  <h2>Drenagem Linfática</h2>
-                  <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento('Drenagem Linfática')">
-                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
-                  </ion-button>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </li>
-        </ul>
-      </div>
-
-      <div id="h" class="container-tratamentos">
-        <h2 class="titulo-letra"><a>H</a></h2>
-        <ul>
-          <li>
-            <ion-card class="card">
-              <ion-card-content>
-                <div class="card-conteudo">
-                  <h2>Hiperidrose - Suor Excessivo</h2>
-                  <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento('Hiperidrose - Suor Excessivo')">
-                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
-                  </ion-button>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </li>
-        </ul>
-      </div>
-
-      <div id="l" class="container-tratamentos">
-        <h2 class="titulo-letra"><a>L</a></h2>
-        <ul>
-          <li>
-            <ion-card class="card">
-              <ion-card-content>
-                <div class="card-conteudo">
-                  <h2>Laser de Vênus</h2>
-                  <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento('Laser de Vênus')">
-                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
-                  </ion-button>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </li>
-        </ul>
-      </div>
-
-      <div id="p" class="container-tratamentos">
-        <h2 class="titulo-letra"><a>P</a></h2>
-        <ul>
-          <li>
-            <ion-card class="card">
-              <ion-card-content>
-                <div class="card-conteudo">
-                  <h2>Pilling de Diamante</h2>
-                  <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento('Pilling de Diamante')">
-                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
-                  </ion-button>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </li>
-        </ul>
-      </div>
-
-      <div id="u" class="container-tratamentos">
-        <h2 class="titulo-letra"><a>U</a></h2>
-        <ul>
-          <li>
-            <ion-card class="card">
-              <ion-card-content>
-                <div class="card-conteudo">
-                  <h2>Ultrassom microfocado</h2>
-                  <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento('Ultrassom microfocado')">
-                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
-                  </ion-button>
-                </div>
-              </ion-card-content>
-            </ion-card>
-          </li>
-        </ul>
-      </div>
-    </section>
+    
+    <div *ngFor="let item of letraComTratamentos">
+      <nav class="navegacao-pagina">
+        <a class="scroll-link" data-target="{{ item.letra }}">{{ item.letra }} |</a>
+      </nav>
+    
+      <section class="sessao-tratamentos">
+        <div *ngFor="let tratamento of item.tratamentos">
+          <div id="item.letra" class="container-tratamentos">
+            <h2 class="titulo-letra"><a>{{ item.letra }}</a></h2>
+            <ul>
+              <li>
+                <ion-card class="card">
+                  <ion-card-content>
+                    <div class="card-conteudo">
+                      <h2>{{ tratamento.nome }}</h2>
+                      <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento(tratamento)">
+                        <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </ion-card-content>
+                </ion-card>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 </ion-content>

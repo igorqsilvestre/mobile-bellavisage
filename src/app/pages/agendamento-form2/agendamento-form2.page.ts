@@ -4,12 +4,10 @@ import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 
 import { Tratamento } from 'src/app/models/tratamento';
-import { DataUtilsService } from 'src/app/shared/services/dataUtils.service';
 
 import { AgendamentoRepository } from 'src/app/repository/agendamento.repository';
 import { Agendamento } from 'src/app/models/agendamento';
 import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-compartilhado.service';
-import { Paciente } from 'src/app/models/paciente';
 import { Horario } from 'src/app/models/horario';
 import { Especialista } from 'src/app/models/especialista';
 
@@ -44,7 +42,6 @@ export class AgendamentoForm2Page implements OnInit {
   constructor(
     private navCtrl: NavController,
     private router: Router,
-    private dataUtils: DataUtilsService,
     private agendamentoRepository: AgendamentoRepository,
     private alertController: AlertController,
     private pacienteCompartilhadoService: PacienteCompartilhadoService,

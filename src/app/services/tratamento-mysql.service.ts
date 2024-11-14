@@ -32,4 +32,8 @@ export class TratamentoMysqlService {
     return this.http.get<Tratamento[]>(`${this.urlTratamento}/buscar`, { params });
   }
 
+  getAllTratamentosOrdenados(): Observable<Tratamento[]>{
+    return this.http.get<Tratamento[]>(`${this.urlTratamento}/ordenados`);
+  }
+
 }

@@ -30,6 +30,21 @@ export class TratamentoRepository {
     }
   }
 
+  async getAllTratamentosOrdenados(): Promise<Tratamento[] | null>{
+    let tratamentos = null;
+    try {
+      const mysqlAtivo = await this.verificaStatusMysql();
+      if(mysqlAtivo){
+        tratamentos = await firstValueFrom(this.tratamentoMysqlService.getAllTratamentosOrdenados());
+      }
+      return tratamentos;
+
+    } catch (error) {
+      console.error('Erro ao buscar tratamentos', error);
+      throw new Error('Erro ao buscar tratamentos');
+    }
+  }
+
   async getAllTratamentosByNomeStartingWith(nome: string): Promise<Tratamento[] | null>{
     let tratamentos = null;
     try {

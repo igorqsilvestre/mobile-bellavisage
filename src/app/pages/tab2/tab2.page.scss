@@ -1,3 +1,4 @@
+
 .principal{
   padding: 0 1em;
 }
@@ -33,6 +34,12 @@ ion-card.card-agendamentos{
   align-items: center;
   border-radius: 12px;
   margin:1em 0 0 0;
+}
+
+.container-agendamento{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .card-agendamentos img {
