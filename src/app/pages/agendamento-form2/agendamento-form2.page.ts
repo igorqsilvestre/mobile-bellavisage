@@ -1,5 +1,5 @@
 import { HorarioRepository } from './../../repository/horario.repository';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 
@@ -16,14 +16,14 @@ import { Especialista } from 'src/app/models/especialista';
   templateUrl: './agendamento-form2.page.html',
   styleUrls: ['./agendamento-form2.page.scss'],
 })
-export class AgendamentoForm2Page implements OnInit {
+export class AgendamentoForm2Page implements OnInit, OnDestroy {
 
   isAlertOpen = false;
   tratamentoDaDo!: Tratamento;
   data!: Date;
   horarioEscolhido!: Horario;
   horarios!: Horario[];
-  especialistasUnicos!: Especialista[];
+  especialistasUnicos!: Especialista[] | null;
 
   public alertButtons = [
     {
@@ -47,6 +47,7 @@ export class AgendamentoForm2Page implements OnInit {
     private pacienteCompartilhadoService: PacienteCompartilhadoService,
     private horarioRepository:HorarioRepository
   ) { }
+
 
 
   ngOnInit() {
@@ -98,10 +99,10 @@ export class AgendamentoForm2Page implements OnInit {
   }
 
   async setResult(ev:any) {
-    
+
     if(ev.detail.role === 'confirm'){
 
-      
+
       const pacienteId = this.buscarIdPaciente();
 
       if(pacienteId){
@@ -124,14 +125,14 @@ export class AgendamentoForm2Page implements OnInit {
            await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
          }
       }
-         
+
       this.isAlertOpen = false;
     }
-    
-   
+
+
   }
 
-  
+
   buscarIdPaciente():number {
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente && paciente.id){
@@ -139,7 +140,7 @@ export class AgendamentoForm2Page implements OnInit {
     }
     throw new Error('Não foi possível buscar o id do paciente.');
   }
-  
+
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {
     const alert = await this.alertController.create({
@@ -151,5 +152,9 @@ export class AgendamentoForm2Page implements OnInit {
 
     await alert.present();
     return await alert.onDidDismiss();
+  }
+
+  ngOnDestroy(): void {
+    this.especialistasUnicos = null;
   }
 }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { PacienteMysqlService } from './paciente-mysql.service';
+import { TratamentoService } from './tratamento.service';
 
-describe('PacienteMysqlService', () => {
-  let service: PacienteMysqlService;
+describe('TratamentoService', () => {
+  let service: TratamentoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(PacienteMysqlService);
+    service = TestBed.inject(TratamentoService);
   });
 
   it('should be created', () => {

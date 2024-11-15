@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HorarioMysqlService } from './horario-mysql.service';
+import { PacienteService } from './paciente.service';
 
-describe('HorarioMysqlService', () => {
-  let service: HorarioMysqlService;
+describe('PacienteService', () => {
+  let service: PacienteService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(HorarioMysqlService);
+    service = TestBed.inject(PacienteService);
   });
 
   it('should be created', () => {

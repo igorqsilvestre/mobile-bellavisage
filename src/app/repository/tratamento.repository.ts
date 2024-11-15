@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Tratamento } from "../models/tratamento";
-import { TratamentoMysqlService } from "../services/tratamento-mysql.service";
 import { firstValueFrom } from "rxjs";
+import { TratamentoService } from "../services/tratamento.service";
 
 
 @Injectable({
@@ -11,19 +11,15 @@ import { firstValueFrom } from "rxjs";
 export class TratamentoRepository {
 
   constructor(
-    private tratamentoMysqlService: TratamentoMysqlService
+    private tratamentoService: TratamentoService
   ) {}
 
 
   async getAllTratamento(): Promise<Tratamento[] | null>{
     let tratamentos = null;
     try {
-      const mysqlAtivo = await this.verificaStatusMysql();
-      if(mysqlAtivo){
-        tratamentos = await firstValueFrom(this.tratamentoMysqlService.getAllTratamentos());
-      }
-      return tratamentos;
-
+    tratamentos = await firstValueFrom(this.tratamentoService.getAllTratamentos());
+    return tratamentos;
     } catch (error) {
       console.error('Erro ao buscar tratamentos', error);
       throw new Error('Erro ao buscar tratamentos');
@@ -33,12 +29,8 @@ export class TratamentoRepository {
   async getAllTratamentosOrdenados(): Promise<Tratamento[] | null>{
     let tratamentos = null;
     try {
-      const mysqlAtivo = await this.verificaStatusMysql();
-      if(mysqlAtivo){
-        tratamentos = await firstValueFrom(this.tratamentoMysqlService.getAllTratamentosOrdenados());
-      }
-      return tratamentos;
-
+    tratamentos = await firstValueFrom(this.tratamentoService.getAllTratamentosOrdenados());
+    return tratamentos;
     } catch (error) {
       console.error('Erro ao buscar tratamentos', error);
       throw new Error('Erro ao buscar tratamentos');
@@ -48,19 +40,11 @@ export class TratamentoRepository {
   async getAllTratamentosByNomeStartingWith(nome: string): Promise<Tratamento[] | null>{
     let tratamentos = null;
     try {
-      const mysqlAtivo = await this.verificaStatusMysql();
-      if(mysqlAtivo){
-        tratamentos = await firstValueFrom(this.tratamentoMysqlService.getAllTratamentosByNomeStartingWith(nome));
-      }
+      tratamentos = await firstValueFrom(this.tratamentoService.getAllTratamentosByNomeStartingWith(nome));
       return tratamentos;
-
     } catch (error) {
       console.error('Erro ao buscar tratamentos', error);
       throw new Error('Erro ao buscar tratamentos');
     }
-  }
-
-  private verificaStatusMysql(): Promise<boolean> {
-    return firstValueFrom(this.tratamentoMysqlService.verificarConexaoMysql());
   }
 }

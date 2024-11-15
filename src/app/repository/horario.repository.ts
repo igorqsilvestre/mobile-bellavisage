@@ -1,11 +1,7 @@
-import { AgendamentoMysqlService } from '../services/agendamento-mysql.service';
-import { Agendamento } from 'src/app/models/agendamento';
-
 import { Injectable } from '@angular/core';
-import { AgendamentoSqliteService } from '../services/agendamento-sqlite.service';
 import { firstValueFrom } from 'rxjs';
-import { HorarioMysqlService } from '../services/horario-mysql.service';
 import { Horario } from '../models/horario';
+import { HorarioService } from '../services/horario.service';
 
 
 @Injectable({
@@ -15,26 +11,18 @@ import { Horario } from '../models/horario';
 export class HorarioRepository {
 
   constructor(
-    private horarioMysqlService: HorarioMysqlService
+    private horarioService: HorarioService
   ) {}
 
     public async obterTodosApartirtratamentoEData(idTratamento:number, data:Date): Promise<Horario[] | null> {
       let horario = null;
       try {
-        const mysqlAtivo = await this.verificaStatusMysql(); // Verifica se o MySQL está ativo
-        if(mysqlAtivo){
-          horario =  await firstValueFrom(this.horarioMysqlService.obterTodosApartirtratamentoEData(idTratamento, data));
-        }
-        return horario;
+       horario =  await firstValueFrom(this.horarioService.obterTodosApartirtratamentoEData(idTratamento, data));
+       return horario;
       } catch (error) {
         console.error('Erro ao retornar agendamentos', error);
         throw new Error('Erro ao retornar agendamentos');
       }
-    }
-
-
-    private verificaStatusMysql(): Promise<boolean> {
-      return firstValueFrom(this.horarioMysqlService.verificarConexaoMysql());
     }
 }
 

@@ -12,6 +12,7 @@ import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-c
 export class Tab4Page implements OnInit {
 
   agendamentos!: Agendamento[];
+  status = {aberto: "Aberto", concluido: "Concluido"};
 
   constructor(
     private agendamentoRepository: AgendamentoRepository,
@@ -27,32 +28,27 @@ export class Tab4Page implements OnInit {
     this.atualizarLista();
   }
 
-  async handleInput(event:CustomEvent) {
-    const query = event.detail.value.toLowerCase() as string;
-
-    const lista = await this.agendamentoRepository.getAllAgendamentosTratamentosNomeStartingWithAndStatus(query,"Concluido");
-    if(lista){
-      this.agendamentos = lista;
-    }
-  }
-
   voltarPaginaAnterior(){
     this.navCtrl.back();
   }
 
-  buscarIdPaciente():number {
+  async onDateChange(event: any) {
+
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente && paciente.id){
-      return paciente.id;
+      const data = new Date(event.detail.value);
+      const lista = await this.agendamentoRepository.getAllAgendamentosByPacienteIdAndStatusAndData(paciente.id, this.status.concluido, data);
+      if(lista){
+       this.agendamentos = lista;
+      }
     }
-    throw new Error('Não foi possível buscar o id do paciente.');
   }
 
   private async atualizarLista(){
     const paciente = this.pacienteCompartilhadoService.getPaciente();
     if(paciente && paciente.id){
       const pacienteId =  paciente.id;
-      const listaAgendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteIdAndStatus(pacienteId, "Concluido");
+      const listaAgendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteIdAndStatus(pacienteId, this.status.concluido);
       if(listaAgendamentos){
         this.agendamentos = listaAgendamentos;
       }

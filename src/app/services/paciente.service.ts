@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { Paciente } from '../models/paciente';
 import { PacienteUpdate } from '../models/paciente-update';
 import { Login } from '../models/login';
@@ -8,22 +8,11 @@ import { Login } from '../models/login';
 @Injectable({
   providedIn: 'root'
 })
-export class PacienteMysqlService {
+export class PacienteService {
 
   private readonly urlPaciente = 'http://localhost:8081/api/v1/paciente';
 
   constructor(private http: HttpClient) { }
-
-  // Método para verificar se o MySQL está ativo
-  verificarConexaoMysql(): Observable<boolean> {
-    return this.http.get(`${this.urlPaciente}/ping`).pipe(
-      map(() => true), // Se a resposta for bem-sucedida, MySQL está ativo
-      catchError((error) => {
-        console.error('Erro ao verificar conexão com MySQL:', error);
-        return of(false); // Em caso de erro, MySQL está inativo
-      })
-    );
-  }
 
   addPaciente(paciente: Paciente): Observable<Paciente> {
     return this.http.post<Paciente>(this.urlPaciente, paciente).pipe(take(1));
@@ -48,5 +37,4 @@ export class PacienteMysqlService {
   existsLogin(login: Login): Observable<boolean>{
     return this.http.post<boolean>(`${this.urlPaciente}/logar`, login).pipe(take(1));
   }
-
 }

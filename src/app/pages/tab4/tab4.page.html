@@ -1,20 +1,30 @@
 <ion-content>
   <main class="principal">
     <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
-    <div class="container-pesquisar">
+    <div class="container-titulo">
       <button (click)="voltarPaginaAnterior()">
         <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
       </button>
-      <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" placeholder="Pesquisar por nome" class="custom"></ion-searchbar>
+      <h1>Meu histórico</h1>
+      <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
 
     <section>
-      <h1>Meu histórico</h1>
 
-      
+      <div class="container-data">
+        <p> Visualize pela data : </p>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      </div>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime" presentation="date" (ionChange)="onDateChange($event)"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+
       <div  *ngFor="let agendamento of agendamentos">
         <ion-card class="card-agendamentos">
-          <img [src]="getImageUrl(agendamento.tratamento.imagem, 
+          <img [src]="getImageUrl(agendamento.tratamento.imagem,
             agendamento.tratamento.tipoImagem)" [alt]="agendamento.tratamento.nome" height="100px" width="133px"/>
           <ion-card-content>
             <ion-card-subtitle >{{ agendamento.tratamento.nome }}</ion-card-subtitle>

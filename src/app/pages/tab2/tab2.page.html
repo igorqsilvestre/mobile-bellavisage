@@ -1,16 +1,16 @@
 <ion-content>
   <main class="principal">
     <div class="container-logo"><ion-img src="assets/logo-bellavisage.png"></ion-img></div>
-    <div class="container-pesquisar">
+    <div class="container-titulo">
       <button (click)="voltarPaginaAnterior()">
         <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
       </button>
-      <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)" placeholder="Pesquisar por nome" class="custom"></ion-searchbar>
+      <h1>Meus agendamentos</h1>
+      <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
 
 
     <section>
-    <h1>Meus agendamentos</h1>
 
       <div  *ngFor="let agendamento of agendamentos">
         <ion-card class="card-agendamentos">
