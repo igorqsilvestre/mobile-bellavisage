@@ -16,8 +16,8 @@
 
             <ion-text color="danger" *ngIf="campoEstaInvalido('nome')">
               <p class="mensagem-erro" *ngIf="pacienteForm.get('nome')?.errors?.['minlength'] ||
-                pacienteForm.get('nome')?.errors?.['required']">Nome tem que ter no minimo 3 caracteres.</p>
-              <p class="mensagem-erro" *ngIf="pacienteForm.get('nome')?.errors?.['maxlength']">Nome tem que ter no máximo 50 caracteres.</p>
+                pacienteForm.get('nome')?.errors?.['required']">Nome tem que ter no minimo 8 caracteres.</p>
+              <p class="mensagem-erro" *ngIf="pacienteForm.get('nome')?.errors?.['maxlength']">Nome tem que ter no máximo 100 caracteres.</p>
             </ion-text>
 
             <ion-item>
