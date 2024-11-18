@@ -1,21 +1,29 @@
+import { Especialista } from "./especialista";
+import { Horario } from "./horario";
+import { Paciente } from "./paciente";
+import { Tratamento } from "./tratamento";
+
 export class Agendamento {
-  id?: number;
-  nomeTratamento: string;
-  imagemTratamento: string;
-  avaliacaoTratamento: number;
-  dataHorario: Date;
-  preco: number;
-  paciente: { id: number };
+  id?:number;
+  paciente: Paciente[] | Paciente | any;
+  especialista: Especialista[] | Especialista | any;
+  tratamento: Tratamento[] | Tratamento | any;
+  horario: Horario[] | Horario | any;
+  valor: number;
+  status: string | null;
+  avaliacao: number | null;
 
-  constructor(nomeTratamento: string, imagemTratamento:string,
-    avaliacaoTratamento: number, dataHorario: Date, preco: number, pacienteId:number,id?: number){
+  constructor(paciente: Paciente[] | Paciente | any, especialista:Especialista[] | Especialista | any,
+    tratamento: Tratamento[] | Tratamento | any, horario:  Horario[] | Horario | any, 
+    valor: number, status:string | null, avaliacao:number | null ,id?: number){
 
-    this.nomeTratamento = nomeTratamento;
-    this.imagemTratamento = imagemTratamento;
-    this.avaliacaoTratamento = avaliacaoTratamento;
-    this.dataHorario = dataHorario;
-    this.preco = preco;
-    this.paciente = {id: pacienteId};
+    this.paciente = paciente;
+    this.especialista = especialista;
+    this.tratamento = tratamento;
+    this.horario = horario;
+    this.valor = valor;
+    this.status = status;
+    this.avaliacao = avaliacao;
     this.id = id;
   }
 

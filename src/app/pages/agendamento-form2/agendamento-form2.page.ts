@@ -1,26 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { HorarioRepository } from './../../repository/horario.repository';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, NavController } from '@ionic/angular';
 
 import { Tratamento } from 'src/app/models/tratamento';
-import { DataUtilsService } from 'src/app/shared/services/dataUtils.service';
 
 import { AgendamentoRepository } from 'src/app/repository/agendamento.repository';
 import { Agendamento } from 'src/app/models/agendamento';
 import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-compartilhado.service';
-import { Paciente } from 'src/app/models/paciente';
+import { Horario } from 'src/app/models/horario';
+import { Especialista } from 'src/app/models/especialista';
 
 @Component({
   selector: 'app-agendamento-form2',
   templateUrl: './agendamento-form2.page.html',
   styleUrls: ['./agendamento-form2.page.scss'],
 })
-export class AgendamentoForm2Page implements OnInit {
+export class AgendamentoForm2Page implements OnInit, OnDestroy {
 
   isAlertOpen = false;
   tratamentoDaDo!: Tratamento;
   data!: Date;
-  dataHorarioEscolhido!: Date;
+  horarioEscolhido!: Horario;
+  horarios!: Horario[];
+  especialistasUnicos!: Especialista[] | null;
 
   public alertButtons = [
     {
@@ -39,11 +42,13 @@ export class AgendamentoForm2Page implements OnInit {
   constructor(
     private navCtrl: NavController,
     private router: Router,
-    private dataUtils: DataUtilsService,
     private agendamentoRepository: AgendamentoRepository,
     private alertController: AlertController,
     private pacienteCompartilhadoService: PacienteCompartilhadoService,
+    private horarioRepository:HorarioRepository
   ) { }
+
+
 
   ngOnInit() {
     this.tratamentoDaDo = this.recuperarInformacoesPacienteDaPaginaAgendamentoForm1();
@@ -52,18 +57,10 @@ export class AgendamentoForm2Page implements OnInit {
       throw new Error('Erro ao tentar recuperar os dados do agendamento');
     }
 
-    this.data = new Date();
-    this.geraHorariosParaOEspecialistaPelaData(this.data, this.tratamentoDaDo);
-
   }
 
-
-  geraHorariosParaOEspecialistaPelaData(dataSelecionada: Date, tratamentoDaDo: Tratamento) {
-    if(tratamentoDaDo){
-      tratamentoDaDo.especialistas.forEach(especialista => {
-        especialista.horarios = this.dataUtils.gerarHorariosAleatorios(dataSelecionada);
-      });
-    }
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
   }
 
   recuperarInformacoesPacienteDaPaginaAgendamentoForm1(){
@@ -73,14 +70,27 @@ export class AgendamentoForm2Page implements OnInit {
     }
   }
 
-  onDateChange(event: any) {
-    const selectedDate = event.detail.value;
-    this.data = new Date(selectedDate);
-    this.geraHorariosParaOEspecialistaPelaData(this.data, this.tratamentoDaDo)
+  async onDateChange(event: any) {
+
+    if(this.tratamentoDaDo){
+      const idTratamento = this.tratamentoDaDo.id;
+      const data = new Date(event.detail.value);
+
+      if(idTratamento){
+        const lista = await this.horarioRepository.obterTodosApartirtratamentoEData(idTratamento, data);
+
+        if(lista){
+          this.horarios = lista;
+          this.especialistasUnicos = Array.from(
+            new Map(lista.map(horario => [horario.especialista.id, horario.especialista])).values()
+          );
+        }
+      }
+    }
   }
 
-  presentAlertHorario(horario: Date) {
-    this.dataHorarioEscolhido = horario;
+  presentAlertHorario(horario: Horario) {
+    this.horarioEscolhido = horario;
     this.isAlertOpen = true;
   }
 
@@ -89,18 +99,21 @@ export class AgendamentoForm2Page implements OnInit {
   }
 
   async setResult(ev:any) {
+
     if(ev.detail.role === 'confirm'){
+
 
       const pacienteId = this.buscarIdPaciente();
 
       if(pacienteId){
         const agendamento = new Agendamento(
-          this.tratamentoDaDo?.nome,
-          this.tratamentoDaDo?.imagemPequena,
-          this.tratamentoDaDo?.avaliacao,
-          this.dataHorarioEscolhido,
-          this.tratamentoDaDo?.preco,
-          pacienteId
+          pacienteId,
+          this.horarioEscolhido.especialista.id,
+          this.tratamentoDaDo.id,
+          this.horarioEscolhido.id,
+          this.tratamentoDaDo.valor,
+          null,
+          null
          );
 
          try {
@@ -112,8 +125,11 @@ export class AgendamentoForm2Page implements OnInit {
            await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
          }
       }
+
+      this.isAlertOpen = false;
     }
-    this.isAlertOpen = false;
+
+
   }
 
 
@@ -124,6 +140,7 @@ export class AgendamentoForm2Page implements OnInit {
     }
     throw new Error('Não foi possível buscar o id do paciente.');
   }
+
 
   async presentAlert(tipo: 'sucesso' | 'erro', mensagem: string) {
     const alert = await this.alertController.create({
@@ -137,4 +154,7 @@ export class AgendamentoForm2Page implements OnInit {
     return await alert.onDidDismiss();
   }
 
+  ngOnDestroy(): void {
+    this.especialistasUnicos = null;
+  }
 }

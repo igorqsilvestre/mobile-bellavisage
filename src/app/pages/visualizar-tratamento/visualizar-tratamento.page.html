@@ -10,7 +10,7 @@
       <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
 
-    <img [src]="tratamento.imagemMaior" [alt]="tratamento.nome">
+    <img [src]="getImageUrl(tratamento.imagem, tratamento.tipoImagem)" [alt]="tratamento.nome" height="214px" width="320px">
 
     <section>
       <h2>Descrição</h2>

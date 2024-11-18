@@ -38,9 +38,10 @@ export class LoginAlterarSenhaPage implements OnInit {
         const paciente = this.pacienteForm.value as Paciente;
         try {
             if(paciente && paciente.email){
-              const data = await this.pacienteRepository.getPacienteByEmail(paciente.email);
-              if (data) {
-                  await this.pacienteRepository.updatePacienteParcialmente(data.id, { senha: paciente.senha });
+              const pacienteEncontrado = await this.pacienteRepository.getPacienteByEmail(paciente.email);
+
+              if (pacienteEncontrado && pacienteEncontrado.id) {
+                  await this.pacienteRepository.updatePacienteParcialmente(pacienteEncontrado.id, { senha: paciente.senha });
                   await this.presentAlert('sucesso', 'Senha alterada com sucesso!');
                   this.route.navigate(['/login']);
               } else {

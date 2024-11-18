@@ -5,12 +5,22 @@
       <button (click)="voltarPaginaAnterior()">
         <ion-icon slot="icon-only" name="arrow-back-outline" color="dark"></ion-icon>
       </button>
-      <h1>Meus agendamentos</h1>
+      <h1>Meu histórico</h1>
       <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
 
-
     <section>
+
+      <div class="container-data">
+        <p> Visualize pela data : </p>
+        <ion-datetime-button datetime="datetime"></ion-datetime-button>
+      </div>
+
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="datetime" presentation="date" (ionChange)="onDateChange($event)"></ion-datetime>
+        </ng-template>
+      </ion-modal>
 
       <div  *ngFor="let agendamento of agendamentos">
         <ion-card class="card-agendamentos">
@@ -22,20 +32,14 @@
             <p>📅 {{ agendamento.horario.data | date: 'dd/MM/yyyy' }}</p>
             <p>⏰ {{ agendamento.horario.data | date: 'HH:mm'  }}</p>
             <p>Preço: {{ agendamento.tratamento.valor | currency:'BRL':'symbol':'1.2-2' }}</p>
+            <div class="avaliacoes">
+              <div *ngFor="let i of [].constructor(agendamento.avaliacao); let index = index">
+                <ion-icon name="star" color="warning"></ion-icon>
+              </div>
+            </div>
           </ion-card-content>
         </ion-card>
-
-        <div class="container-botoes">
-          <ion-button (click)="alertaDeConfirmarOuCancelarAgendamento(agendamento, true)" size="small">
-            <ion-icon name="checkmark-circle-outline"></ion-icon>
-          </ion-button>
-          <ion-button (click)="alertaDeConfirmarOuCancelarAgendamento(agendamento, false)" size="small">
-            <ion-icon name="close-circle-outline"></ion-icon>
-          </ion-button>
         </div>
-      </div>
-
-
     </section>
   </main>
 </ion-content>

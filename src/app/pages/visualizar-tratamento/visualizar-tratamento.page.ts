@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { TratamentoDetails } from 'src/app/models/tratamento-details';
+import { Tratamento } from 'src/app/models/tratamento';
 
 @Component({
   selector: 'app-visualizar-tratamento',
@@ -10,7 +10,7 @@ import { TratamentoDetails } from 'src/app/models/tratamento-details';
 })
 export class VisualizarTratamentoPage implements OnInit {
 
-  tratamento:TratamentoDetails = {nome: '',imagemMaior:'' ,descricao: '', funcionamento: '', indicacoes: '' };
+  tratamento!:Tratamento;
   listaIndicacoes!: string[];
 
   constructor(
@@ -25,6 +25,10 @@ export class VisualizarTratamentoPage implements OnInit {
 
   voltarPaginaAnterior(){
     this.navCtrl.back();
+  }
+
+  getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
+    return `${tipoImagem}base64,${base64}`;
   }
 
   separaAsIndicacoes(){
