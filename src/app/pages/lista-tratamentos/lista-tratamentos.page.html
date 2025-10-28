@@ -8,33 +8,35 @@
       <h1>Lista de tratamentos</h1>
       <ion-icon slot="icon-only" name="ellipsis-vertical-outline" color="dark"></ion-icon>
     </div>
-    
-    <div *ngFor="let item of letraComTratamentos">
-      <nav class="navegacao-pagina">
-        <a class="scroll-link" data-target="{{ item.letra }}">{{ item.letra }} |</a>
-      </nav>
-    
-      <section class="sessao-tratamentos">
-        <div *ngFor="let tratamento of item.tratamentos">
-          <div id="item.letra" class="container-tratamentos">
-            <h2 class="titulo-letra"><a>{{ item.letra }}</a></h2>
-            <ul>
-              <li>
-                <ion-card class="card">
-                  <ion-card-content>
-                    <div class="card-conteudo">
-                      <h2>{{ tratamento.nome }}</h2>
-                      <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento(tratamento)">
-                        <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon>
-                      </ion-button>
-                    </div>
-                  </ion-card-content>
-                </ion-card>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </section>
+
+    <div class="navegacao-pagina">
+        <nav *ngFor="let letra of letras" class="navegacao-pagina">
+          <a class="scroll-link" data-target="{{ letra }}">{{ letra }} |</a>
+        </nav>
     </div>
+
+    <section class="sessao-tratamentos">
+      <div *ngFor="let item of letrasComTratamentos">
+        <div [id]="item.letra" class="container-tratamentos">
+          <h2 class="titulo-letra">
+            <a>{{ item.letra }}</a>
+          </h2>
+          <ul *ngFor="let tratamento of item.tratamentos">
+            <li>
+              <ion-card class="card">
+                <ion-card-content>
+                  <div class="card-conteudo">
+                    <h2>{{ tratamento.nome }}</h2>
+                    <ion-button class="card-botao-seta" fill="clear" (click)="onCarregarTratamento(tratamento)">
+                    <ion-icon class="icone-seta" name="arrow-forward-outline"></ion-icon> </ion-button>
+                  </div>
+                </ion-card-content>
+              </ion-card>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
   </main>
 </ion-content>

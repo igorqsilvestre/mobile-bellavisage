@@ -9,7 +9,7 @@ import { PacienteCompartilhadoService } from 'src/app/shared/services/paciente-c
   templateUrl: './tab4.page.html',
   styleUrls: ['./tab4.page.scss'],
 })
-export class Tab4Page implements OnInit {
+export class Tab4Page {
 
   agendamentos!: Agendamento[];
   status = {aberto: "Aberto", concluido: "Concluido"};
@@ -20,8 +20,7 @@ export class Tab4Page implements OnInit {
     private navCtrl: NavController,
   ) { }
 
-  ngOnInit() {
-  }
+
 
    // Executa sempre que a página for exibida
    ionViewDidEnter() {

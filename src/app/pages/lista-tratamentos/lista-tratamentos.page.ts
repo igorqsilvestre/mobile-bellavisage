@@ -11,7 +11,8 @@ import { TratamentoRepository } from 'src/app/repository/tratamento.repository';
 })
 export class ListaTratamentosPage implements OnInit {
 
-  letraComTratamentos!:{letra:string, tratamentos:Tratamento[]}[];
+  letras!: string[];
+  letrasComTratamentos!:{letra:string, tratamentos:Tratamento[]}[];
 
 
   constructor(
@@ -23,41 +24,43 @@ export class ListaTratamentosPage implements OnInit {
   ngOnInit() {
     this.atualizaLista();
     this.rolaApaginaAteOelemento();
+
   }
- 
+
 
   async atualizaLista() {
     const lista = await this.tratamentoRepository.getAllTratamentosOrdenados();
     if(lista){
-      this.letraComTratamentos = this.criarObjetoLetrasComTratamentos(lista);
-      console.log(this.letraComTratamentos);
+      this.criarObjetoLetrasComTratamentos(lista);
     }
   }
 
-  private criarObjetoLetrasComTratamentos(tratamentos: Tratamento[]): { letra: string, tratamentos: Tratamento[] }[] {
+  private criarObjetoLetrasComTratamentos(tratamentos: Tratamento[]) {
     const agrupado = tratamentos.reduce((acc, tratamento) => {
       // Obtenha a primeira letra do nome do tratamento
       const letra = tratamento.nome[0].toUpperCase();
-  
+
       // Verifique se a letra já existe no agrupamento
       if (!acc[letra]) {
         acc[letra] = [];
       }
-  
+
       // Adicione o tratamento ao grupo correspondente
       acc[letra].push(tratamento);
-  
+
       return acc;
     }, {} as { [letra: string]: Tratamento[] });
-  
+
+    this.letras = Object.keys(agrupado);
+
     // Converta o objeto em um array de objetos com a estrutura desejada
-    return Object.keys(agrupado).map(letra => ({
+    this.letrasComTratamentos = Object.keys(agrupado).map(letra => ({
       letra,
       tratamentos: agrupado[letra]
     }));
   }
-  
-  
+
+
 
   onCarregarTratamento(tratamento:Tratamento){
     if(tratamento){
@@ -84,7 +87,7 @@ export class ListaTratamentosPage implements OnInit {
       });
     });
   }
-    
+
 
   voltarPaginaAnterior(){
     this.navCtrl.back();

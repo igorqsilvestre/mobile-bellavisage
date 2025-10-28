@@ -21,22 +21,8 @@ export class AgendamentoForm2Page implements OnInit, OnDestroy {
   isAlertOpen = false;
   tratamentoDaDo!: Tratamento;
   data!: Date;
-  horarioEscolhido!: Horario;
   horarios!: Horario[];
   especialistasUnicos!: Especialista[] | null;
-
-  public alertButtons = [
-    {
-      text: 'Não',
-      role: 'cancel',
-      cssClass: 'alert-button-cancel',
-    },
-    {
-      text: 'Sim',
-      role: 'confirm',
-      cssClass: 'alert-button-confirm',
-    },
-  ];
 
 
   constructor(
@@ -50,13 +36,16 @@ export class AgendamentoForm2Page implements OnInit, OnDestroy {
 
 
 
-  ngOnInit() {
+  async ngOnInit() {
     this.tratamentoDaDo = this.recuperarInformacoesPacienteDaPaginaAgendamentoForm1();
 
     if(!this.tratamentoDaDo){
       throw new Error('Erro ao tentar recuperar os dados do agendamento');
+    }else{
+      if(this.tratamentoDaDo.id){
+        await this.carregarHorariosPorDataETratamento(new Date(), this.tratamentoDaDo.id);
+      }
     }
-
   }
 
   getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
@@ -71,13 +60,19 @@ export class AgendamentoForm2Page implements OnInit, OnDestroy {
   }
 
   async onDateChange(event: any) {
-
     if(this.tratamentoDaDo){
       const idTratamento = this.tratamentoDaDo.id;
       const data = new Date(event.detail.value);
 
       if(idTratamento){
-        const lista = await this.horarioRepository.obterTodosApartirtratamentoEData(idTratamento, data);
+        await this.carregarHorariosPorDataETratamento(data, idTratamento)
+      }
+    }
+  }
+
+   private async carregarHorariosPorDataETratamento(data: Date, idTratamento: number){
+    if(idTratamento){
+       const lista = await this.horarioRepository.obterTodosApartirtratamentoEData(idTratamento, data);
 
         if(lista){
           this.horarios = lista;
@@ -86,50 +81,61 @@ export class AgendamentoForm2Page implements OnInit, OnDestroy {
           );
         }
       }
-    }
   }
 
-  presentAlertHorario(horario: Horario) {
-    this.horarioEscolhido = horario;
-    this.isAlertOpen = true;
+  async presentAlertHorario(horario: Horario) {
+    (document.activeElement as HTMLElement).blur();
+
+    const alert = await this.alertController.create({
+      header: 'Confirma o agendamento?',
+      cssClass: 'custom-alert',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'alert-button-cancel',
+        },
+        {
+          text: 'Sim',
+          role: 'confirm',
+          cssClass: 'alert-button-confirm',
+          handler: async () => {
+            await this.confirmarAgendamento(horario);
+          }
+        }
+      ],
+    })
+
+    await alert.present();
+  }
+
+  private async confirmarAgendamento(horario: Horario) {
+   const pacienteId = this.buscarIdPaciente();
+
+    if(pacienteId){
+      const agendamento = new Agendamento(
+        pacienteId,
+        horario.especialista.id,
+        this.tratamentoDaDo.id,
+        horario.id,
+        this.tratamentoDaDo.valor,
+        null,
+        null
+        );
+
+        try {
+          this.agendamentoRepository.addAgendamento(agendamento);
+          await this.presentAlert('sucesso', 'Agendamento realizado com sucesso!');
+          this.router.navigate(['/tabs/tab1']);
+
+        } catch (error) {
+          await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
+        }
+    }
   }
 
   voltarPaginaAnterior(){
     this.navCtrl.back();
-  }
-
-  async setResult(ev:any) {
-
-    if(ev.detail.role === 'confirm'){
-
-
-      const pacienteId = this.buscarIdPaciente();
-
-      if(pacienteId){
-        const agendamento = new Agendamento(
-          pacienteId,
-          this.horarioEscolhido.especialista.id,
-          this.tratamentoDaDo.id,
-          this.horarioEscolhido.id,
-          this.tratamentoDaDo.valor,
-          null,
-          null
-         );
-
-         try {
-           this.agendamentoRepository.addAgendamento(agendamento);
-           await this.presentAlert('sucesso', 'Agendamento realizado com sucesso!');
-           this.router.navigate(['/tabs/tab1']);
-
-         } catch (error) {
-           await this.presentAlert('erro', 'Ocorreu um erro ao realizar o agendamento.');
-         }
-      }
-
-      this.isAlertOpen = false;
-    }
-
-
   }
 
 

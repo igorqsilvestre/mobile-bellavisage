@@ -1,3 +1,4 @@
+import { PagamentoRepository } from './../../repository/pagamento.repository';
 import { PacienteCompartilhadoService } from './../../shared/services/paciente-compartilhado.service';
 import { AgendamentoRepository } from './../../repository/agendamento.repository';
 import { Component } from '@angular/core';
@@ -10,14 +11,16 @@ import { Agendamento } from 'src/app/models/agendamento';
   styleUrls: ['tab2.page.scss']
 })
 export class Tab2Page{
+
   isAlertOpen = false;
-  agendamentos!: Agendamento[];
+  agendamentosComPodeExcluir!: { agendamento: Agendamento; podeExcluir: boolean }[];
   agendamento!: Agendamento;
   status = {aberto: "Aberto", concluido: "Concluido"};
 
   constructor(
     private navCtrl: NavController,
     private agendamentoRepository: AgendamentoRepository,
+    private pagamentoRepository: PagamentoRepository,
     private alertController: AlertController,
     private pacienteCompartilhadoService: PacienteCompartilhadoService,
   ) {}
@@ -32,7 +35,7 @@ export class Tab2Page{
     this.navCtrl.back();
   }
 
-  async alertaDeConfirmarOuCancelarAgendamento(agendamento: Agendamento, confirmar = false) {
+  async alertaDeConfirmarOuCancelarAgendamento(agendamento: Agendamento, confirmar = true) {
 
     let cabecalho ='Cancelar Agendamento?';
     let messagem = '';
@@ -81,6 +84,15 @@ export class Tab2Page{
     await alert.present();
   }
 
+  private async verificaSePodeExcuirAgendamento(agendamento: Agendamento): Promise<boolean> {
+    if(agendamento){
+      if(await this.pagamentoRepository.checkPagamentoExistsByAgendamentoId(agendamento.id!)){
+        return false;
+      }
+    }
+    return true;
+  }
+
   async confirmarCancelamento() {
     if (this.agendamento && this.agendamento.id) {
       try {
@@ -114,13 +126,22 @@ export class Tab2Page{
 
   private async atualizarLista(){
     const paciente = this.pacienteCompartilhadoService.getPaciente();
-    if(paciente && paciente.id){
-      const pacienteId =  paciente.id;
-      const listaAgendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteIdAndStatus(pacienteId, this.status.aberto);
-      if(listaAgendamentos){
-        this.agendamentos = listaAgendamentos;
-      }
+
+    if(!paciente?.id)return;
+
+     const listaAgendamentos = await this.agendamentoRepository.getAllAgendamentosByPacienteIdAndStatus(paciente.id, this.status.aberto);
+
+     if(!listaAgendamentos?.length){
+      this.agendamentosComPodeExcluir = [];
+      return;
     }
+
+    this.agendamentosComPodeExcluir = await Promise.all(
+      listaAgendamentos.map(async (agendamento) => ({
+        agendamento,
+        podeExcluir: await this.verificaSePodeExcuirAgendamento(agendamento),
+      }))
+    );
   }
 
   getImageUrl(base64:string, tipoImagem = 'data:image/jpeg;'): string {
