@@ -23,7 +23,11 @@ export class AgendamentoService {
   }
 
   getAllAgendamentosByPacienteIdAndStatusAndDate(pacienteId:number, status:string, data: Date): Observable<Agendamento[]> {
-    const params = new HttpParams().set('status', status).set('data', data.toISOString().split('T')[0]);
+    const ano = data.getFullYear();
+    const mes = String(data.getMonth() + 1).padStart(2, '0');
+    const dia = String(data.getDate()).padStart(2, '0');
+    const dataFormatada = `${ano}-${mes}-${dia}`;
+    const params = new HttpParams().set('status', status).set('data', dataFormatada);
     return this.http.get<Agendamento[]>(`${this.urlAgendamento}/paciente/${pacienteId}/status/data`, { params }).pipe(take(1));
   }
 
